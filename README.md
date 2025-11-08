@@ -1,3 +1,7 @@
+Een virtuele representatie van je persoonlijke garage, met CRUD operaties om auto's toe te voegen, te verwijderen, informatie te updaten (onderhoudsgeschiedenis, beschikbaarheid, uit te voeren herstellingen, status van verzekering/keuring/inschrijving en algemene informatie over de wagens). Er zal ook een mogelijkheid zijn om auto's uit te lenen aan andere gebruikers, een wishlist van auto's die je nog zou willen toevoegen aan je garage, en een lijst van auto's die in de toekomst beschikbaar zullen zijn in de fleet.
+
+
+
 # Introduction 
 TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
 
