@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VirtualGarage.Persistence.Entities;
+using VirtualGarage.Persistence.Interfaces;
 
 namespace VirtualGarage.Persistence
 {
-    public class UserRepository(DbContexts.VirtualGarageDbContext dbContext)
+    public class UserRepository(DbContexts.VirtualGarageDbContext dbContext) : IUserRepository
     {
         public User CreateUser(User user)
         {
