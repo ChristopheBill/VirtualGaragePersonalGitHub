@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.Api", "VirtualGarage.Api\VirtualGarage.Api.csproj", "{32CBCC19-889C-408F-B87C-C0D8DD519B27}"
 EndProject
@@ -14,6 +14,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.Persistence.Entities", "VirtualGarage.Persistence.Entities\VirtualGarage.Persistence.Entities.csproj", "{8198A927-1238-43BC-BB3F-6A31BB1128F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.Domain.Services", "VirtualGarage.Domain.Services\VirtualGarage.Domain.Services.csproj", "{1E179F8F-890A-426E-BC3B-F173164B36B5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3A91BBF2-67A0-48DB-8FB0-4B53000CA20C} = {3A91BBF2-67A0-48DB-8FB0-4B53000CA20C}
+		{B5CDCAFB-FE4E-48D2-9B36-EF0996A3853E} = {B5CDCAFB-FE4E-48D2-9B36-EF0996A3853E}
+		{F7878333-A708-455D-A457-DA1AFFA3057A} = {F7878333-A708-455D-A457-DA1AFFA3057A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

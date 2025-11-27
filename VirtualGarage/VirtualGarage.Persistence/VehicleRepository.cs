@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VirtualGarage.Persistence.Entities;
+using VirtualGarage.Persistence.Interfaces;
 
 namespace VirtualGarage.Persistence
 {
-    public class VehicleRepository(DbContexts.VirtualGarageDbContext dbContext)
+    public class VehicleRepository(DbContexts.VirtualGarageDbContext dbContext) : IVehicleRepository
     {
         public Vehicle CreateVehicle(Entities.Vehicle vehicle)
         {
