@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace VirtualGarage.Persistence.Entities
     {
         public int Id { get; set; }
         public DateTime ServiceDate { get; set; }
+        [MaxLength(5000)]
         public string Description { get; set; }
         public decimal Cost { get; set; }
         public int VehicleId { get; set; }
