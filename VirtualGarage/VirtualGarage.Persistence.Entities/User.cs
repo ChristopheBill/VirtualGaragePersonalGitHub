@@ -17,6 +17,6 @@ namespace VirtualGarage.Persistence.Entities
             Mechanic
         }
         public UserRole Role { get; set; }
-        public List<Vehicle> Vehicles { get; set; }
+        public List<Vehicle>? Vehicles { get; set; }
     }
 }

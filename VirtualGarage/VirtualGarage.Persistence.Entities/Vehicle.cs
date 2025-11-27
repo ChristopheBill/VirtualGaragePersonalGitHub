@@ -6,4 +6,5 @@ public class Vehicle
     public string Brand { get; set; }
     public string Model { get; set; }
     public DateTime ManufactureDate { get; set; }
+    public List<ServiceRecord> ServiceRecords { get; set; }
 }
