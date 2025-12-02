@@ -12,7 +12,7 @@ namespace VirtualGarage.Persistence
             dbContext.SaveChanges();
             return user;
         }
-        public User? GetUserById(int id)
+        public User? GetUserById(Guid id)
         {
             return dbContext.Users
                 .Include(u => u.Vehicles)
@@ -29,7 +29,7 @@ namespace VirtualGarage.Persistence
             dbContext.Users.Update(user);
             dbContext.SaveChanges();
         }
-        public void DeleteUser(int id)
+        public void DeleteUser(Guid id)
         {
             var user = dbContext.Users.Find(id);
             if (user != null)

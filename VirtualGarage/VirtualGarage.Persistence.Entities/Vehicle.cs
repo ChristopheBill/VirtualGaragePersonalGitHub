@@ -4,8 +4,9 @@ namespace VirtualGarage.Persistence.Entities;
 
 public class Vehicle
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     [MaxLength(50)]
+    public Guid? UserId { get; set; }
     public string? Brand { get; set; }
     [MaxLength(50)]
     public string? Model { get; set; }

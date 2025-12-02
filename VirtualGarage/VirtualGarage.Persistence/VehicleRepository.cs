@@ -17,7 +17,7 @@ namespace VirtualGarage.Persistence
             dbContext.SaveChanges();
             return vehicle;
         }
-        public Entities.Vehicle? GetVehicleById(int id)
+        public Entities.Vehicle? GetVehicleById(Guid id)
         {
             return dbContext.Vehicles
                 .Include(v => v.ServiceRecords)
