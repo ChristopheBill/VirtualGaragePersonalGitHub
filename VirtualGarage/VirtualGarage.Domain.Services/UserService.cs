@@ -5,6 +5,6 @@ namespace VirtualGarage.Domain.Services
 {
     public class UserService(IUserRepository userRepository)
     {
-        public UserResponseContract 
+        //public UserResponseContract 
     }
 }

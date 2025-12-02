@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using VirtualGarage.Persistence.DbContexts;
+
 namespace VirtualGarage.Api
 {
     public class Program
@@ -5,6 +9,16 @@ namespace VirtualGarage.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+               // EF Core - MySQL
+            string? connectionString = builder.Configuration.GetConnectionString("VirtualGarage");
+
+            builder.Services.AddDbContext<VirtualGarageDbContext>(options =>
+                options.UseMySql(
+                    connectionString,
+                    ServerVersion.AutoDetect(connectionString)
+                )
+            );
 
             // Add services to the container.
 

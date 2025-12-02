@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,9 @@ using VirtualGarage.Persistence.Entities;
 
 namespace VirtualGarage.Persistence.DbContexts
 {
-    public class VirtualGarageDbContext : DbContext
+    public sealed class VirtualGarageDbContext(DbContextOptions<VirtualGarageDbContext> options) : DbContext(options)
     {
-        public VirtualGarageDbContext(DbContextOptions<VirtualGarageDbContext> options)
-            : base(options)
-        {
-        }
-        public DbSet <User> Users { get; set; }
-        public DbSet <Vehicle> Vehicles { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
     }
 }
