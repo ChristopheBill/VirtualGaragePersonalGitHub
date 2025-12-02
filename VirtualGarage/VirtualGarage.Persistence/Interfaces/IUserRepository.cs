@@ -9,10 +9,10 @@ namespace VirtualGarage.Persistence.Interfaces
 {
     public interface IUserRepository
     {
-        public User CreateUser(User user);
-        public User? GetUserById(Guid id);
-        public List<User> GetAllUsers();
-        public void UpdateUser(User user);
-        public void DeleteUser(Guid id);
+        public Task<User> CreateUserAsync(User user);
+        public Task<User?> GetUserByIdAsync(Guid id);
+        public Task<List<User>> GetAllUsersAsync();
+        public Task UpdateUserAsync(User user);
+        public Task DeleteUserAsync(Guid id);
     }
 }

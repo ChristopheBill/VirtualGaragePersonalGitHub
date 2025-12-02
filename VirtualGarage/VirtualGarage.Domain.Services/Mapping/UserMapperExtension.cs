@@ -7,9 +7,9 @@ using VirtualGarage.Persistence.Entities;
 
 namespace VirtualGarage.Domain.Services.Mapping
 {
-    internal class UserMapperExtension
+    internal static class UserMapperExtension
     {
-        public User ToEntity(UserResponseContract user)
+        public static User ToEntity(this UserResponseContract user)
         {
             return new User
             {
@@ -27,7 +27,7 @@ namespace VirtualGarage.Domain.Services.Mapping
                 })
             };
         }
-        public UserResponseContract ToContract(User user)
+        public static UserResponseContract ToContract(this User user)
         {
             return new UserResponseContract
             {

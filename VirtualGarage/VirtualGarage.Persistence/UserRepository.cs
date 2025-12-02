@@ -6,38 +6,37 @@ namespace VirtualGarage.Persistence
 {
     public class UserRepository(DbContexts.VirtualGarageDbContext dbContext) : IUserRepository
     {
-        public User CreateUser(User user)
+        public async Task<User> CreateUserAsync(User user)
         {
             dbContext.Users.Add(user);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
             return user;
         }
-        public User? GetUserById(Guid id)
+        public async Task<User?> GetUserByIdAsync(Guid id)
         {
-            return dbContext.Users
+            return await dbContext.Users
                 .Include(u => u.Vehicles)
-                .FirstOrDefault(u => u.Id == id);
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
-        public List<User> GetAllUsers()
+        public async Task<List<User>> GetAllUsersAsync()
         {
-            return dbContext.Users
+            return await dbContext.Users
                 .Include(u => u.Vehicles)
-                .ToList();
+                .ToListAsync();
         }
-        public void UpdateUser(User user)
+        public async Task UpdateUserAsync(User user)
         {
             dbContext.Users.Update(user);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
-        public void DeleteUser(Guid id)
-        {
-            var user = dbContext.Users.Find(id);
+        public async Task DeleteUserAsync(Guid id)
+        { 
+             var user = await dbContext.Users.FindAsync(id);
             if (user != null)
             {
                 dbContext.Users.Remove(user);
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
             }
-
         }
     }
 }
