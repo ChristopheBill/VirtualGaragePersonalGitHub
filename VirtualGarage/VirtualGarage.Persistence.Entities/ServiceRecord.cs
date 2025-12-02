@@ -12,9 +12,9 @@ namespace VirtualGarage.Persistence.Entities
         public int Id { get; set; }
         public DateTime ServiceDate { get; set; }
         [MaxLength(5000)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public decimal Cost { get; set; }
         public int VehicleId { get; set; }
-        public Vehicle Vehicle { get; set; }
+        public Vehicle? Vehicle { get; set; }
     }
 }
