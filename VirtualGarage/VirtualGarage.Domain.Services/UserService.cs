@@ -10,7 +10,7 @@ namespace VirtualGarage.Domain.Services
         public Task<UserResponseContract> CreateUserAsync(User user)
         {
             var createdUser = userRepository.CreateUserAsync(user);
-            return createdUser.ToContract();
+            return Task.FromResult(createdUser.ToContract());
         }
         public UserResponseContract? GetUserByIdAsync(Guid id)
         {
