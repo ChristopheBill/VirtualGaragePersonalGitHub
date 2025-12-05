@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Serilog;
 using VirtualGarage.Persistence.DbContexts;
 
 namespace VirtualGarage.Api
@@ -24,6 +25,12 @@ namespace VirtualGarage.Api
 
             builder.Services.AddControllers();
 
+            // Add SeriLog logging
+
+            builder.Host.UseSerilog((context, configuration) =>
+            configuration.ReadFrom.Configuration(context.Configuration));
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -32,6 +39,7 @@ namespace VirtualGarage.Api
 
             app.UseAuthorization();
 
+            app.UseSerilogRequestLogging();
 
             app.MapControllers();
 
