@@ -7,24 +7,24 @@ namespace VirtualGarage.Domain.Services
 {
     public class UserService(IUserRepository userRepository)
     {
-        public UserResponseContract CreateUser(User user)
+        public Task<UserResponseContract> CreateUser(User user)
         {
-            var createdUser = userRepository.CreateUser(user);
+            var createdUser = userRepository.CreateUserAsync(user);
             return createdUser.ToContract();
         }
         public UserResponseContract? GetUserById(Guid id)
         {
-            var user = userRepository.GetUserById(id);
+            var user = userRepository.GetUserByIdAsync(id);
             return user?.ToContract();
         }
-        public List<UserResponseContract> GetAllUsers()
+        public List<UserResponseContract> GetAllUsersAsync()
         {
-            var users = userRepository.GetAllUsers();
+            var users = userRepository.GetAllUsersAsync();
             return users.ConvertAll(u => u.ToContract());
         }
         public UserResponseContract? UpdateUser(Guid id, User user)
         {
-            var updatedUser = userRepository.UpdateUser(id, user);
+            var updatedUser = userRepository.UpdateUserAsync(id, user);
             return updatedUser?.ToContract();
         }
         public bool DeleteUser(Guid id)
