@@ -7,29 +7,30 @@ namespace VirtualGarage.Domain.Services
 {
     public class UserService(IUserRepository userRepository)
     {
-        public Task<UserResponseContract> CreateUserAsync(User user)
+        public async Task<UserResponseContract> CreateUserAsync(User user)
         {
             var createdUser = userRepository.CreateUserAsync(user);
             return Task.FromResult(createdUser.ToContract());
         }
-        public UserResponseContract? GetUserByIdAsync(Guid id)
+        public async Task<UserResponseContract?> GetUserByIdAsync(Guid id)
         {
             var user = userRepository.GetUserByIdAsync(id);
-            return user?.ToContract();
+            return Task.FromResult(user?.ToContract());
         }
-        public List<UserResponseContract> GetAllUsersAsync()
+        public async Task<List<UserResponseContract?>> GetAllUsersAsync()
         {
             var users = userRepository.GetAllUsersAsync();
-            return users.ConvertAll(u => u.ToContract());
+            var userContracts = users.Select(user => user.ToContract()).ToList();
+            return Task.FromResult(userContracts);
         }
-        public UserResponseContract? UpdateUserAsync(Guid id, User user)
+        public async Task <UserResponseContract?> UpdateUserAsync(User user)
         {
-            var updatedUser = userRepository.UpdateUserAsync(id, user);
-            return updatedUser?.ToContract();
+            var updatedUser = userRepository.UpdateUserAsync(user);
+            return Task.FromResult(updatedUser?.ToContract());
         }
-        public bool DeleteUserAsync(Guid id)
+        public async Task DeleteUserAsync(Guid id)
         {
-            return userRepository.DeleteUser(id);
+            await userRepository.DeleteUserAsync(id);
         }
     }
 }
