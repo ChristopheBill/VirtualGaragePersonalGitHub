@@ -23,10 +23,9 @@ namespace VirtualGarage.Domain.Services
             var userContracts = users.Select(user => user.ToContract()).ToList();
             return userContracts;
         }
-        public async Task <UserResponseContract?> UpdateUserAsync(User user)
+        public async Task UpdateUserAsync(User user)
         {
-            var updatedUser = await userRepository.UpdateUserAsync(user);
-            return updatedUser?.ToContract();
+            await userRepository.UpdateUserAsync(user);
         }
         public async Task DeleteUserAsync(Guid id)
         {
