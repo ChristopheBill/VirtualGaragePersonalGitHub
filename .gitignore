@@ -112,7 +112,7 @@ temp/
 *.bak
 *.orig
 *.rej
-*.Development
+*.Development.json
 *~
 
 # End of file
