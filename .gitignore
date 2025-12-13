@@ -112,6 +112,7 @@ temp/
 *.bak
 *.orig
 *.rej
+*.Development
 *~
 
 # End of file
