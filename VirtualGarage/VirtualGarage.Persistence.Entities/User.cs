@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+
 namespace VirtualGarage.Persistence.Entities
 {
     public class User
@@ -12,13 +13,7 @@ namespace VirtualGarage.Persistence.Entities
         [EmailAddress]
         public string? Email { get; set; }
         public DateTime BirthDay { get; set; }
-        public enum UserRole
-        {
-            Admin,
-            Customer,
-            Mechanic
-        }
-        public UserRole Role { get; set; }
+        public RoleEnum UserRole { get; set; }
         public List<Vehicle>? Vehicles { get; set; }
     }
 }
