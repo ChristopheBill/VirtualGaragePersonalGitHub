@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.Domain.Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.IdentityServer", "VirtualGarage.IdentityServer\VirtualGarage.IdentityServer.csproj", "{B4051D13-FB2D-4A35-B34B-6741E157DC84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.Shared", "VirtualGarage.Shared\VirtualGarage.Shared.csproj", "{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -116,6 +118,18 @@ Global
 		{B4051D13-FB2D-4A35-B34B-6741E157DC84}.Release|x64.Build.0 = Release|Any CPU
 		{B4051D13-FB2D-4A35-B34B-6741E157DC84}.Release|x86.ActiveCfg = Release|Any CPU
 		{B4051D13-FB2D-4A35-B34B-6741E157DC84}.Release|x86.Build.0 = Release|Any CPU
+		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Debug|x64.Build.0 = Debug|Any CPU
+		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Debug|x86.Build.0 = Debug|Any CPU
+		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Release|x64.ActiveCfg = Release|Any CPU
+		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Release|x64.Build.0 = Release|Any CPU
+		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Release|x86.ActiveCfg = Release|Any CPU
+		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using VirtualGarage.Shared;
 
 
 namespace VirtualGarage.Persistence.Entities

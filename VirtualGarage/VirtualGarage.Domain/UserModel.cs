@@ -1,4 +1,5 @@
 using System;
+using VirtualGarage.Shared;
 
 namespace VirtualGarage.Domain.Models;
 
