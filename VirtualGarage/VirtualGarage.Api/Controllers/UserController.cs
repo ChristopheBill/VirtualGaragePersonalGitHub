@@ -18,7 +18,7 @@ namespace VirtualGarage.Api.Controllers
 
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<IActionResult> GetUserByIdAsync(Guid id)
+        public async Task<IActionResult> GetUserByIdAsync([FromRoute] Guid id)
         {
             var user = await _userService.GetUserByIdAsync(id);
             if (user == null)
