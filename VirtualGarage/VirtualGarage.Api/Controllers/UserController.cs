@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using VirtualGarage.Domain.Services.Interfaces;
+using VirtualGarage.Contracts;
 
 namespace VirtualGarage.Api.Controllers
 {
@@ -26,6 +27,13 @@ namespace VirtualGarage.Api.Controllers
                 return new NotFoundResult();
             }
             return new OkObjectResult(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateUserAsync([FromBody] UserRequestContract userRequestContract)
+        {
+            var createdUser = await _userService.CreateUserAsync(userRequestContract);
+            return new CreatedAtActionResult(nameof(GetUserByIdAsync), "User", new { id = createdUser.Id }, createdUser);
         }
     }
 }
