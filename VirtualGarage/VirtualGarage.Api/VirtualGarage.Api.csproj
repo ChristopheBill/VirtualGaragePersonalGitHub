@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VirtualGarage.Persistence\VirtualGarage.Persistence.csproj" />
+    <ProjectReference Include="..\VirtualGarage.Domain.Services\VirtualGarage.Domain.Services.csproj" />
   </ItemGroup>
 
 </Project>

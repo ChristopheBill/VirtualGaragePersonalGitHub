@@ -11,6 +11,19 @@ namespace VirtualGarage.Api.Controllers
     {
         private readonly IUserService _userService;
 
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
+        //[HttpGet("me")]
+        //[Authorize]
+        //public IActionResult GetCurrentUser()
+        //{
+        //    var user = _userService.GetCurrentUser();
+        //    return new OkObjectResult(user);
+        //}
+
 
     }
 }
