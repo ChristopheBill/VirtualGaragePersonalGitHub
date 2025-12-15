@@ -2,10 +2,11 @@
 using VirtualGarage.Domain.Services.Mapping;
 using VirtualGarage.Persistence.Entities;
 using VirtualGarage.Persistence.Interfaces;
+using VirtualGarage.Domain.Services.Interfaces;
 
 namespace VirtualGarage.Domain.Services
 {
-    public class UserService(IUserRepository userRepository)
+    public class UserService(IUserRepository userRepository) : IUserService
     {
         public async Task<UserResponseContract> CreateUserAsync(User user)
         {
