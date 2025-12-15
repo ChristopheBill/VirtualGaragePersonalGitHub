@@ -16,14 +16,16 @@ namespace VirtualGarage.Api.Controllers
             _userService = userService;
         }
 
-        //[HttpGet("me")]
-        //[Authorize]
-        //public IActionResult GetCurrentUser()
-        //{
-        //    var user = _userService.GetCurrentUser();
-        //    return new OkObjectResult(user);
-        //}
-
-
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetUserByIdAsync(Guid id)
+        {
+            var user = await _userService.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                return new NotFoundResult();
+            }
+            return new OkObjectResult(user);
+        }
     }
 }
