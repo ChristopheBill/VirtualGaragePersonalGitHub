@@ -11,37 +11,37 @@ namespace VirtualGarage.Persistence
 {
     public class VehicleRepository(DbContexts.VirtualGarageDbContext dbContext) : IVehicleRepository
     {
-        public Vehicle CreateVehicle(Entities.Vehicle vehicle)
+        public async Task <Vehicle> CreateVehicleAsync(Entities.Vehicle vehicle)
         {
             dbContext.Vehicles.Add(vehicle);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
             return vehicle;
         }
-        public Entities.Vehicle? GetVehicleById(Guid id)
+        public async Task <Vehicle?> GetVehicleByIdAsync(Guid id)
         {
-            return dbContext.Vehicles
+            return await dbContext.Vehicles
                 .Include(v => v.ServiceRecords)
-                .FirstOrDefault(v => v.Id == id);
+                .FirstOrDefaultAsync(v => v.Id == id);
         }
-        public List<Entities.Vehicle> GetAllVehicles()
+        public async Task <List<Entities.Vehicle>> GetAllVehiclesAsync()
         {
-            return dbContext.Vehicles
+            return await dbContext.Vehicles
                 .Include(v => v.ServiceRecords)
-                .ToList();
+                .ToListAsync();
         }
-        public void UpdateVehicle(Entities.Vehicle vehicle)
+        public Task UpdateVehicleAsync(Entities.Vehicle vehicle)
         {
             dbContext.Vehicles.Update(vehicle);
-            dbContext.SaveChanges();
+            return dbContext.SaveChangesAsync();
         }
-        public void DeleteVehicle(int id)
+        public Task DeleteVehicleAsync(Guid id)
         {
             var vehicle = dbContext.Vehicles.Find(id);
             if (vehicle != null)
             {
                 dbContext.Vehicles.Remove(vehicle);
-                dbContext.SaveChanges();
             }
+            return dbContext.SaveChangesAsync();
         }
     }
 }

@@ -9,10 +9,10 @@ namespace VirtualGarage.Persistence.Interfaces
 {
     public interface IVehicleRepository
     {
-        Vehicle CreateVehicle(Entities.Vehicle vehicle);
-        Vehicle? GetVehicleById(Guid id);
-        List<Vehicle> GetAllVehicles();
-        void UpdateVehicle(Vehicle vehicle);
-        void DeleteVehicle(int id);
+        public Task<Vehicle> CreateVehicleAsync(Vehicle vehicle);
+        public Task<Vehicle?> GetVehicleByIdAsync(Guid id);
+        public Task<List<Vehicle>> GetAllVehiclesAsync();
+        public Task UpdateVehicleAsync(Vehicle vehicle);
+        public Task DeleteVehicleAsync(Guid id);
     }
 }
