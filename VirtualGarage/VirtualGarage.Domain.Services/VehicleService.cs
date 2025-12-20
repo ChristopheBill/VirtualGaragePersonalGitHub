@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using VirtualGarage.Api.Contracts;
 using VirtualGarage.Domain.Services.Interfaces;
+using VirtualGarage.Domain.Services.Mapping;
 using VirtualGarage.Persistence.Entities;
 using VirtualGarage.Persistence.Interfaces;
 
@@ -14,9 +16,9 @@ namespace VirtualGarage.Domain.Services
             var vehicle = await vehicleRepository.GetVehicleByIdAsync(vehicleId);
             return vehicle;
         }
-        public async Task<Vehicle> CreateVehicleAsync(Vehicle vehicle)
+        public async Task<Vehicle> CreateVehicleAsync(VehicleRequestContract vehicle)
         {
-            var createdVehicle = await vehicleRepository.CreateVehicleAsync(vehicle);
+            var createdVehicle = await vehicleRepository.CreateVehicleAsync(vehicle.ToEntity());
             return createdVehicle;
         }
         public async Task<List<Vehicle>> GetAllVehiclesAsync()

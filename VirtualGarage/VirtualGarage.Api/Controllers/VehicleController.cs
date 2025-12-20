@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VirtualGarage.Api.Contracts;
+using VirtualGarage.Domain.Services.Interfaces;
 
 namespace VirtualGarage.Api.Controllers
 {
@@ -6,11 +8,28 @@ namespace VirtualGarage.Api.Controllers
     [Route("api/vehicle")]
     public class VehicleController : ControllerBase
     {
-       [HttpGet]
+        private readonly IVehicleService _vehicleService;
+        public VehicleController(IVehicleService vehicleService)
+        {
+            _vehicleService = vehicleService;
+        }
+
+       [HttpGet("{id}")]
        [Route("index")]
-       public Task<IActionResult> Index()
-       {
-           return Task.FromResult<IActionResult>(Ok("Vehicle Index"));
-       }
+       public async Task<IActionResult> GetCarByIdAsync([FromRoute] Guid id)
+        {
+            var vehicle =  await _vehicleService.GetVehicleAsync(id);
+            if (vehicle == null)
+            {
+                return new NotFoundResult();
+            }
+            return new OkObjectResult(vehicle);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateVehicleAsync([FromBody] VehicleRequestContract vehicle)
+        {
+            var createdVehicle = await _vehicleService.CreateVehicleAsync(vehicle);
+            return new CreatedAtActionResult(nameof(GetCarByIdAsync), "Vehicle", new { id = createdVehicle.Id }, createdVehicle);
+        }
 }
 }
