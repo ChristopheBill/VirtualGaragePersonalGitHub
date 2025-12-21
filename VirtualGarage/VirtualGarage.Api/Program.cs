@@ -15,10 +15,7 @@ namespace VirtualGarage.Api
             string? connectionString = builder.Configuration.GetConnectionString("VirtualGarage");
 
             builder.Services.AddDbContext<VirtualGarageDbContext>(options =>
-                options.UseMySql(
-                    connectionString,
-                    ServerVersion.AutoDetect(connectionString)
-                )
+                options.UseSqlServer(connectionString)
             );
 
             // Add services to the container.
