@@ -18,6 +18,7 @@ namespace VirtualGarage.Api
                 options.UseSqlServer(connectionString)
             );
 
+            Console.WriteLine($"Connection String: {connectionString}");
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -27,6 +28,7 @@ namespace VirtualGarage.Api
             builder.Host.UseSerilog((context, configuration) =>
             configuration.ReadFrom.Configuration(context.Configuration));
 
+            System.Console.WriteLine("SeriLog configured");
 
             var app = builder.Build();
 
@@ -34,12 +36,16 @@ namespace VirtualGarage.Api
 
             app.UseHttpsRedirection();
 
+            System.Console.WriteLine("HTTPS Redirection configured");
+
             app.UseAuthorization();
+
+            System.Console.WriteLine("Authorization configured");
 
             app.UseSerilogRequestLogging();
 
             app.MapControllers();
-
+            System.Console.WriteLine("Controllers mapped");
             app.Run();
         }
     }
