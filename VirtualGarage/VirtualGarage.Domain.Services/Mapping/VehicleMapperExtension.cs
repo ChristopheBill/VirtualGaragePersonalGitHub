@@ -11,7 +11,7 @@ internal static class VehicleMapperExtension
             Id = Guid.NewGuid(),
             Brand = vehicleContract.Make,
             Model = vehicleContract.Model,
-            ManufactureDate = vehicleContract.ManufactureDate,
+            ManufactureDate = vehicleContract.Year,
         };
     }
 }

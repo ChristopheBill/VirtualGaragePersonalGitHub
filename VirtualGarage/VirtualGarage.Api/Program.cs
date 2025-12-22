@@ -35,7 +35,9 @@ namespace VirtualGarage.Api
             System.Console.WriteLine("SeriLog configured");
 
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IVehicleService, VehicleService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
             var app = builder.Build();
 
