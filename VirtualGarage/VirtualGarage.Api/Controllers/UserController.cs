@@ -7,7 +7,7 @@ using VirtualGarage.Contracts;
 namespace VirtualGarage.Api.Controllers
 {
     [ApiController]
-    [Route("api/user")]
+    [Route("api/users")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -17,8 +17,8 @@ namespace VirtualGarage.Api.Controllers
             _userService = userService;
         }
 
-        [HttpGet("{id}")]
-        [Authorize]
+        [HttpGet("{id:guid}")]
+        // [Authorize]
         public async Task<IActionResult> GetUserByIdAsync([FromRoute] Guid id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -33,7 +33,11 @@ namespace VirtualGarage.Api.Controllers
         public async Task<IActionResult> CreateUserAsync([FromBody] UserRequestContract userRequestContract)
         {
             var createdUser = await _userService.CreateUserAsync(userRequestContract);
-            return new CreatedAtActionResult(nameof(GetUserByIdAsync), "User", new { id = createdUser.Id }, createdUser);
+            // return CreatedAtAction(nameof(GetUserByIdAsync),  // action name
+            //                         new { id = createdUser.Id }, // route values
+            //                         createdUser                 // body
+            //                         );
+            return new OkObjectResult(createdUser);
         }
     }
 }

@@ -1,7 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Serilog;
+using VirtualGarage.Domain.Services;
+using VirtualGarage.Domain.Services.Interfaces;
+using VirtualGarage.Persistence;
 using VirtualGarage.Persistence.DbContexts;
+using VirtualGarage.Persistence.Interfaces;
 
 namespace VirtualGarage.Api
 {
@@ -15,12 +19,10 @@ namespace VirtualGarage.Api
             string? connectionString = builder.Configuration.GetConnectionString("VirtualGarage");
 
             builder.Services.AddDbContext<VirtualGarageDbContext>(options =>
-                options.UseMySql(
-                    connectionString,
-                    ServerVersion.AutoDetect(connectionString)
-                )
+                options.UseSqlServer(connectionString)
             );
 
+            Console.WriteLine($"Connection String: {connectionString}");
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -30,6 +32,10 @@ namespace VirtualGarage.Api
             builder.Host.UseSerilog((context, configuration) =>
             configuration.ReadFrom.Configuration(context.Configuration));
 
+            System.Console.WriteLine("SeriLog configured");
+
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             var app = builder.Build();
 
@@ -37,13 +43,21 @@ namespace VirtualGarage.Api
 
             app.UseHttpsRedirection();
 
+            System.Console.WriteLine("HTTPS Redirection configured");
+
             app.UseAuthorization();
+
+            System.Console.WriteLine("Authorization configured");
 
             app.UseSerilogRequestLogging();
 
             app.MapControllers();
 
+            System.Console.WriteLine("Controllers mapped");
+
             app.Run();
+
+            System.Console.WriteLine("Application shutdown");
         }
     }
 }
