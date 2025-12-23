@@ -20,13 +20,13 @@ namespace VirtualGarage.Persistence
         public async Task <Vehicle?> GetVehicleByIdAsync(Guid id)
         {
             return await dbContext.Vehicles
-                .Include(v => v.ServiceRecords)
+                // .Include(v => v.ServiceRecords)
                 .FirstOrDefaultAsync(v => v.Id == id);
         }
         public async Task <List<Entities.Vehicle>> GetAllVehiclesAsync()
         {
             return await dbContext.Vehicles
-                .Include(v => v.ServiceRecords)
+                // .Include(v => v.ServiceRecords)
                 .ToListAsync();
         }
         public Task UpdateVehicleAsync(Entities.Vehicle vehicle)

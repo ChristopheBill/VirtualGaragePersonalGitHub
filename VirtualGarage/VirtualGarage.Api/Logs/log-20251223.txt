@@ -3,3 +3,6 @@
 2025-12-23 19:59:59.359 +01:00 [WRN] No store type was specified for the decimal property 'Cost' on entity type 'ServiceRecord'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
 2025-12-23 20:00:00.717 +01:00 [INF] HTTP GET /api/users/8052339f-9b0c-40dc-6bbc-08de40ec8101 responded 200 in 2320.0380 ms
 2025-12-23 20:00:07.740 +01:00 [INF] HTTP POST /api/vehicles responded 415 in 45.7310 ms
+2025-12-23 20:31:33.123 +01:00 [WRN] Failed to determine the https port for redirect.
+2025-12-23 20:31:33.311 +01:00 [INF] HTTP POST /api/vehicles responded 415 in 150.3240 ms
+2025-12-23 20:31:42.394 +01:00 [INF] HTTP POST /api/vehicles responded 415 in 7.7661 ms

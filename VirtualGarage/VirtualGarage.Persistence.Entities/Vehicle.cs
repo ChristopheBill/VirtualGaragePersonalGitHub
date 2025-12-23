@@ -6,10 +6,10 @@ public class Vehicle
 {
     public Guid Id { get; set; }
     [MaxLength(50)]
-    public Guid UserId { get; set; }
+    // public Guid UserId { get; set; }
     public required string Brand { get; set; }
     [MaxLength(50)]
     public required string Model { get; set; }
     public DateTime ManufactureDate { get; set; }
-    public List<ServiceRecord>? ServiceRecords { get; set; }
+    // public List<ServiceRecord>? ServiceRecords { get; set; }
 }
