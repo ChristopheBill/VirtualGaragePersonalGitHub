@@ -9,6 +9,7 @@ internal static class VehicleMapperExtension
         return new Persistence.Entities.Vehicle
         {
             Id = Guid.NewGuid(),
+            UserId = vehicleContract.OwnerId,
             Brand = vehicleContract.Make,
             Model = vehicleContract.Model,
             ManufactureDate = vehicleContract.Year,

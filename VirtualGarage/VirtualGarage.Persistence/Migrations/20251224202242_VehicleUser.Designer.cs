@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VirtualGarage.Persistence.DbContexts;
 
@@ -11,9 +12,11 @@ using VirtualGarage.Persistence.DbContexts;
 namespace VirtualGarage.Persistence.Migrations
 {
     [DbContext(typeof(VirtualGarageDbContext))]
-    partial class VirtualGarageDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251224202242_VehicleUser")]
+    partial class VehicleUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

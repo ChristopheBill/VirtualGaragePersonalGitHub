@@ -7,6 +7,8 @@ namespace VirtualGarage.Api.Contracts
 {
     public class VehicleRequestContract
     {
+        [Required]
+        public required Guid OwnerId { get; set; }
         [Required, MaxLength(50)]
         public required string Make { get; set; }
         [Required, MaxLength(50)]
