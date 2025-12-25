@@ -69,5 +69,21 @@ namespace VirtualGarage.Api.Controllers
             var vehicles = await _vehicleService.GetVehiclesForUserAsync(userId);
             return Ok(vehicles);
         }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateVehicle(
+         Guid id,
+         [FromBody] VehicleRequestContract contract)
+        {
+           var updated = await _vehicleService.UpdateVehicleAsync(id, contract);
+           return Ok(updated);
+      }   
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteVehicle(Guid id)
+        {
+            await _vehicleService.DeleteVehicleAsync(id);
+            return NoContent();
+        }
     }
 }

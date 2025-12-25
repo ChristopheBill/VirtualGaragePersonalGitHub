@@ -26,9 +26,10 @@ namespace VirtualGarage.Domain.Services
             var vehicles = await vehicleRepository.GetAllVehiclesAsync();
             return vehicles;
         }
-        public async Task UpdateVehicleAsync(Vehicle vehicle)
+        public async Task<Vehicle> UpdateVehicleAsync(Guid id, VehicleRequestContract vehicle)
         {
-            await vehicleRepository.UpdateVehicleAsync(vehicle);
+            await vehicleRepository.UpdateVehicleAsync(id, vehicle.ToEntity());
+            return await GetVehicleAsync(id);
         }
         public async Task DeleteVehicleAsync(Guid vehicleId)
         {

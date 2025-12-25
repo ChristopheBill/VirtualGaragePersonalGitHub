@@ -11,7 +11,7 @@ namespace VirtualGarage.Domain.Services.Interfaces
         Task<Vehicle?> GetVehicleAsync(Guid vehicleId);
         Task<Vehicle> CreateVehicleAsync(VehicleRequestContract vehicle);
         Task<List<Vehicle>> GetAllVehiclesAsync();
-        Task UpdateVehicleAsync(Vehicle vehicle);
+        Task <Vehicle> UpdateVehicleAsync(Guid id, VehicleRequestContract vehicle);
         Task DeleteVehicleAsync(Guid vehicleId);
         Task<List<Vehicle>> GetVehiclesForUserAsync(Guid userId);
     }

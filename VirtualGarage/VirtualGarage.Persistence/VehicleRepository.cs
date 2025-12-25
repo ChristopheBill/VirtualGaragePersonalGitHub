@@ -29,8 +29,9 @@ namespace VirtualGarage.Persistence
                 // .Include(v => v.ServiceRecords)
                 .ToListAsync();
         }
-        public Task UpdateVehicleAsync(Entities.Vehicle vehicle)
+        public Task UpdateVehicleAsync(Guid id, Entities.Vehicle vehicle)
         {
+            vehicle.Id = id;
             dbContext.Vehicles.Update(vehicle);
             return dbContext.SaveChangesAsync();
         }

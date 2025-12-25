@@ -355,3 +355,6 @@ Error Number:207,State:1,Class:16
 2025-12-25 18:05:45.271 +01:00 [WRN] Failed to determine the https port for redirect.
 2025-12-25 18:05:46.436 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1118.6299 ms
 2025-12-25 18:05:46.436 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1118.6177 ms
+2025-12-25 21:08:52.208 +01:00 [WRN] Failed to determine the https port for redirect.
+2025-12-25 21:08:53.663 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1410.4040 ms
+2025-12-25 21:08:53.687 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 21.8638 ms
