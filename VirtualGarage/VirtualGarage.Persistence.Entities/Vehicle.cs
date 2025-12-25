@@ -6,6 +6,7 @@ public class Vehicle
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
+    public User? User { get; set; } // navigation property
     [MaxLength(50)]
     public required string Brand { get; set; }
     [MaxLength(50)]

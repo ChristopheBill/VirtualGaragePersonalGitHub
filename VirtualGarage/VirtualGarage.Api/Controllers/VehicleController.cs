@@ -3,17 +3,32 @@ using Microsoft.AspNetCore.Mvc;
 using VirtualGarage.Api.Contracts;
 using VirtualGarage.Domain.Services.Interfaces;
 
-using System.Security.Claims;
-
-public static class ClaimsPrincipalExtensions
+public static class HttpContextExtensions
 {
-    // Extension method to get UserId from ClaimsPrincipal - before using IdentityServer
-    public static Guid GetUserId(this ClaimsPrincipal user)
+    //temp method to get userId from header for testing before IdentityServer is setup
+    public static Guid GetDebugUserId(this HttpContext context)
     {
-        var id = user.FindFirstValue(ClaimTypes.NameIdentifier);
-        return Guid.Parse(id!);
+        var userIdHeader = context.Request.Headers["X-Debug-UserId"].ToString();
+        if (string.IsNullOrEmpty(userIdHeader) || !Guid.TryParse(userIdHeader, out var userId))
+        {
+            throw new InvalidOperationException("X-Debug-UserId header is missing or invalid.");
+        }
+        return userId;
     }
 }
+
+
+// using System.Security.Claims;
+
+// public static class ClaimsPrincipalExtensions
+// {
+//     // Extension method to get UserId from ClaimsPrincipal - before using IdentityServer
+//     public static Guid GetUserId(this ClaimsPrincipal user)
+//     {
+//         var id = user.FindFirstValue(ClaimTypes.NameIdentifier);
+//         return Guid.Parse(id!);
+//     }
+// }
 
 namespace VirtualGarage.Api.Controllers
 {
@@ -46,11 +61,11 @@ namespace VirtualGarage.Api.Controllers
             return new OkObjectResult(createdVehicle);
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet("mine")]
         public async Task<IActionResult> GetMyVehicles()
         {
-            var userId = User.GetUserId();
+            var userId = HttpContext.GetDebugUserId();
             var vehicles = await _vehicleService.GetVehiclesForUserAsync(userId);
             return Ok(vehicles);
         }

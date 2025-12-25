@@ -31,13 +31,15 @@ namespace VirtualGarage.Persistence.DbContexts
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.Brand).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.Model).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.ManufactureDate).IsRequired();
-                entity.HasOne<User>()
-                      .WithMany()
-                      .HasForeignKey(e => e.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(v => v.User)
+                    .WithMany(u => u.Vehicles)
+                    .HasForeignKey(v => v.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }
