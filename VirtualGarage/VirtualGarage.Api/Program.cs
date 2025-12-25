@@ -39,9 +39,20 @@ namespace VirtualGarage.Api
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("DevCors", policy =>
+                {
+                    policy
+                        .WithOrigins("http://localhost:5173")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });         
+            });
+
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            app.UseCors("DevCors");
 
             app.UseHttpsRedirection();
 
