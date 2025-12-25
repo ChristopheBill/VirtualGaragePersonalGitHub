@@ -34,5 +34,10 @@ namespace VirtualGarage.Domain.Services
         {
             await vehicleRepository.DeleteVehicleAsync(vehicleId);
         }
+        public async Task<List<Vehicle>> GetVehiclesForUserAsync(Guid userId)
+        {
+            var vehicles = await vehicleRepository.GetVehiclesByUserIdAsync(userId);
+            return vehicles;
+        }
     }
 }

@@ -43,5 +43,11 @@ namespace VirtualGarage.Persistence
             }
             return dbContext.SaveChangesAsync();
         }
+        public async Task<List<Entities.Vehicle>> GetVehiclesByUserIdAsync(Guid userId)
+        {
+            return await dbContext.Vehicles
+                .Where(v => v.UserId == userId)
+                .ToListAsync();
+        }
     }
 }

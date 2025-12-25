@@ -14,5 +14,6 @@ namespace VirtualGarage.Persistence.Interfaces
         public Task<List<Vehicle>> GetAllVehiclesAsync();
         public Task UpdateVehicleAsync(Vehicle vehicle);
         public Task DeleteVehicleAsync(Guid id);
+        public Task<List<Vehicle>> GetVehiclesByUserIdAsync(Guid userId);
     }
 }
