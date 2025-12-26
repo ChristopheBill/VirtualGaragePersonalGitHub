@@ -29,11 +29,20 @@ namespace VirtualGarage.Persistence
                 // .Include(v => v.ServiceRecords)
                 .ToListAsync();
         }
-        public Task UpdateVehicleAsync(Guid id, Entities.Vehicle vehicle)
+        public async Task<Vehicle> UpdateVehicleAsync(Guid id, Vehicle updatedData)
         {
-            vehicle.Id = id;
-            dbContext.Vehicles.Update(vehicle);
-            return dbContext.SaveChangesAsync();
+            var existing = await dbContext.Vehicles
+                .FirstOrDefaultAsync(v => v.Id == id);
+
+            if (existing == null)
+                throw new KeyNotFoundException("Vehicle not found");
+
+            existing.Brand = updatedData.Brand;
+            existing.Model = updatedData.Model;
+            existing.ManufactureDate = updatedData.ManufactureDate;
+
+            await dbContext.SaveChangesAsync();
+            return existing;
         }
         public Task DeleteVehicleAsync(Guid id)
         {

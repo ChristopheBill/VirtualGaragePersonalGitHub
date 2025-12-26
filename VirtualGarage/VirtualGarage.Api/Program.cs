@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Serilog;
@@ -49,6 +50,14 @@ namespace VirtualGarage.Api
                         .AllowAnyMethod();
                 });         
             });
+
+            //PascalCase JSON Serialization
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                  options.JsonSerializerOptions.PropertyNamingPolicy =
+                  JsonNamingPolicy.CamelCase;
+              });
 
             var app = builder.Build();
 
