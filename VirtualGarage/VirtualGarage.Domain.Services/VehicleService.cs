@@ -16,10 +16,13 @@ namespace VirtualGarage.Domain.Services
             var vehicle = await vehicleRepository.GetVehicleByIdAsync(vehicleId);
             return vehicle;
         }
-        public async Task<Vehicle> CreateVehicleAsync(VehicleRequestContract vehicle)
+        public async Task<Vehicle> CreateVehicleAsync(VehicleRequestContract vehicle, Guid currentUserId)
         {
-            var createdVehicle = await vehicleRepository.CreateVehicleAsync(vehicle.ToEntity());
-            return createdVehicle;
+            var entity = vehicle.ToEntity();
+            entity.UserId = currentUserId;
+            Console.WriteLine($"[DEBUG] Creating vehicle for user {currentUserId}");
+            await vehicleRepository.CreateVehicleAsync(entity);
+            return entity;
         }
         public async Task<List<Vehicle>> GetAllVehiclesAsync()
         {

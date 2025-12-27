@@ -56,9 +56,9 @@ namespace VirtualGarage.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateVehicleAsync([FromBody] VehicleRequestContract vehicle)
         {
-            var createdVehicle = await _vehicleService.CreateVehicleAsync(vehicle);
-            // return new CreatedAtActionResult(nameof(GetCarByIdAsync), "Vehicle", new { id = createdVehicle.Id }, createdVehicle);
-            return new OkObjectResult(createdVehicle);
+            var userId = HttpContext.GetDebugUserId();
+            var created = await _vehicleService.CreateVehicleAsync(vehicle, userId);
+            return Ok(created);
         }
 
         // [Authorize]
