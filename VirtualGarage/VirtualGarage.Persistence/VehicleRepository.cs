@@ -20,19 +20,29 @@ namespace VirtualGarage.Persistence
         public async Task <Vehicle?> GetVehicleByIdAsync(Guid id)
         {
             return await dbContext.Vehicles
-                .Include(v => v.ServiceRecords)
+                // .Include(v => v.ServiceRecords)
                 .FirstOrDefaultAsync(v => v.Id == id);
         }
         public async Task <List<Entities.Vehicle>> GetAllVehiclesAsync()
         {
             return await dbContext.Vehicles
-                .Include(v => v.ServiceRecords)
+                // .Include(v => v.ServiceRecords)
                 .ToListAsync();
         }
-        public Task UpdateVehicleAsync(Entities.Vehicle vehicle)
+        public async Task<Vehicle> UpdateVehicleAsync(Guid id, Vehicle updatedData)
         {
-            dbContext.Vehicles.Update(vehicle);
-            return dbContext.SaveChangesAsync();
+            var existing = await dbContext.Vehicles
+                .FirstOrDefaultAsync(v => v.Id == id);
+
+            if (existing == null)
+                throw new KeyNotFoundException("Vehicle not found");
+
+            existing.Brand = updatedData.Brand;
+            existing.Model = updatedData.Model;
+            existing.ManufactureDate = updatedData.ManufactureDate;
+
+            await dbContext.SaveChangesAsync();
+            return existing;
         }
         public Task DeleteVehicleAsync(Guid id)
         {
@@ -42,6 +52,12 @@ namespace VirtualGarage.Persistence
                 dbContext.Vehicles.Remove(vehicle);
             }
             return dbContext.SaveChangesAsync();
+        }
+        public async Task<List<Entities.Vehicle>> GetVehiclesByUserIdAsync(Guid userId)
+        {
+            return await dbContext.Vehicles
+                .Where(v => v.UserId == userId)
+                .ToListAsync();
         }
     }
 }

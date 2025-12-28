@@ -16,23 +16,32 @@ namespace VirtualGarage.Domain.Services
             var vehicle = await vehicleRepository.GetVehicleByIdAsync(vehicleId);
             return vehicle;
         }
-        public async Task<Vehicle> CreateVehicleAsync(VehicleRequestContract vehicle)
+        public async Task<Vehicle> CreateVehicleAsync(VehicleRequestContract vehicle, Guid currentUserId)
         {
-            var createdVehicle = await vehicleRepository.CreateVehicleAsync(vehicle.ToEntity());
-            return createdVehicle;
+            var entity = vehicle.ToEntity();
+            entity.UserId = currentUserId;
+            Console.WriteLine($"[DEBUG] Creating vehicle for user {currentUserId}");
+            await vehicleRepository.CreateVehicleAsync(entity);
+            return entity;
         }
         public async Task<List<Vehicle>> GetAllVehiclesAsync()
         {
             var vehicles = await vehicleRepository.GetAllVehiclesAsync();
             return vehicles;
         }
-        public async Task UpdateVehicleAsync(Vehicle vehicle)
+        public async Task<Vehicle> UpdateVehicleAsync(Guid id, VehicleRequestContract vehicle)
         {
-            await vehicleRepository.UpdateVehicleAsync(vehicle);
+            await vehicleRepository.UpdateVehicleAsync(id, vehicle.ToEntity());
+            return await GetVehicleAsync(id);
         }
         public async Task DeleteVehicleAsync(Guid vehicleId)
         {
             await vehicleRepository.DeleteVehicleAsync(vehicleId);
+        }
+        public async Task<List<Vehicle>> GetVehiclesForUserAsync(Guid userId)
+        {
+            var vehicles = await vehicleRepository.GetVehiclesByUserIdAsync(userId);
+            return vehicles;
         }
     }
 }

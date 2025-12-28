@@ -7,11 +7,13 @@ namespace VirtualGarage.Api.Contracts
 {
     public class VehicleRequestContract
     {
-        [Required, MaxLength(50)]
-        public required string Make { get; set; }
-        [Required, MaxLength(50)]
-        public required string Model { get; set; }
+        [Required, MaxLength(100)]
+        public string Brand { get; set; } = null!;
+
+        [Required, MaxLength(100)]
+        public string Model { get; set; } = null!;
+
         [Required]
-        public required DateTime Year { get; set; }
-    }
+        public DateTime ManufactureDate { get; set; }
+}
 }
