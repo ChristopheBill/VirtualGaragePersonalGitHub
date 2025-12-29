@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.IdentityServe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.Shared", "VirtualGarage.Shared\VirtualGarage.Shared.csproj", "{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.VehicleSpecs.Api", "VirtualGarage.VehicleSpecs.Api\VirtualGarage.VehicleSpecs.Api.csproj", "{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -130,6 +132,18 @@ Global
 		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Release|x64.Build.0 = Release|Any CPU
 		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Release|x86.ActiveCfg = Release|Any CPU
 		{AFF9BAFB-8925-40D2-BCA9-F4BB16460FE6}.Release|x86.Build.0 = Release|Any CPU
+		{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}.Debug|x64.Build.0 = Debug|Any CPU
+		{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}.Debug|x86.Build.0 = Debug|Any CPU
+		{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}.Release|x64.ActiveCfg = Release|Any CPU
+		{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}.Release|x64.Build.0 = Release|Any CPU
+		{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}.Release|x86.ActiveCfg = Release|Any CPU
+		{050BE3F4-35A7-42BB-BB73-670E59BBA9B7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
