@@ -13,5 +13,7 @@ namespace VirtualGarage.VehicleSpecs.Api.Controllers
             // Placeholder implementation
             return Ok(new { VehicleId = vehicleId, Specifications = "Sample Specifications" });
         }
+
+        
     }
 }
