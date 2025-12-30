@@ -1,17 +1,21 @@
 ﻿using System.Net.Http.Headers;
+using VirtualGarage.VehicleSpecs.Api.Contracts.RequestContracts;
+using VirtualGarage.VehicleSpecs.Api.Contracts.ResponseContracts;
 using VirtualGarage.VehicleSpecs.Domain.Services.Interfaces;
 using VirtualGarage.VehicleSpecs.Domain.Services.Mapping;
 using VirtualGarage.VehicleSpecs.Persistence.Entities;
+using VirtualGarage.VehicleSpecs.Infrastructure.Interfaces;
 
 namespace VirtualGarage.VehicleSpecs.Domain.Services;
 
 public class SpecsService : ISpecsService
 {
-    private readonly HttpClient _httpClient;
 
-    public SpecsService(HttpClient httpClient)
+    private readonly ICarApiClient _carApi;
+
+    public SpecsService(ICarApiClient carApi)
     {
-        _httpClient = httpClient;
+        _carApi = carApi;
     }
 
     public async Task<CarSpecs> GetSpecsAsync(

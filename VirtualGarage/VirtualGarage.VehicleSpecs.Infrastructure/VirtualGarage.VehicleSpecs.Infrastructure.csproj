@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <Folder Include="CarApi\Contracts\" />
+    <Folder Include="CarApi\Mapping\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>

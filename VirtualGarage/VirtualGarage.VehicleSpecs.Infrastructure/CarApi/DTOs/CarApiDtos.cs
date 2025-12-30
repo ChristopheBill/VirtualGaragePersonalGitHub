@@ -2,9 +2,9 @@ using System;
 
 namespace VirtualGarage.VehicleSpecs.Infrastructure.DTOs;
 
-public class CarApiTrimResponse
+public sealed class CarApiTrimsResponse
 {
-    public List<CarApiTrim> Data { get; set; } = [];
+    public List<CarApiTrimDto> data { get; set; } = [];
 }
 
 public class CarApiTrim
@@ -16,4 +16,28 @@ public class CarApiTrim
     public string? Drive { get; set; }
     public int? Doors { get; set; }
     public int? Seats { get; set; }
+}
+public sealed class CarApiTrimDto
+{
+    public int id { get; set; }
+
+    public string make { get; set; } = default!;
+    public string model { get; set; } = default!;
+    public int year { get; set; }
+
+    public string? name { get; set; } // trim name
+
+    public CarApiEngineDto engine { get; set; } = default!;
+
+    public string? transmission { get; set; }
+    public string? drive { get; set; }
+
+    public int? doors { get; set; }
+    public int? seats { get; set; }
+}
+public sealed class CarApiEngineDto
+{
+    public string? type { get; set; }
+    public int? horsepower { get; set; }
+    public string? fuel { get; set; }
 }

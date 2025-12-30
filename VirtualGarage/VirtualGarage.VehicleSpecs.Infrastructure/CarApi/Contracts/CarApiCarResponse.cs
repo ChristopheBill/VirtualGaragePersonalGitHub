@@ -3,16 +3,16 @@ using System;
 namespace VirtualGarage.VehicleSpecs.Infrastructure.CarApi.Contracts;
 
 public sealed record CarApiCarResponse(
-    string make,
-    string model,
-    int year,
-    CarApiEngine engine
+    string ake,
+    string Model,
+    int Year,
+    CarApiEngine Engine
     // ,
     // CarApiDimensions dimensions
 );
 
 public sealed record CarApiEngine(
-    string type,
-    int horsepower,
-    string fuel
+    string Type,
+    int Horsepower,
+    string Fuel
 );
