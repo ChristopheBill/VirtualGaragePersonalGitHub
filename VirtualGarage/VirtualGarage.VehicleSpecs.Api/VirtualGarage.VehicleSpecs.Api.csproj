@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Domain.Services\VirtualGarage.VehicleSpecs.Domain.Services.csproj" />
+    <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Persistence\VirtualGarage.VehicleSpecs.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
