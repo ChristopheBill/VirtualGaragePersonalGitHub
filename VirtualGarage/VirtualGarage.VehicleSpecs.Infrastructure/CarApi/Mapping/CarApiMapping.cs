@@ -32,6 +32,7 @@ public static class CarApiMapping
             ),
             Transmission: trim.transmission,
             Doors: trim.doors,
+            Seats: trim.seats,
             DriveType: trim.drive
         );
     }

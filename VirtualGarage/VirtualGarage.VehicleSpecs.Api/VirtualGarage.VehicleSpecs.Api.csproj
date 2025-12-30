@@ -15,10 +15,4 @@
     <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Persistence\VirtualGarage.VehicleSpecs.Persistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\" />
-    <Folder Include="Contracts\RequestContracts\" />
-    <Folder Include="Contracts\ResponseContracts\" />
-  </ItemGroup>
-
 </Project>

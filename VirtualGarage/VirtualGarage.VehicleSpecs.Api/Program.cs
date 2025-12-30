@@ -1,5 +1,7 @@
 using VirtualGarage.VehicleSpecs.Domain.Services;
 using VirtualGarage.VehicleSpecs.Domain.Services.Interfaces;
+using VirtualGarage.VehicleSpecs.Infrastructure.CarApi;
+using VirtualGarage.VehicleSpecs.Infrastructure.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddHttpClient<SpecsService>();
 builder.Services.AddScoped<ISpecsService, SpecsService>();
+builder.Services.AddScoped<ICarApiClient, CarApiClient>();
+
 
 var app = builder.Build();
 

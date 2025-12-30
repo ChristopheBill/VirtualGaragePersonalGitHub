@@ -38,4 +38,28 @@ public sealed class SpecsService : ISpecsService
             DriveType: car.DriveType
         );
     }
+
+    public async Task<CarSpecsResponse> GetSpecsAsync(
+        string brand,
+        string model,
+        int year)
+    {
+        var car = await _carApi.GetCarAsync(
+            brand,
+            model,
+            year);
+
+        return new CarSpecsResponse(
+            Make: car.Make,
+            Model: car.Model,
+            Year: car.Year,
+            Engine: car.Engine.Type,
+            HorsePower: car.Engine.Horsepower,
+            FuelType: car.Engine.Fuel,
+            Transmission: car.Transmission,
+            Doors: car.Doors,
+            Seats: car.Seats,
+            DriveType: car.DriveType
+        );
+    }
 }

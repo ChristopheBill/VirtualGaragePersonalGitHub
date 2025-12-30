@@ -9,6 +9,7 @@ public sealed record CarApiCarResponse(
     CarApiEngine Engine,
     string? Transmission,
     int? Doors,
+    int? Seats,
     string? DriveType
 );
 
