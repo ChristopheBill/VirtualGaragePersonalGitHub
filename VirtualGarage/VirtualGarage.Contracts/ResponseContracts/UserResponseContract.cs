@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VirtualGarage.Api.Contracts
 {
-    public class UserResponseContract
+    public sealed record UserResponseContract
     {
         public Guid Id { get; set; }
         public required string FirstName { get; set; }

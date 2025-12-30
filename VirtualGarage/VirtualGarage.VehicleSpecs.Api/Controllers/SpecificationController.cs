@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VirtualGarage.VehicleSpecs.Api.Contracts.RequestContracts;
+using VirtualGarage.VehicleSpecs.Api.Contracts.ResponseContracts;
 using VirtualGarage.VehicleSpecs.Domain.Services;
 using VirtualGarage.VehicleSpecs.Domain.Services.Interfaces;
 
@@ -25,5 +27,13 @@ namespace VirtualGarage.VehicleSpecs.Api.Controllers
             var specs = await _specsService.GetSpecsAsync(brand, model, year);
         return Ok(specs);
     }
+
+    [HttpPost("lookup")]
+    public async Task<ActionResult<CarSpecsResponse>> Lookup(
+        CarSpecsLookupRequest request)
+    {
+        var specs = await _specsService.LookupAsync(request);
+        return Ok(specs);
     }
+}
 }

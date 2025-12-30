@@ -35,4 +35,24 @@ public class SpecsService : ISpecsService
         // TODO: deserialize and choose trim
         return CarSpecsMappingExtension.MapToCarSpecs(json);
     }
+
+    public async Task<CarSpecsResponse> LookupAsync(CarSpecsLookupRequest request)
+    {
+    var car = await _carApi.GetCarAsync(
+        request.Make,
+        request.Model,
+        request.Year);
+
+    return new CarSpecsResponse(
+        Make: car.make,
+        Model: car.model,
+        Year: car.year,
+        Engine: car.engine.type,
+        HorsePower: car.engine.horsepower,
+        FuelType: car.engine.fuel,
+        Transmission: null,
+        Doors: null,
+        Seats: null,
+        DriveType: null
+    );
 }

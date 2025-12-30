@@ -5,7 +5,7 @@ using System.Text;
 
 namespace VirtualGarage.Api.Contracts
 {
-    public class VehicleRequestContract
+    public sealed record VehicleRequestContract
     {
         [Required, MaxLength(100)]
         public string Brand { get; set; } = null!;
