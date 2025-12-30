@@ -9,11 +9,11 @@ namespace VirtualGarage.VehicleSpecs.Api.Controllers
     [ApiController]
     public class SpecificationController : ControllerBase
     {
-        private readonly ISpecService _specService;
+        private readonly ISpecsService _specsService;
 
-        public SpecificationController(ISpecService specService)
+        public SpecificationController(ISpecsService specsService)
         {
-            _specService = specService;
+            _specsService = specsService;
         }
 
         [HttpGet]
@@ -22,7 +22,7 @@ namespace VirtualGarage.VehicleSpecs.Api.Controllers
             [FromQuery] string model,
             [FromQuery] int year)
         {
-            var specs = await _specService.GetSpecsAsync(brand, model, year);
+            var specs = await _specsService.GetSpecsAsync(brand, model, year);
         return Ok(specs);
     }
     }

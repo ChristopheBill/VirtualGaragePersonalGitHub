@@ -1,3 +1,6 @@
+using VirtualGarage.VehicleSpecs.Domain.Services;
+using VirtualGarage.VehicleSpecs.Domain.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddHttpClient<SpecsService>();
+builder.Services.AddScoped<ISpecsService, SpecsService>();
 
 var app = builder.Build();
 

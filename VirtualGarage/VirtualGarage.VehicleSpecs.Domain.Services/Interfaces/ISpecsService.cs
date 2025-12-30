@@ -3,7 +3,7 @@ using VirtualGarage.VehicleSpecs.Persistence.Entities;
 
 namespace VirtualGarage.VehicleSpecs.Domain.Services.Interfaces;
 
-public interface ISpecService
+public interface ISpecsService
 {
-    Task<Specs> GetSpecsAsync(string brand, string model, int year);
+    Task<CarSpecs> GetSpecsAsync(string brand, string model, int year);
 }
