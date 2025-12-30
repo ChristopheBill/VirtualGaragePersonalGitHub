@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Domain.Services\VirtualGarage.VehicleSpecs.Domain.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
