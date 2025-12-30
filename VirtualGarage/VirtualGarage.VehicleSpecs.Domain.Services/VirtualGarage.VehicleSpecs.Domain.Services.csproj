@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Api\VirtualGarage.VehicleSpecs.Api.csproj" />
-    <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Infrastructure\VirtualGarage.VehicleSpecs.Infrastructure.csproj" />
     <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Persistence\VirtualGarage.VehicleSpecs.Persistence.csproj" />
   </ItemGroup>
 
