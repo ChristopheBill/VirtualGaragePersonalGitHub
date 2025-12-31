@@ -46,20 +46,42 @@ public record CarApiCollection(
 );
 
 // Detailed info for a single trim
-public record CarApiTrimDetailResponse(
-    string Make,
-    string Model,
-    int Year,
-    CarApiEngineDto? Engine,
-    string? Transmission,
-    int? Doors,
-    int? Seats,
-    string? DriveType
-);
 
-// Engine info inside trim details
-public record CarApiEngineDto(
-    string? Type,
-    int? Horsepower,
-    string? Fuel
-);
+public record CarApiTrimDetailResponse
+{
+    public int Id { get; set; }
+    public string Make { get; set; } = null!;
+    public string Model { get; set; } = null!;
+    public int Year { get; set; }
+
+    public List<CarApiEngineDto>? Engines { get; set; }
+    public List<CarApiBodyDto>? Bodies { get; set; }
+    public List<CarApiTransmissionDto>? Transmissions { get; set; }
+    public List<CarApiDriveTypeDto>? Drive_Types { get; set; }
+
+    // Optional: you can add colors, mileages, etc. later
+}
+
+public class CarApiEngineDto
+{
+    public string? Engine_Type { get; set; }
+    public string? Fuel_Type { get; set; }
+    public int? Horsepower_Hp { get; set; }
+}
+
+public class CarApiBodyDto
+{
+    public int? Doors { get; set; }
+    public int? Seats { get; set; }
+}
+
+public class CarApiTransmissionDto
+{
+    public string? Description { get; set; }
+}
+
+public class CarApiDriveTypeDto
+{
+    public string? Description { get; set; }
+}
+

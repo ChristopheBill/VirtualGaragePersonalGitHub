@@ -26,21 +26,26 @@ public static class CarApiMapping
     {
         if (trim == null) throw new ArgumentNullException(nameof(trim));
 
+        var engine = trim.Engines?.FirstOrDefault();
+        var body = trim.Bodies?.FirstOrDefault();
+        var transmission = trim.Transmissions?.FirstOrDefault();
+        var drive = trim.Drive_Types?.FirstOrDefault();
+
         return new CarApiCarResponse(
             Brand: trim.Make,
             Model: trim.Model,
             Year: trim.Year,
-            Engine: trim.Engine != null 
+            Engine: engine != null
                 ? new CarApiEngine(
-                    Type: trim.Engine.Type,
-                    Horsepower: trim.Engine.Horsepower,
-                    Fuel: trim.Engine.Fuel
-                )
+                    Type: engine.Engine_Type,
+                    Horsepower: engine.Horsepower_Hp,
+                    Fuel: engine.Fuel_Type
+                  )
                 : null,
-            Transmission: trim.Transmission,
-            Doors: trim.Doors,
-            Seats: trim.Seats,
-            DriveType: trim.DriveType
+            Transmission: transmission?.Description,
+            Doors: body?.Doors,
+            Seats: body?.Seats,
+            DriveType: drive?.Description
         );
-    }
+}
 }
