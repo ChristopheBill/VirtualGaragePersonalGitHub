@@ -2,42 +2,64 @@ using System;
 
 namespace VirtualGarage.VehicleSpecs.Infrastructure.DTOs;
 
-public sealed class CarApiTrimsResponse
+public sealed class CarApiResponse
 {
-    public List<CarApiTrimDto> data { get; set; } = [];
+    public CarApiCollection Collection { get; set; } = null!;
+    public List<CarApiTrimDto> Data { get; set; } = new();
 }
 
-public class CarApiTrim
-{
-    public string? Name { get; set; }
-    public int? Horsepower { get; set; }
-    public int? Torque { get; set; }
-    public string? Transmission { get; set; }
-    public string? Drive { get; set; }
-    public int? Doors { get; set; }
-    public int? Seats { get; set; }
-}
-public sealed class CarApiTrimDto
-{
-    public int id { get; set; }
+// DTO representing a car returned by CarAPI
 
-    public string make { get; set; } = default!;
-    public string model { get; set; } = default!;
-    public int year { get; set; }
+public record CarApiTrimDto(
+    int Id,
+    int? MakeId,
+    int? ModelId,
+    int? SubmodelId,
+    int Year,
+    string Make,
+    string Model,
+    string? Series,
+    string? Submodel,
+    string? Trim,
+    string? Description,
+    decimal? MsRp,
+    decimal? Invoice,
+    string? Created,
+    string? Modified
+);
 
-    public string? name { get; set; } // trim name
+// The response for trims list endpoint
+public record CarApiTrimsListResponse(
+    CarApiCollection? Collection,
+    List<CarApiTrimDto>? Data
+);
 
-    public CarApiEngineDto engine { get; set; } = default!;
+public record CarApiCollection(
+    string? Url,
+    int Count,
+    int Pages,
+    int Total,
+    string? Next,
+    string? Prev,
+    string? First,
+    string? Last
+);
 
-    public string? transmission { get; set; }
-    public string? drive { get; set; }
+// Detailed info for a single trim
+public record CarApiTrimDetailResponse(
+    string Make,
+    string Model,
+    int Year,
+    CarApiEngineDto? Engine,
+    string? Transmission,
+    int? Doors,
+    int? Seats,
+    string? DriveType
+);
 
-    public int? doors { get; set; }
-    public int? seats { get; set; }
-}
-public sealed class CarApiEngineDto
-{
-    public string? type { get; set; }
-    public int? horsepower { get; set; }
-    public string? fuel { get; set; }
-}
+// Engine info inside trim details
+public record CarApiEngineDto(
+    string? Type,
+    int? Horsepower,
+    string? Fuel
+);

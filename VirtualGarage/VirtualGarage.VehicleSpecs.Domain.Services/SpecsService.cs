@@ -21,17 +21,17 @@ public sealed class SpecsService : ISpecsService
         CarSpecsLookupRequest request)
     {
         var car = await _carApi.GetCarAsync(
-            request.Make,
+            request.Brand,
             request.Model,
             request.Year);
 
         return new CarSpecsResponse(
-            Make: car.Make,
+            Brand: car.Brand,
             Model: car.Model,
             Year: car.Year,
-            Engine: car.Engine.Type,
-            HorsePower: car.Engine.Horsepower,
-            FuelType: car.Engine.Fuel,
+            Engine: car.Engine?.Type,
+            HorsePower: car.Engine?.Horsepower,
+            FuelType: car.Engine?.Fuel,
             Transmission: car.Transmission,
             Doors: car.Doors,
             Seats: car.Seats,
@@ -50,12 +50,12 @@ public sealed class SpecsService : ISpecsService
             year);
 
         return new CarSpecsResponse(
-            Make: car.Make,
+            Brand: car.Brand,
             Model: car.Model,
             Year: car.Year,
-            Engine: car.Engine.Type,
-            HorsePower: car.Engine.Horsepower,
-            FuelType: car.Engine.Fuel,
+            Engine: car.Engine?.Type,
+            HorsePower: car.Engine?.Horsepower,
+            FuelType: car.Engine?.Fuel,
             Transmission: car.Transmission,
             Doors: car.Doors,
             Seats: car.Seats,

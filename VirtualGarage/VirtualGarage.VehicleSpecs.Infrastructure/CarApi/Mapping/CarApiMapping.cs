@@ -8,44 +8,39 @@ using VirtualGarage.VehicleSpecs.Infrastructure.DTOs;
 
 public static class CarApiMapping
 {
-    public static CarApiCarResponse Map(string json)
+    public static int PickTrimIdFromList(string json)
     {
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
+        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        var response = JsonSerializer.Deserialize<CarApiTrimsListResponse>(json, options)
+                       ?? throw new InvalidOperationException("Invalid CarAPI trims list response");
 
-        var response =
-            JsonSerializer.Deserialize<CarApiTrimsResponse>(json, options)
-            ?? throw new InvalidOperationException("Invalid CarAPI response");
+        if (response.Data == null || response.Data.Count == 0)
+            throw new InvalidOperationException("No trims found in list");
 
-        var trim = PickBestTrim(response.data);
-
-        return new CarApiCarResponse(
-            Make: trim.make,
-            Model: trim.model,
-            Year: trim.year,
-            Engine: new CarApiEngine(
-                Type: trim.engine?.type,
-                Horsepower: trim.engine?.horsepower,
-                Fuel: trim.engine?.fuel
-            ),
-            Transmission: trim.transmission,
-            Doors: trim.doors,
-            Seats: trim.seats,
-            DriveType: trim.drive
-        );
+        // Pick first trim (can improve later)
+        return response.Data.First().Id;
     }
 
-    private static CarApiTrimDto PickBestTrim(
-        List<CarApiTrimDto> trims)
+    // Step 2: Map from trim detail response to CarApiCarResponse
+    public static CarApiCarResponse MapTrimDetail(CarApiTrimDetailResponse trim)
     {
-        if (trims.Count == 0)
-            throw new InvalidOperationException("No trims found");
+        if (trim == null) throw new ArgumentNullException(nameof(trim));
 
-        // Simple rule for now (exam-friendly)
-        return trims
-            .OrderByDescending(t => t.engine?.horsepower ?? 0)
-            .First();
+        return new CarApiCarResponse(
+            Brand: trim.Make,
+            Model: trim.Model,
+            Year: trim.Year,
+            Engine: trim.Engine != null 
+                ? new CarApiEngine(
+                    Type: trim.Engine.Type,
+                    Horsepower: trim.Engine.Horsepower,
+                    Fuel: trim.Engine.Fuel
+                )
+                : null,
+            Transmission: trim.Transmission,
+            Doors: trim.Doors,
+            Seats: trim.Seats,
+            DriveType: trim.DriveType
+        );
     }
 }

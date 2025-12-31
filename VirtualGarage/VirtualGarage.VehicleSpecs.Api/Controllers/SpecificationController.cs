@@ -25,9 +25,12 @@ namespace VirtualGarage.VehicleSpecs.Api.Controllers
             [FromQuery] int year)
         {
             var specs = await _specsService.GetSpecsAsync(brand, model, year);
-        return Ok(specs);
-    }
-
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(specs);
+        }   
     [HttpPost("lookup")]
     public async Task<ActionResult<CarSpecsResponse>> LookupAsync(
         CarSpecsLookupRequest request)

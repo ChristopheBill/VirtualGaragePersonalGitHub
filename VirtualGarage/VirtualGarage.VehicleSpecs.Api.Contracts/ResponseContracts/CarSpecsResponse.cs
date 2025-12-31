@@ -3,7 +3,7 @@ using System;
 namespace VirtualGarage.VehicleSpecs.Api.Contracts.ResponseContracts;
 
 public sealed record CarSpecsResponse(
-    string Make,
+    string Brand,
     string Model,
     int Year,
 
