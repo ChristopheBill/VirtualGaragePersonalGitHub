@@ -2,7 +2,6 @@
 using VirtualGarage.VehicleSpecs.Api.Contracts.RequestContracts;
 using VirtualGarage.VehicleSpecs.Api.Contracts.ResponseContracts;
 using VirtualGarage.VehicleSpecs.Domain.Services.Interfaces;
-using VirtualGarage.VehicleSpecs.Domain.Services.Mapping;
 using VirtualGarage.VehicleSpecs.Persistence.Entities;
 using VirtualGarage.VehicleSpecs.Infrastructure.Interfaces;
 
