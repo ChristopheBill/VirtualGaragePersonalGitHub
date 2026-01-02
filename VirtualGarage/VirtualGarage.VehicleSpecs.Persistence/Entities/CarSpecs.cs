@@ -1,14 +1,13 @@
 using System;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace VirtualGarage.VehicleSpecs.Persistence.Entities;
 
 public class CarSpecs
 {
     // Cosmos DB required
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string Id { get; set; } = default!;   // "toyota-corolla-2019"
-    // public string PartitionKey { get; set; } = default!; // set = Make when creating item   
     // Identity
     public string Make { get; set; } = default!;
     public string Model { get; set; } = default!;

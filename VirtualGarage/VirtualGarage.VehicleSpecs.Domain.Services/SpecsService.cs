@@ -40,7 +40,6 @@ public sealed class SpecsService : ISpecsService
         var car = await _carApi.GetCarAsync(brand, model, year);
 
         var specs = car.ToDomain(id);
-        // specs.PartitionKey = specs.Make;
         await _repository.SaveAsync(specs);
 
         return specs.ToCarSpecsResponse();
