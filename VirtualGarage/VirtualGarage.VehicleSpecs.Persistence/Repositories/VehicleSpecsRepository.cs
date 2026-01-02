@@ -36,7 +36,7 @@ public class VehicleSpecsRepository : IVehicleSpecsRepository
     {
         var response = await _container.ReadItemAsync<CarSpecs>(
             id,
-            new PartitionKey(make)
+            new PartitionKey(id)
         );
 
         return response.Resource;
