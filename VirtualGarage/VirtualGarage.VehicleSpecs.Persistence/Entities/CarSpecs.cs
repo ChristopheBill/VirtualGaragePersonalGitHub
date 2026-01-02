@@ -4,10 +4,9 @@ namespace VirtualGarage.VehicleSpecs.Persistence.Entities;
 
 public class CarSpecs
 {
-    public Guid Id { get; set; }
-
-    // Link to your Vehicle
-    public Guid VehicleId { get; set; }
+    // Cosmos DB required
+    public string Id { get; set; } = default!;   // "toyota-corolla-2019"
+    public string PartitionKey => Make;
 
     // Identity
     public string Make { get; set; } = default!;
@@ -15,7 +14,8 @@ public class CarSpecs
     public int Year { get; set; }
 
     // Engine
-    public string? Engine { get; set; }
+    public string? EngineType { get; set; }
+    public string? FuelType { get; set; }
     public int? Horsepower { get; set; }
     public int? Torque { get; set; }
 
@@ -27,6 +27,7 @@ public class CarSpecs
     public int? Doors { get; set; }
     public int? Seats { get; set; }
 
-    // Meta
+    // Metadata
     public DateTime RetrievedAt { get; set; }
+    public string Source { get; set; } = "CarAPI";
 }
