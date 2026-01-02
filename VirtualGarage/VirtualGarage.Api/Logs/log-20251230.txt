@@ -1,0 +1,12 @@
+2025-12-30 03:50:02.489 +01:00 [WRN] Failed to determine the https port for redirect.
+2025-12-30 03:50:03.991 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1465.5900 ms
+2025-12-30 03:50:03.991 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1465.6166 ms
+2025-12-30 03:50:14.138 +01:00 [INF] HTTP PUT /api/vehicles/fcebc137-bf12-4e57-9c3c-106f268b301b responded 200 in 208.3043 ms
+2025-12-30 03:50:21.990 +01:00 [INF] HTTP PUT /api/vehicles/fcebc137-bf12-4e57-9c3c-106f268b301b responded 200 in 14.5000 ms
+2025-12-30 03:50:35.747 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 35.9388 ms
+2025-12-30 03:50:50.911 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 4.1361 ms
+2025-12-30 03:50:50.911 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 4.1360 ms
+2025-12-30 03:51:20.505 +01:00 [INF] HTTP DELETE /api/vehicles/e57d38e2-2adf-4e83-83fe-e1dd2725aec2 responded 204 in 64.4111 ms
+2025-12-30 03:51:20.521 +01:00 [INF] HTTP DELETE /api/vehicles/e57d38e2-2adf-4e83-83fe-e1dd2725aec2 responded 204 in 8.9669 ms
+2025-12-30 03:51:28.625 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 3.6905 ms
+2025-12-30 03:51:28.631 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 4.0151 ms

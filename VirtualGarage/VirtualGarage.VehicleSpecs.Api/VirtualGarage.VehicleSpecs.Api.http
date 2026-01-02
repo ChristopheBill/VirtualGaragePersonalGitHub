@@ -1,0 +1,6 @@
+@VirtualGarage.VehicleSpecs.Api_HostAddress = http://localhost:5248
+
+GET {{VirtualGarage.VehicleSpecs.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

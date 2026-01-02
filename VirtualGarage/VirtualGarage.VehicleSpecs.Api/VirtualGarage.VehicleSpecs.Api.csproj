@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>6c3e89c7-b197-4dc4-b6f2-1191d601a8ca</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Domain.Services\VirtualGarage.VehicleSpecs.Domain.Services.csproj" />
+    <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Infrastructure\VirtualGarage.VehicleSpecs.Infrastructure.csproj" />
+    <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Persistence\VirtualGarage.VehicleSpecs.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Settings\" />
+  </ItemGroup>
+
+</Project>

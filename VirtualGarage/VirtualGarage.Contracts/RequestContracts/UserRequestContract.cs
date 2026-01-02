@@ -2,7 +2,7 @@
 
 namespace VirtualGarage.Contracts
 {
-    public class UserRequestContract
+    public sealed record UserRequestContract
     {
         [Required, MaxLength(50)]
         public required string FirstName { get; set; }

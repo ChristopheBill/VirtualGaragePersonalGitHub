@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Api.Contracts\VirtualGarage.VehicleSpecs.Api.Contracts.csproj" />
+    <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Infrastructure\VirtualGarage.VehicleSpecs.Infrastructure.csproj" />
+    <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Persistence\VirtualGarage.VehicleSpecs.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
