@@ -20,7 +20,7 @@ builder.Services.AddHttpClient<ICarApiClient, CarApiClient>((sp, client) =>
 
     client.BaseAddress = new Uri(settings.BaseUrl);
 
-    // CarAPI accepts either X-Api-Key OR Bearer — pick ONE
+    // CarAPI accepts either X-Api-Key OR Bearer
     client.DefaultRequestHeaders.Add("X-Api-Key", settings.JwtToken);
 });
 
