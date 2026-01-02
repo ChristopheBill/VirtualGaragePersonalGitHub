@@ -17,17 +17,17 @@ public sealed class CarApiClient : ICarApiClient
 
     public async Task<CarApiCarResponse> GetCarAsync(string brand, string model, int year)
 {
-    // 1️⃣ Get the list of trims
+    // 1️ Get the list of trims
     var trimsResponse = await _httpClient.GetFromJsonAsync<CarApiTrimsListResponse>(
         $"trims/v2?brand={Uri.EscapeDataString(brand)}&model={Uri.EscapeDataString(model)}&year={year}");
 
     if (trimsResponse == null || trimsResponse.Data == null || !trimsResponse.Data.Any())
         throw new InvalidOperationException($"No trims found for {brand} {model} {year}");
 
-    // 2️⃣ Pick the first trim (or you can implement your own selection logic)
+    // 2️ Pick the first trim
     var trim = trimsResponse.Data.First();
 
-    // 3️⃣ Get full trim details
+    // 3 Get full trim details
     var detailResponse = await _httpClient.GetFromJsonAsync<CarApiTrimDetailResponse>(
     $"trims/v2/{trim.Id}");
     var carSpecs = CarApiMapping.MapTrimDetail(detailResponse);
