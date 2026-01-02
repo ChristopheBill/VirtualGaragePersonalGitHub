@@ -5,6 +5,7 @@ namespace VirtualGarage.VehicleSpecs.Infrastructure.CarApi.Mapping;
 using System.Text.Json;
 using VirtualGarage.VehicleSpecs.Infrastructure.CarApi.Contracts;
 using VirtualGarage.VehicleSpecs.Infrastructure.DTOs;
+using VirtualGarage.VehicleSpecs.Persistence.Entities;
 
 public static class CarApiMapping
 {
@@ -31,21 +32,47 @@ public static class CarApiMapping
         var transmission = trim.Transmissions?.FirstOrDefault();
         var drive = trim.Drive_Types?.FirstOrDefault();
 
-        return new CarApiCarResponse(
-            Brand: trim.Make,
-            Model: trim.Model,
-            Year: trim.Year,
-            Engine: engine != null
-                ? new CarApiEngine(
-                    Type: engine.Engine_Type,
-                    Horsepower: engine.Horsepower_Hp,
-                    Fuel: engine.Fuel_Type
-                  )
-                : null,
-            Transmission: transmission?.Description,
-            Doors: body?.Doors,
-            Seats: body?.Seats,
-            DriveType: drive?.Description
+    return new CarApiCarResponse(
+        Brand: trim.Make,
+        Model: trim.Model,
+        Year: trim.Year,
+        Engine: engine != null
+            ? new CarApiEngine(
+                Type: engine.Engine_Type,
+                Horsepower: engine.Horsepower_Hp,
+                Fuel: engine.Fuel_Type
+              )
+            : null,
+        Transmission: transmission?.Description,
+        Doors: body?.Doors,
+        Seats: body?.Seats,
+        DriveType: drive?.Description
         );
-}
+    }
+    // public static CarSpecs Map(CarApiTrimDetailResponse trim)
+    // {  
+    //     var engine = trim.Engines?.FirstOrDefault();
+    //     var body = trim.Bodies?.FirstOrDefault();
+
+    //     return new CarSpecs
+    //         {
+    //         Id = $"{trim.Make}-{trim.Model}-{trim.Year}".ToLower().ToString(),
+    //         Make = trim.Make,
+    //         Model = trim.Model,
+    //         Year = trim.Year,
+
+    //         EngineType = engine?.EngineType,
+    //         FuelType = engine?.FuelType,
+    //         Horsepower = engine?.HorsepowerHp,
+    //         Torque = engine?.TorqueFtLbs,
+
+    //         Transmission = trim.Transmissions?.FirstOrDefault()?.Description,
+    //         DriveType = trim.DriveTypes?.FirstOrDefault()?.Description,
+
+    //         Doors = body?.Doors,
+    //         Seats = body?.Seats,
+
+    //         RetrievedAt = DateTime.UtcNow,
+    //     Source = "CarAPI"
+    // };
 }

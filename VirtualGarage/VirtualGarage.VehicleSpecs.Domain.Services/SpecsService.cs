@@ -13,12 +13,15 @@ namespace VirtualGarage.VehicleSpecs.Domain.Services;
 public sealed class SpecsService : ISpecsService
 {
     private readonly ICarApiClient _carApi;
-    private readonly IVehicleSpecsRepository _repository;
+    // private readonly IVehicleSpecsRepository _repository;
 
-    public SpecsService(ICarApiClient carApi, IVehicleSpecsRepository repository)
+    public SpecsService(ICarApiClient carApi
+    // , 
+    // IVehicleSpecsRepository repository
+    )
     {
         _carApi = carApi;
-        _repository = repository;
+        // _repository = repository;
     }
 
     public async Task<CarSpecsResponse> LookupAsync(CarSpecsLookupRequest request)
@@ -34,21 +37,21 @@ public sealed class SpecsService : ISpecsService
 
         return car.ToCarSpecsResponse();
     }
-    public async Task<CarSpecsResponse> GetAsync(string brand, string model, int year)
-{
-    var id = $"{brand}-{model}-{year}".ToLower();
+//     public async Task<CarSpecsResponse> GetAsync(string brand, string model, int year)
+// {
+//     var id = $"{brand}-{model}-{year}".ToLower();
 
-    var existing = await _repository.GetAsync(id);
-    if (existing != null)
-        return Map(existing);
+//     var existing = await _repository.GetAsync(id);
+//     if (existing != null)
+//         return Map(existing);
 
-    var apiResult = await _carApi.GetCarAsync(brand, model, year);
-    var specs = MapToDomain(apiResult, id);
+//     var apiResult = await _carApi.GetCarAsync(brand, model, year);
+//     var specs = MapToDomain(apiResult, id);
 
-    await _repository.SaveAsync(specs);
+//     await _repository.SaveAsync(specs);
 
-    return Map(specs);
-}
+//     return Map(specs);
+// }
 
     // private CarSpecsResponse Map(CarSpecs specs)
     // {

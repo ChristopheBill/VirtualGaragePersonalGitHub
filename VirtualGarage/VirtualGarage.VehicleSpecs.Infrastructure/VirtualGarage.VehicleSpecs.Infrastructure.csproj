@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="CarApi\Contracts\" />
+    <Folder Include="CarApi\Mapping\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CarApi\Contracts\" />
-    <Folder Include="CarApi\Mapping\" />
+    <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Persistence\VirtualGarage.VehicleSpecs.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
