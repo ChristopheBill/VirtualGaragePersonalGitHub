@@ -15,80 +15,37 @@ public sealed class SpecsService : ISpecsService
     private readonly ICarApiClient _carApi;
     private readonly IVehicleSpecsRepository _repository;
 
-    public SpecsService(ICarApiClient carApi, IVehicleSpecsRepository repository)
+    public SpecsService(
+        ICarApiClient carApi,
+        IVehicleSpecsRepository repository)
     {
         _carApi = carApi;
         _repository = repository;
     }
 
-    public async Task<CarSpecsResponse> LookupAsync(CarSpecsLookupRequest request)
+    // public Task<CarSpecsResponse> GetSpecsAsync(string brand, string model, int year)
+    //     => GetOrFetchAsync(brand, model, year);
+
+    public async Task<CarSpecsResponse> GetOrFetchAsync(
+        string brand,
+        string model,
+        int year)
     {
-        var id = $"{request.Brand}-{request.Model}-{request.Year}".ToLower();
+        var id = BuildId(brand, model, year);
 
-        var existing = await _repository.GetAsync(id);
-        if (existing != null)
-            return existing.ToCarSpecsResponse();
-
-        var car = await _carApi.GetCarAsync(request.Brand, request.Model, request.Year);
-        var specs = car.ToDomain(id);
-        await _repository.SaveAsync(specs);
-
-        return specs.ToCarSpecsResponse();
-    }
-
-    public async Task<CarSpecsResponse> GetSpecsAsync(string brand, string model, int year)
-    {
-        var id = $"{brand}-{model}-{year}".ToLower();
-
-        var existing = await _repository.GetAsync(id);
+        var existing = await _repository.GetAsync(id, brand);
         if (existing != null)
             return existing.ToCarSpecsResponse();
 
         var car = await _carApi.GetCarAsync(brand, model, year);
+
         var specs = car.ToDomain(id);
+        // specs.PartitionKey = specs.Make;
         await _repository.SaveAsync(specs);
 
         return specs.ToCarSpecsResponse();
     }
-//     public async Task<CarSpecsResponse> GetAsync(string brand, string model, int year)
-// {
-//     var id = $"{brand}-{model}-{year}".ToLower();
 
-//     var existing = await _repository.GetAsync(id);
-//     if (existing != null)
-//         return Map(existing);
-
-//     var apiResult = await _carApi.GetCarAsync(brand, model, year);
-//     var specs = MapToDomain(apiResult, id);
-
-//     await _repository.SaveAsync(specs);
-
-//     return Map(specs);
-// }
-
-    // private CarSpecsResponse Map(CarSpecs specs)
-    // {
-    //     return new CarSpecsResponse(
-    //         specs.Make,
-    //         specs.Model,
-    //         specs.Year,
-    //         specs.Horsepower?.ToString(),
-    //         specs.Torque,
-    //         specs.
-    //     );
-    // }
-
-    // private CarSpecs MapToDomain(CarApiResponse apiResponse, string id)
-    // {
-    //     return new CarSpecs
-    //     {
-    //         Id = id,
-    //         Make = apiResponse.Make,
-    //         Model = apiResponse.Model,
-    //         Year = apiResponse.Year,
-    //         Horsepower = apiResponse.Horsepower,
-    //         Torque = apiResponse.Torque,
-    //         Weight = apiResponse.Weight
-    //     };
-    // }
+    private static string BuildId(string brand, string model, int year)
+        => $"{brand}-{model}-{year}".ToLowerInvariant();
 }

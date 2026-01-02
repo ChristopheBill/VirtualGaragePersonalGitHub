@@ -17,4 +17,8 @@
     <ProjectReference Include="..\VirtualGarage.VehicleSpecs.Persistence\VirtualGarage.VehicleSpecs.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Settings\" />
+  </ItemGroup>
+
 </Project>

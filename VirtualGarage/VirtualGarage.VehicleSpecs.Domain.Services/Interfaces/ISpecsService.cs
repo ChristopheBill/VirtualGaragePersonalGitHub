@@ -7,6 +7,6 @@ namespace VirtualGarage.VehicleSpecs.Domain.Services.Interfaces;
 
 public interface ISpecsService
 {
-    Task<CarSpecsResponse> GetSpecsAsync(string brand, string model, int year);
-    Task<CarSpecsResponse> LookupAsync(CarSpecsLookupRequest request);
+    Task<CarSpecsResponse> GetOrFetchAsync(string brand, string model, int year);
+    // Task<CarSpecsResponse> LookupAsync(CarSpecsLookupRequest request);
 }
