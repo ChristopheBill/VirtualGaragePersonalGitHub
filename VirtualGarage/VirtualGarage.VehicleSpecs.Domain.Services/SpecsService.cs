@@ -13,29 +13,42 @@ namespace VirtualGarage.VehicleSpecs.Domain.Services;
 public sealed class SpecsService : ISpecsService
 {
     private readonly ICarApiClient _carApi;
-    // private readonly IVehicleSpecsRepository _repository;
+    private readonly IVehicleSpecsRepository _repository;
 
-    public SpecsService(ICarApiClient carApi
-    // , 
-    // IVehicleSpecsRepository repository
-    )
+    public SpecsService(ICarApiClient carApi, IVehicleSpecsRepository repository)
     {
         _carApi = carApi;
-        // _repository = repository;
+        _repository = repository;
     }
 
     public async Task<CarSpecsResponse> LookupAsync(CarSpecsLookupRequest request)
     {
-        var car = await _carApi.GetCarAsync(request.Brand, request.Model, request.Year);
+        var id = $"{request.Brand}-{request.Model}-{request.Year}".ToLower();
 
-        return car.ToCarSpecsResponse();
+        var existing = await _repository.GetAsync(id);
+        if (existing != null)
+            return existing.ToCarSpecsResponse();
+
+        var car = await _carApi.GetCarAsync(request.Brand, request.Model, request.Year);
+        var specs = car.ToDomain(id);
+        await _repository.SaveAsync(specs);
+
+        return specs.ToCarSpecsResponse();
     }
 
     public async Task<CarSpecsResponse> GetSpecsAsync(string brand, string model, int year)
     {
-        var car = await _carApi.GetCarAsync(brand, model, year);
+        var id = $"{brand}-{model}-{year}".ToLower();
 
-        return car.ToCarSpecsResponse();
+        var existing = await _repository.GetAsync(id);
+        if (existing != null)
+            return existing.ToCarSpecsResponse();
+
+        var car = await _carApi.GetCarAsync(brand, model, year);
+        var specs = car.ToDomain(id);
+        await _repository.SaveAsync(specs);
+
+        return specs.ToCarSpecsResponse();
     }
 //     public async Task<CarSpecsResponse> GetAsync(string brand, string model, int year)
 // {
