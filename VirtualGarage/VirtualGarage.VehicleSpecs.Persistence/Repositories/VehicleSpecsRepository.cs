@@ -53,7 +53,7 @@ public class VehicleSpecsRepository : IVehicleSpecsRepository
 
         await _container.UpsertItemAsync(
             specs,
-            new PartitionKey(specs.Make)
+            new PartitionKey(specs.Id)
         );
     }
 }
