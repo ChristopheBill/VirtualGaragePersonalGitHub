@@ -33,7 +33,7 @@ public sealed class SpecsService : ISpecsService
     {
         var id = BuildId(brand, model, year);
 
-        var existing = await _repository.GetAsync(id, brand);
+        var existing = await _repository.GetAsync(id);
         if (existing != null)
             return existing.ToCarSpecsResponse();
 

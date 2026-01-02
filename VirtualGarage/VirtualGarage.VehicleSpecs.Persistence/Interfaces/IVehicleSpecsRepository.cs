@@ -5,6 +5,6 @@ namespace VirtualGarage.VehicleSpecs.Persistence.Interfaces;
 
 public interface IVehicleSpecsRepository
 {
-    Task<CarSpecs?> GetAsync(string id, string make);
+    Task<CarSpecs?> GetAsync(string id);
     Task SaveAsync(CarSpecs specs);
 }

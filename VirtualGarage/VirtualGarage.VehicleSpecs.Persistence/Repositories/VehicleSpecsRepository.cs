@@ -27,9 +27,9 @@ public class VehicleSpecsRepository : IVehicleSpecsRepository
             "/id"
         ).GetAwaiter().GetResult().Container;
     }
-    public async Task<CarSpecs?> GetAsync(string id, string make)
+    public async Task<CarSpecs?> GetAsync(string id)
     {
-    if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(make))
+    if (string.IsNullOrWhiteSpace(id))
         return null;
 
     try
