@@ -1,3 +1,7 @@
+using System;
+
+namespace VirtualGarage.Api.Contracts.ResponseContracts;
+
 public sealed record VehicleSpecsResponseContract
 {
     public string Brand { get; init; } = default!;
