@@ -11,6 +11,8 @@ using VirtualGarage.Persistence.Interfaces;
 using VirtualGarage.QuestPDF.Infrastructure;
 using VirtualGarage.QuestPDF.Infrastructure.Clients;
 using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
+using QuestPDF.Infrastructure;
+
 
 namespace VirtualGarage.Api
 {
@@ -20,7 +22,9 @@ namespace VirtualGarage.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-               // EF Core - MySQL
+            QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+
+               // EF Core - SQL
             string? connectionString = builder.Configuration.GetConnectionString("VirtualGarage");
 
             builder.Services.AddDbContext<VirtualGarageDbContext>(options =>
@@ -41,12 +45,11 @@ namespace VirtualGarage.Api
 
             System.Console.WriteLine("SeriLog configured");
 
+          // Register domain services
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IVehicleService, VehicleService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
-
-          // Register domain services
             builder.Services.AddScoped<IVehicleReportService, VehicleReportService>();
 
             // Register infrastructure providers
@@ -63,7 +66,6 @@ namespace VirtualGarage.Api
                 client.BaseAddress = new Uri(baseUrl!);
             });
             builder.Services.AddProblemDetails();
-
 
             System.Console.WriteLine("HttpClient for VehicleSpecsClient configured, BaseUrl: " + builder.Configuration["VehicleSpecsApi:BaseUrl"]);
 
