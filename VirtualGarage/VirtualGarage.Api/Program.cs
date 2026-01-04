@@ -58,6 +58,9 @@ namespace VirtualGarage.Api
             {
                 client.BaseAddress = new Uri(builder.Configuration["VehicleSpecsApi:BaseUrl"]);
             });
+            builder.Services.AddProblemDetails();
+
+
             System.Console.WriteLine("HttpClient for VehicleSpecsClient configured, BaseUrl: " + builder.Configuration["VehicleSpecsApi:BaseUrl"]);
 
 
