@@ -11,7 +11,7 @@ using VirtualGarage.Persistence.Interfaces;
 using VirtualGarage.QuestPDF.Infrastructure;
 using VirtualGarage.QuestPDF.Infrastructure.Clients;
 using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
-using QuestPDF.Infrastructure;
+using QuestPdfInfra = QuestPDF.Infrastructure;
 
 
 namespace VirtualGarage.Api
@@ -22,7 +22,7 @@ namespace VirtualGarage.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+            QuestPdfInfra.ImageGenerationSettings.License = QuestPdfInfra.LicenseType.Community;
 
                // EF Core - SQL
             string? connectionString = builder.Configuration.GetConnectionString("VirtualGarage");
