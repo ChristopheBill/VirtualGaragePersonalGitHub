@@ -53,7 +53,7 @@ namespace VirtualGarage.Api
             builder.Services.AddScoped<IVehicleSpecsProvider, VehicleSpecsClient>();
             builder.Services.AddScoped<IVehicleSpecsPdfGenerator, VehicleSpecsPdfGenerator>();
 
-            // If using HttpClient for VehicleSpecsClient
+            // Using HttpClient for VehicleSpecsClient
             builder.Services.AddHttpClient<IVehicleSpecsProvider, VehicleSpecsClient>(
             (sp, client) =>
             {
