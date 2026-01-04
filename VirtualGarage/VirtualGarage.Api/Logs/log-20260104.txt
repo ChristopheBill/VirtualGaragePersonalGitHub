@@ -422,3 +422,6 @@ Thank you for supporting QuestPDF! ❤️ By choosing the right license, you hel
    at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-04 17:38:01.223 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-04 17:38:02.785 +01:00 [INF] HTTP GET /api/vehiclespecs responded 200 in 1517.1987 ms
+2026-01-04 17:38:06.455 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 698.4583 ms
