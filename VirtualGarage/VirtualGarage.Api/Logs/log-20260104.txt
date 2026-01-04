@@ -425,3 +425,6 @@ Thank you for supporting QuestPDF! ❤️ By choosing the right license, you hel
 2026-01-04 17:38:01.223 +01:00 [WRN] Failed to determine the https port for redirect.
 2026-01-04 17:38:02.785 +01:00 [INF] HTTP GET /api/vehiclespecs responded 200 in 1517.1987 ms
 2026-01-04 17:38:06.455 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 698.4583 ms
+2026-01-04 19:38:18.091 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-04 19:38:20.629 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 2494.0947 ms
+2026-01-04 19:38:24.718 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 144.7312 ms
