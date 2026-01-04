@@ -54,9 +54,13 @@ namespace VirtualGarage.Api
             builder.Services.AddScoped<IVehicleSpecsPdfGenerator, VehicleSpecsPdfGenerator>();
 
             // If using HttpClient for VehicleSpecsClient
-            builder.Services.AddHttpClient<VehicleSpecsClient>(client =>
+            builder.Services.AddHttpClient<IVehicleSpecsProvider, VehicleSpecsClient>(
+            (sp, client) =>
             {
-                client.BaseAddress = new Uri(builder.Configuration["VehicleSpecsApi:BaseUrl"]);
+                var config = sp.GetRequiredService<IConfiguration>();
+                var baseUrl = config["VehicleSpecsApi:BaseUrl"];
+
+                client.BaseAddress = new Uri(baseUrl!);
             });
             builder.Services.AddProblemDetails();
 
