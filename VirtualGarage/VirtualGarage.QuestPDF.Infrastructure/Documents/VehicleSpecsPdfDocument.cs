@@ -1,16 +1,18 @@
 using System;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
+using VirtualGarage.Domain.Models;
+using VirtualGarage.QuestPDF.Infrastructure.Mapping;
 
 namespace VirtualGarage.QuestPDF.Infrastructure.Documents;
 
-public sealed class VehicleSpecsDocument : IDocument
+public sealed class VehicleSpecsPdfDocument : IDocument
 {
-    private readonly VehicleSpecsDocument _specs;
+    private readonly VehicleSpecsPdfDocument _specs;
 
-    public VehicleSpecsDocument(VehicleSpecsDocument specs)
+    public VehicleSpecsPdfDocument(VehicleSpecs specs)
     {
-        _specs = specs;
+        _specs = VehicleSpecsMapper.ToDocument(specs);
     }
 
     public DocumentMetadata GetMetadata()

@@ -1,7 +1,8 @@
 using System;
 using System.Net.Http.Json;
+using VirtualGarage.Domain.Models;
 using VirtualGarage.QuestPDF.Infrastructure.DTOs;
-using VirtualGarage.Shared.Interfaces;
+using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
 
 namespace VirtualGarage.QuestPDF.Infrastructure.Clients;
 
