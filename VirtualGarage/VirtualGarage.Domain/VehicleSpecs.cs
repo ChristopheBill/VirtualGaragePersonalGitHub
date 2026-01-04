@@ -2,7 +2,7 @@ using System;
 
 namespace VirtualGarage.Domain.Models;
 
-public sealed class VehicleSpecsModel
+public sealed class VehicleSpecs
 {
     public string Brand { get; init; } = default!;
     public string Model { get; init; } = default!;

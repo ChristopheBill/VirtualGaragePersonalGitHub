@@ -1,28 +1,27 @@
-using System;
 using VirtualGarage.Domain.Services.Interfaces;
+using VirtualGarage.Shared.Interfaces;
 
-namespace VirtualGarage.Domain.Services;
-
-public sealed class VehicleReportPDFService
+public sealed class VehicleReportService
 {
-    private readonly IVehicleSpecsService _specsService;
-    private readonly IPdfGenerator _pdf;
+    private readonly IVehicleSpecsProvider _specsProvider;
+    private readonly IVehicleSpecsPdfGenerator _pdfGenerator;
 
-    public VehicleReportPDFService(
-        IVehicleSpecsService specsService,
-        IPdfGenerator pdf)
+    public VehicleReportService(
+        IVehicleSpecsProvider specsProvider,
+        IVehicleSpecsPdfGenerator pdfGenerator)
     {
-        _specsService = specsService;
-        _pdf = pdf;
+        _specsProvider = specsProvider;
+        _pdfGenerator = pdfGenerator;
     }
 
-    public async Task<byte[]> CreateVehicleReportAsync(
+    public async Task<byte[]> GeneratePdfAsync(
         string brand,
         string model,
         int year)
     {
-        var specs = await _specsService.GetAsync(brand, model, year);
+        var specs = await _specsProvider
+            .GetSpecsAsync(brand, model, year);
 
-        return _pdf.Generate(specs);
+        return _pdfGenerator.Generate(specs);
     }
 }
