@@ -4,7 +4,7 @@ using VirtualGarage.Domain.Services.Interfaces;
 namespace VirtualGarage.VehicleSpecs.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/vehiclespecs")]
     public class VehicleSpecsController : ControllerBase
     {
         private readonly IVehicleReportService _reportService;
