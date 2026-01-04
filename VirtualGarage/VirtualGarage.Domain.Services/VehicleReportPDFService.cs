@@ -3,7 +3,7 @@ using VirtualGarage.Shared.Interfaces;
 
 public sealed class VehicleReportService
 {
-    private readonly IVehicleSpecsProvider _specsProvider;
+    private readonly VirtualGarage.Domain.Services.Interfaces.IVehicleSpecsProvider _specsProvider;
     private readonly IVehicleSpecsPdfGenerator _pdfGenerator;
 
     public VehicleReportService(
