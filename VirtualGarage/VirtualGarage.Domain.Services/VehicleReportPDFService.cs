@@ -1,3 +1,4 @@
+using VirtualGarage.Domain.Models;
 using VirtualGarage.Domain.Services.Interfaces;
 using VirtualGarage.QuestPDF.Infrastructure;
 using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
@@ -24,5 +25,12 @@ public sealed class VehicleReportService
             .GetSpecsAsync(brand, model, year);
 
         return _pdfGenerator.Generate(specs);
+    }
+    public async Task<VehicleSpecs> GetRawSpecsAsync(string brand, string model, int year)
+    {
+        if (string.IsNullOrWhiteSpace(brand) || string.IsNullOrWhiteSpace(model))
+            throw new ArgumentException("Brand and model must be provided.");
+
+        return await _specsProvider.GetSpecsAsync(brand, model, year);
     }
 }

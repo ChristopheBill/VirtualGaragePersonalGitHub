@@ -13,7 +13,7 @@ public sealed class VehicleSpecsPdfGenerator
 {
     public byte[] Generate(VehicleSpecs specs)
     {
-        var document = specs;
+        var document = new VehicleSpecsPdfDocument(specs);
 
         return document.GeneratePdf();
     }

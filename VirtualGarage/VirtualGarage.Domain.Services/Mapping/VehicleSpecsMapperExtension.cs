@@ -6,7 +6,7 @@ namespace VirtualGarage.Domain.Services.Mapping;
 
 internal static class VehicleSpecsMapperExtension
 {
-    public static VehicleSpecsModel ToDomain(this VehicleSpecsResponseContract r)
+    public static VehicleSpecs ToDomain(this VehicleSpecsResponseContract r)
         => new()
         {
             Brand = r.Brand,

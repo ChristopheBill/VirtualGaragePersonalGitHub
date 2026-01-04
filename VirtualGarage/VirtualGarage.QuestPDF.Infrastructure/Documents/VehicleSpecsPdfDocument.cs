@@ -43,4 +43,19 @@ public sealed class VehicleSpecsPdfDocument : IDocument
             });
         });
     }
+    private static void SpecRow(ColumnDescriptor column, string label, string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return;
+
+        column.Item().Row(row =>
+        {
+            row.RelativeItem(1)
+                .Text(label)
+                .SemiBold();
+
+            row.RelativeItem(3)
+                .Text(value);
+        });
+    }
 }
