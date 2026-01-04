@@ -13,7 +13,7 @@ public sealed class VehicleSpecsPdfGenerator
 {
     public byte[] Generate(VehicleSpecs specs)
     {
-        var document = new VehicleSpecsDocument(VehicleSpecsMapper.ToDocument(specs));
+        var document = specs;
 
         return document.GeneratePdf();
     }

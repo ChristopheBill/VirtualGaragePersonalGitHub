@@ -8,11 +8,11 @@ namespace VirtualGarage.QuestPDF.Infrastructure.Documents;
 
 public sealed class VehicleSpecsPdfDocument : IDocument
 {
-    private readonly VehicleSpecsPdfDocument _specs;
+    private readonly VehicleSpecs _specs;
 
     public VehicleSpecsPdfDocument(VehicleSpecs specs)
     {
-        _specs = VehicleSpecsMapper.ToDocument(specs);
+        _specs = specs;
     }
 
     public DocumentMetadata GetMetadata()
@@ -38,18 +38,9 @@ public sealed class VehicleSpecsPdfDocument : IDocument
                 SpecRow(column, "Fuel", _specs.FuelType);
                 SpecRow(column, "Transmission", _specs.Transmission);
                 SpecRow(column, "Drive Type", _specs.DriveType);
-                SpecRow(column, "Doors", _specs.Doors.ToString());
-                SpecRow(column, "Seats", _specs.Seats.ToString());
+                SpecRow(column, "Doors", _specs.Doors?.ToString());
+                SpecRow(column, "Seats", _specs.Seats?.ToString());
             });
-        });
-    }
-
-    private static void SpecRow(ColumnDescriptor column, string label, string value)
-    {
-        column.Item().Row(row =>
-        {
-            row.RelativeItem(1).Text(label).SemiBold();
-            row.RelativeItem(2).Text(value);
         });
     }
 }

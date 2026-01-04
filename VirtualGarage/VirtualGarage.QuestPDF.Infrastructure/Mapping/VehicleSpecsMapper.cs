@@ -1,6 +1,7 @@
 using System;
 using VirtualGarage.Domain.Models;
 using VirtualGarage.QuestPDF.Infrastructure.Documents;
+using VirtualGarage.QuestPDF.Infrastructure.DTOs;
 using VirtualGarage.QuestPDF.Infrastructure.Storage;
 
 namespace VirtualGarage.QuestPDF.Infrastructure.Mapping;
@@ -47,6 +48,22 @@ internal static class VehicleSpecsMapper
             Doors = doc.Doors,
             Seats = doc.Seats,
             DriveType = doc.DriveType
+        };
+    }
+    public static VehicleSpecs MapToDomain(VehicleSpecsResponseDto dto)
+    {
+        return new VehicleSpecs
+        {
+            Brand = dto.Brand,
+            Model = dto.Model,
+            Year = dto.Year,
+            Engine = dto.Engine,
+            HorsePower = dto.HorsePower,
+            FuelType = dto.FuelType,
+            Transmission = dto.Transmission,
+            Doors = dto.Doors,
+            Seats = dto.Seats,
+            DriveType = dto.DriveType
         };
     }
 }
