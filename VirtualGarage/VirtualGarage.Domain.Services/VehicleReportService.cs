@@ -3,7 +3,7 @@ using VirtualGarage.Domain.Services.Interfaces;
 using VirtualGarage.QuestPDF.Infrastructure;
 using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
 
-public sealed class VehicleReportService
+public sealed class VehicleReportService : IVehicleReportService
 {
     private readonly IVehicleSpecsProvider _specsProvider;
     private readonly IVehicleSpecsPdfGenerator _pdfGenerator;

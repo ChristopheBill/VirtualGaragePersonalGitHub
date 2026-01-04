@@ -46,20 +46,19 @@ namespace VirtualGarage.Api
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
-            // Register VehicleSpecsClient
-            builder.Services.AddHttpClient<IVehicleSpecsProvider, VehicleSpecsClient>((sp, client) =>
+          // Register domain services
+            builder.Services.AddScoped<IVehicleReportService, VehicleReportService>();
+
+            // Register infrastructure providers
+            builder.Services.AddScoped<IVehicleSpecsProvider, VehicleSpecsClient>();
+            builder.Services.AddScoped<IVehicleSpecsPdfGenerator, VehicleSpecsPdfGenerator>();
+
+            // If using HttpClient for VehicleSpecsClient
+            builder.Services.AddHttpClient<VehicleSpecsClient>(client =>
             {
-                var options = sp.GetRequiredService<IOptions<VehicleSpecsApiOptions>>().Value;
-                client.BaseAddress = new Uri(options.BaseUrl);
+                client.BaseAddress = new Uri(builder.Configuration["VehicleSpecsApi:BaseUrl"]);
             });
-            System.Console.WriteLine("VehicleSpecsClient configured");
-            System.Console.WriteLine("Base URL: " + builder.Configuration.GetSection("VehicleSpecsApi")["BaseUrl"]);
-
-            // Register PDF generator
-            builder.Services.AddSingleton<IVehicleSpecsPdfGenerator, VehicleSpecsPdfGenerator>();
-
-            // Register the report service
-            builder.Services.AddScoped<VehicleReportService>();
+            System.Console.WriteLine("HttpClient for VehicleSpecsClient configured, BaseUrl: " + builder.Configuration["VehicleSpecsApi:BaseUrl"]);
 
 
             builder.Services.AddCors(options =>

@@ -22,7 +22,7 @@ public sealed class VehicleSpecsClient : IVehicleSpecsProvider
         if (string.IsNullOrWhiteSpace(brand)) throw new ArgumentException("Brand is required", nameof(brand));
         if (string.IsNullOrWhiteSpace(model)) throw new ArgumentException("Model is required", nameof(model));
 
-        var url = $"api/vehiclespecs?brand={Uri.EscapeDataString(brand)}&model={Uri.EscapeDataString(model)}&year={year}";
+        var url = $"api/specifications?brand={Uri.EscapeDataString(brand)}&model={Uri.EscapeDataString(model)}&year={year}";
 
         var response = await _httpClient.GetAsync(url);
 
