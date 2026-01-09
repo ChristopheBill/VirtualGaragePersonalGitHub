@@ -1,4 +1,5 @@
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using VirtualGarage.Domain.Services.Interfaces;
 
 public sealed class AzureBlobStorage : IBlobStorage
@@ -11,16 +12,25 @@ public sealed class AzureBlobStorage : IBlobStorage
         _container.CreateIfNotExists();
     }
 
-    public async Task<string> UploadAsync(
-        string fileName,
-        byte[] content,
-        string contentType)
+    public async Task<bool> ExistsAsync(string fileName)
+    {
+        var blob = _container.GetBlobClient(fileName);
+        return await blob.ExistsAsync();
+    }
+
+    public async Task<string> UploadAsync(string fileName, byte[] content, string contentType)
     {
         var blob = _container.GetBlobClient(fileName);
 
         using var stream = new MemoryStream(content);
-        await blob.UploadAsync(stream, overwrite: true);
-
+        await blob.UploadAsync(stream, new BlobUploadOptions
+        {
+            HttpHeaders = new BlobHttpHeaders
+            {
+                ContentType = contentType
+            }
+        }
+        );
         return blob.Uri.ToString();
     }
 

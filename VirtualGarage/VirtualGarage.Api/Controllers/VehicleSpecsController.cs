@@ -30,7 +30,7 @@ namespace VirtualGarage.VehicleSpecs.Api.Controllers
         [HttpGet("pdf")]
         public async Task<IActionResult> GetPdf([FromQuery] string brand, [FromQuery] string model, [FromQuery] int year)
         {
-            var pdfBytes = await _reportService.GeneratePdfAsync(brand, model, year);
+            var pdfBytes = await _reportService.GetOrCreatePdfAsync(brand, model, year);
 
             if (pdfBytes.Length == 0)
                 return NotFound();

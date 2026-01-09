@@ -70,6 +70,7 @@ namespace VirtualGarage.Api
             // Register infrastructure providers
             builder.Services.AddScoped<IVehicleSpecsProvider, VehicleSpecsClient>();
             builder.Services.AddScoped<IVehicleSpecsPdfGenerator, VehicleSpecsPdfGenerator>();
+            builder.Services.AddScoped<IBlobStorage, AzureBlobStorage>();
 
             // Using HttpClient for VehicleSpecsClient
             builder.Services.AddHttpClient<IVehicleSpecsProvider, VehicleSpecsClient>(
