@@ -12,6 +12,7 @@ using VirtualGarage.QuestPDF.Infrastructure;
 using VirtualGarage.QuestPDF.Infrastructure.Clients;
 using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
 using QuestPDF.Infrastructure;
+using VirtualGarage.Infrastructure.Storage;
 
 
 namespace VirtualGarage.Api
@@ -24,19 +25,29 @@ namespace VirtualGarage.Api
 
             global::QuestPDF.Settings.License = global::QuestPDF.Infrastructure.LicenseType.Community;
 
-               // EF Core - SQL
+            // EF Core - SQL
+
             string? connectionString = builder.Configuration.GetConnectionString("VirtualGarage");
 
+            // Register DbContext with DI container
+
             builder.Services.AddDbContext<VirtualGarageDbContext>(options =>
-                options.UseSqlServer(connectionString)
-            );
+                options.UseSqlServer(connectionString));
+
+            // Configure options from appsettings.json
+
             builder.Services.Configure<VehicleSpecsApiOptions>(
                 builder.Configuration.GetSection("VehicleSpecsApi"));
 
             Console.WriteLine($"Connection String: {connectionString}");
-            // Add services to the container.
 
-            builder.Services.AddControllers();
+            // Configure BlobStorage options
+
+            builder.Services.Configure<BlobStorageOptions>(
+                builder.Configuration.GetSection("BlobStorage"));
+
+            System.Console.WriteLine("BlobStorage options configured, ContainerName: " + 
+                builder.Configuration.GetSection("BlobStorage:ContainerName").Value);
 
             // Add SeriLog logging
 
@@ -45,7 +56,11 @@ namespace VirtualGarage.Api
 
             System.Console.WriteLine("SeriLog configured");
 
-          // Register domain services
+            // Add services to the container.
+
+            builder.Services.AddControllers();
+
+            // Register domain services
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IVehicleService, VehicleService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();

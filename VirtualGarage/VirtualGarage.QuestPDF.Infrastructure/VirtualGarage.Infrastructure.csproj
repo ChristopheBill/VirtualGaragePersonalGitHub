@@ -10,7 +10,6 @@
     <Folder Include="Clients\" />
     <Folder Include="DTOs\" />
     <Folder Include="Mapping\" />
-    <Folder Include="Storage\" />
   </ItemGroup>
 
   <ItemGroup>
