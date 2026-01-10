@@ -35,7 +35,7 @@ public sealed class VehicleReportService : IVehicleReportService
         // We already know UploadAsync returns the blob URL,
         // so we can reconstruct it deterministically OR
         // add GetUriAsync later if you want to be fancy.
-        return GetBlobUrl(fileName);
+        return _blobStorage.GetBlobUrl(fileName);
     }
 
     // 2️⃣ Generate PDF
@@ -63,10 +63,5 @@ public sealed class VehicleReportService : IVehicleReportService
         .ToLowerInvariant()
         .Replace(" ", "-")
         + ".pdf";
-    }
-
-    private static string GetBlobUrl(string fileName)
-    {
-        return $"https://yourstorageaccount.blob.core.windows.net/reports/{fileName}";
     }
 }

@@ -40,4 +40,10 @@ public sealed class AzureBlobStorage : IBlobStorage
         var response = await blob.DownloadContentAsync();
         return response.Value.Content.ToArray();
     }
+
+    public string GetBlobUrl(string fileName)
+    {
+        var blob = _container.GetBlobClient(fileName);
+        return blob.Uri.ToString();
+    }
 }

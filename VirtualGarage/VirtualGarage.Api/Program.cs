@@ -13,6 +13,7 @@ using VirtualGarage.QuestPDF.Infrastructure.Clients;
 using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
 using QuestPDF.Infrastructure;
 using VirtualGarage.Infrastructure.Storage;
+using Azure.Storage.Blobs;
 
 
 namespace VirtualGarage.Api
@@ -48,6 +49,15 @@ namespace VirtualGarage.Api
 
             System.Console.WriteLine("BlobStorage options configured, ContainerName: " + 
                 builder.Configuration.GetSection("BlobStorage:ContainerName").Value);
+            
+            // Register BlobServiceClient with DI container
+            
+            builder.Services.AddSingleton(sp =>
+            {
+                var options = sp.GetRequiredService<IOptions<BlobStorageOptions>>().Value;
+
+                return new BlobServiceClient(options.ConnectionString);
+            });
 
             // Add SeriLog logging
 
