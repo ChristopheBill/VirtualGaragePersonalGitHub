@@ -19,7 +19,7 @@ public sealed class VehicleReportService : IVehicleReportService
         _blobStorage = blobStorage;
     }
 
-    public async Task<string> GetOrCreatePdfAsync(
+    public async Task<byte[]> GetOrCreatePdfAsync(
     string brand,
     string model,
     int year)
@@ -35,7 +35,7 @@ public sealed class VehicleReportService : IVehicleReportService
         // We already know UploadAsync returns the blob URL,
         // so we can reconstruct it deterministically OR
         // add GetUriAsync later if you want to be fancy.
-        return _blobStorage.GetBlobUrl(fileName);
+        return await _blobStorage.GetBlobBytesAsync(fileName);
     }
 
     // 2️⃣ Generate PDF
@@ -43,10 +43,8 @@ public sealed class VehicleReportService : IVehicleReportService
     var pdfBytes = _pdfGenerator.Generate(specs);
 
     // 3️⃣ Store + return URL
-    return await _blobStorage.UploadAsync(
-        fileName,
-        pdfBytes,
-        contentType: "application/pdf");
+    await _blobStorage.UploadAsync(fileName, pdfBytes, contentType: "application/pdf");
+    return await _blobStorage.GetBlobBytesAsync(fileName);
     }
 
     public async Task<VehicleSpecs> GetRawSpecsAsync(string brand, string model, int year)

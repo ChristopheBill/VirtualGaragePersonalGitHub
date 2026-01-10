@@ -8,7 +8,7 @@ public sealed class AzureBlobStorage : IBlobStorage
 
     public AzureBlobStorage(BlobServiceClient client)
     {
-        _container = client.GetBlobContainerClient("reports");
+        _container = client.GetBlobContainerClient("virtualgarageblob");
         _container.CreateIfNotExists();
     }
 
@@ -45,5 +45,11 @@ public sealed class AzureBlobStorage : IBlobStorage
     {
         var blob = _container.GetBlobClient(fileName);
         return blob.Uri.ToString();
+    }
+    public async Task<byte[]> GetBlobBytesAsync(string fileName)
+    {
+        var blob = _container.GetBlobClient(fileName);
+        var response = await blob.DownloadContentAsync();
+        return response.Value.Content.ToArray();
     }
 }

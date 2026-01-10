@@ -8,4 +8,5 @@ public interface IBlobStorage
     Task<string> UploadAsync(string fileName, byte[] content, string contentType);
     Task<byte[]> DownloadAsync(string fileName);
     string GetBlobUrl(string fileName);
+    Task<byte[]> GetBlobBytesAsync(string fileName);
 }
