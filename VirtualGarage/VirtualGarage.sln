@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.Api", "VirtualGarage.Api\VirtualGarage.Api.csproj", "{32CBCC19-889C-408F-B87C-C0D8DD519B27}"
 EndProject
@@ -33,6 +33,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.VehicleSpecs.Infrastructure", "VirtualGarage.VehicleSpecs.Infrastructure\VirtualGarage.VehicleSpecs.Infrastructure.csproj", "{D7742144-3A77-4766-982C-9E1D69B2BF3B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.VehicleSpecs.Api.Contracts", "VirtualGarage.VehicleSpecs.Api.Contracts\VirtualGarage.VehicleSpecs.Api.Contracts.csproj", "{5143383E-81D1-487F-AED3-D48911546605}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGarage.Infrastructure", "VirtualGarage.QuestPDF.Infrastructure\VirtualGarage.Infrastructure.csproj", "{64A12E40-FB55-4E69-94C3-97464031CB65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -200,6 +202,18 @@ Global
 		{5143383E-81D1-487F-AED3-D48911546605}.Release|x64.Build.0 = Release|Any CPU
 		{5143383E-81D1-487F-AED3-D48911546605}.Release|x86.ActiveCfg = Release|Any CPU
 		{5143383E-81D1-487F-AED3-D48911546605}.Release|x86.Build.0 = Release|Any CPU
+		{64A12E40-FB55-4E69-94C3-97464031CB65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64A12E40-FB55-4E69-94C3-97464031CB65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64A12E40-FB55-4E69-94C3-97464031CB65}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{64A12E40-FB55-4E69-94C3-97464031CB65}.Debug|x64.Build.0 = Debug|Any CPU
+		{64A12E40-FB55-4E69-94C3-97464031CB65}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{64A12E40-FB55-4E69-94C3-97464031CB65}.Debug|x86.Build.0 = Debug|Any CPU
+		{64A12E40-FB55-4E69-94C3-97464031CB65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64A12E40-FB55-4E69-94C3-97464031CB65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64A12E40-FB55-4E69-94C3-97464031CB65}.Release|x64.ActiveCfg = Release|Any CPU
+		{64A12E40-FB55-4E69-94C3-97464031CB65}.Release|x64.Build.0 = Release|Any CPU
+		{64A12E40-FB55-4E69-94C3-97464031CB65}.Release|x86.ActiveCfg = Release|Any CPU
+		{64A12E40-FB55-4E69-94C3-97464031CB65}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

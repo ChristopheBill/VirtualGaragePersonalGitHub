@@ -23,9 +23,6 @@ public sealed class SpecsService : ISpecsService
         _repository = repository;
     }
 
-    // public Task<CarSpecsResponse> GetSpecsAsync(string brand, string model, int year)
-    //     => GetOrFetchAsync(brand, model, year);
-
     public async Task<CarSpecsResponse> GetOrFetchAsync(
         string brand,
         string model,

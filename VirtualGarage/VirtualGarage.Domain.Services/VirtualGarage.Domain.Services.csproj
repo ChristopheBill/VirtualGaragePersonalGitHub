@@ -13,7 +13,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VirtualGarage.Contracts\VirtualGarage.Api.Contracts.csproj" />
+    <ProjectReference Include="..\VirtualGarage.Domain\VirtualGarage.Domain.Models.csproj" />
 	  <ProjectReference Include="..\VirtualGarage.Persistence\VirtualGarage.Persistence.csproj" />
+	  <ProjectReference Include="..\VirtualGarage.QuestPDF.Infrastructure\VirtualGarage.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
