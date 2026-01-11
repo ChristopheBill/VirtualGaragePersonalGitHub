@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VirtualGarage.VehicleSpecs.Api.Contracts.RequestContracts;
@@ -8,6 +9,7 @@ using VirtualGarage.VehicleSpecs.Domain.Services.Interfaces;
 namespace VirtualGarage.VehicleSpecs.Api.Controllers
 {
     [Route("api/specifications")]
+    [Authorize]
     [ApiController]
     public class SpecificationController : ControllerBase
     {

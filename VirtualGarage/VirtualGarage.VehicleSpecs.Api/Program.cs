@@ -25,6 +25,16 @@ builder.Services.AddHttpClient<ICarApiClient, CarApiClient>((sp, client) =>
     client.DefaultRequestHeaders.Add("X-Api-Key", settings.JwtToken);
 });
 
+// Setup authentication/authorization
+builder.Services.AddAuthentication()
+    .AddJwtBearer(options =>
+    {
+        options.Authority = "https://localhost:5001";
+        options.TokenValidationParameters.ValidateAudience = false;
+    });
+    
+builder.Services.AddAuthorization();
+
 // Domain service
 builder.Services.AddScoped<ISpecsService, SpecsService>();
 
