@@ -9,7 +9,6 @@ using VirtualGarage.VehicleSpecs.Domain.Services.Interfaces;
 namespace VirtualGarage.VehicleSpecs.Api.Controllers
 {
     [Route("api/specifications")]
-    [Authorize]
     [ApiController]
     public class SpecificationController : ControllerBase
     {

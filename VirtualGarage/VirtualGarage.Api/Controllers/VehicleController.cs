@@ -17,21 +17,9 @@ public static class HttpContextExtensions
     }
 }
 
-
-// using System.Security.Claims;
-
-// public static class ClaimsPrincipalExtensions
-// {
-//     // Extension method to get UserId from ClaimsPrincipal - before using IdentityServer
-//     public static Guid GetUserId(this ClaimsPrincipal user)
-//     {
-//         var id = user.FindFirstValue(ClaimTypes.NameIdentifier);
-//         return Guid.Parse(id!);
-//     }
-// }
-
 namespace VirtualGarage.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/vehicles")]
     public class VehicleController : ControllerBase

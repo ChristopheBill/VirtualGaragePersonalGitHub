@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VirtualGarage.Domain.Services.Interfaces;
 
 namespace VirtualGarage.VehicleSpecs.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/vehiclespecs")]
     public class VehicleSpecsController : ControllerBase

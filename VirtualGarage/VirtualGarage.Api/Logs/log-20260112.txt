@@ -1,0 +1,7 @@
+2026-01-12 00:14:28.385 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-12 00:25:07.160 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-12 00:25:08.484 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1293.7815 ms
+2026-01-12 00:26:03.423 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 366.3000 ms
+2026-01-12 00:26:37.636 +01:00 [INF] HTTP GET /api/vehiclespecs responded 200 in 194.5337 ms
+2026-01-12 00:27:09.974 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-12 00:27:10.996 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 982.6370 ms

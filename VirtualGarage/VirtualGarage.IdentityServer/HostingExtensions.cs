@@ -4,6 +4,7 @@ using VirtualGarage.IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Duende.IdentityServer.EntityFramework.DbContexts;
 
 namespace VirtualGarage.IdentityServer;
 
@@ -13,8 +14,13 @@ internal static class HostingExtensions
     {
         builder.Services.AddRazorPages();
 
+
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        
+        builder.Services.AddDbContext<ConfigurationDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+            options => options.MigrationsAssembly(typeof(Program).Assembly.GetName().Name)));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -31,9 +37,10 @@ internal static class HostingExtensions
                 // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
                 options.EmitStaticAudienceClaim = true;
             })
-            .AddInMemoryIdentityResources(Config.IdentityResources)
-            .AddInMemoryApiScopes(Config.ApiScopes)
-            .AddInMemoryClients(Config.Clients)
+            // .AddInMemoryIdentityResources(Config.IdentityResources)
+            // .AddInMemoryApiScopes(Config.ApiScopes)
+            // .AddInMemoryClients(Config.Clients)
+            .AddConfigurationStore()
             .AddAspNetIdentity<ApplicationUser>();
         
         builder.Services.AddAuthentication()

@@ -66,6 +66,16 @@ namespace VirtualGarage.Api
 
             System.Console.WriteLine("SeriLog configured");
 
+            // Setup authentication/authorization
+            builder.Services.AddAuthentication()
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://localhost:5001";
+                    options.TokenValidationParameters.ValidateAudience = false;
+                });
+                
+            builder.Services.AddAuthorization();
+
             // Add services to the container.
 
             builder.Services.AddControllers();

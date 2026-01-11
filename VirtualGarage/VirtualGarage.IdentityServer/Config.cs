@@ -14,22 +14,22 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
-            new ApiScope("virtualgarage.vehiclespecs.api"),
+            new ApiScope("virtualgarage.api"),
         };
 
     public static IEnumerable<Client> Clients =>
         new Client[]
         {
-            // m2m (postman => virtualgarage.vehiclespecs.api)
+            // m2m (postman => virtualgarage.api)
             new Client
             {
                 ClientId = "m2m.postman",
-                ClientName = "Postman Client for Virtual Garage Vehicle Specs API",
+                ClientName = "Postman Client for Virtual Garage API",
 
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
                 ClientSecrets = { new Secret("postmangeheim".Sha256()) },
 
-                AllowedScopes = { "virtualgarage.vehiclespecs.api" }
+                AllowedScopes = { "virtualgarage.api" }
             },
         };
 }
