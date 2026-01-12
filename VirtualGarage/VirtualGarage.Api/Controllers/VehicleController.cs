@@ -19,7 +19,7 @@ public static class HttpContextExtensions
 
 namespace VirtualGarage.Api.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("api/vehicles")]
     public class VehicleController : ControllerBase

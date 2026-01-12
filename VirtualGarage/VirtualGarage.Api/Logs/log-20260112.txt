@@ -5,3 +5,12 @@
 2026-01-12 00:26:37.636 +01:00 [INF] HTTP GET /api/vehiclespecs responded 200 in 194.5337 ms
 2026-01-12 00:27:09.974 +01:00 [WRN] Failed to determine the https port for redirect.
 2026-01-12 00:27:10.996 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 982.6370 ms
+2026-01-12 00:54:23.333 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-12 00:54:24.667 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1290.1513 ms
+2026-01-12 00:54:24.667 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1290.1883 ms
+2026-01-12 00:54:53.282 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 230.2773 ms
+2026-01-12 00:55:00.750 +01:00 [INF] HTTP DELETE /api/vehicles/1f062370-01f2-4141-b969-6b07b5b925fb responded 204 in 67.0787 ms
+2026-01-12 00:55:00.773 +01:00 [INF] HTTP DELETE /api/vehicles/1f062370-01f2-4141-b969-6b07b5b925fb responded 204 in 5.9169 ms
+2026-01-12 00:57:54.703 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-12 00:57:55.897 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1135.5993 ms
+2026-01-12 00:57:55.897 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1135.5959 ms
