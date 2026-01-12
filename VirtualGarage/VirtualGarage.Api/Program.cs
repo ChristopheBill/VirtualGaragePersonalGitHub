@@ -14,6 +14,7 @@ using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
 using QuestPDF.Infrastructure;
 using VirtualGarage.Infrastructure.Storage;
 using Azure.Storage.Blobs;
+using Scalar.AspNetCore;
 
 
 namespace VirtualGarage.Api
@@ -63,8 +64,9 @@ namespace VirtualGarage.Api
 
             builder.Host.UseSerilog((context, configuration) =>
             configuration.ReadFrom.Configuration(context.Configuration));
-
             System.Console.WriteLine("SeriLog configured");
+
+            builder.Services.AddOpenApi();
 
             // Setup authentication/authorization
             builder.Services.AddAuthentication()
@@ -129,19 +131,21 @@ namespace VirtualGarage.Api
 
             app.UseCors("DevCors");
 
+            if (app.Environment.IsDevelopment())
+            {
+                app.MapOpenApi();
+                app.MapScalarApiReference();
+            }
+
             app.UseHttpsRedirection();
 
-            System.Console.WriteLine("HTTPS Redirection configured");
+            System.Console.WriteLine("App running at http://localhost:5215/scalar");
 
             app.UseAuthorization();
-
-            System.Console.WriteLine("Authorization configured");
-
             app.UseSerilogRequestLogging();
-
             app.MapControllers();
 
-            System.Console.WriteLine("Controllers mapped");
+            System.Console.WriteLine("Application started");
 
             app.Run();
 

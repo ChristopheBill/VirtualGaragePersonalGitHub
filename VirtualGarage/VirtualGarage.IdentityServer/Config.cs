@@ -14,7 +14,8 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
-            new ApiScope("virtualgarage.api"),
+            new ApiScope("virtualgarage.api.read"),
+            new ApiScope("virtualgarage.api.write")
         };
 
     public static IEnumerable<Client> Clients =>
@@ -29,7 +30,7 @@ public static class Config
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
                 ClientSecrets = { new Secret("postmangeheim".Sha256()) },
 
-                AllowedScopes = { "virtualgarage.api" }
+                AllowedScopes = { "virtualgarage.api.read", "virtualgarage.api.write" }
             },
         };
 }

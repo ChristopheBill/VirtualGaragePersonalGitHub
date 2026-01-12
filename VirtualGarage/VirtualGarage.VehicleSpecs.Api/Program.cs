@@ -6,6 +6,8 @@ using VirtualGarage.VehicleSpecs.Infrastructure.Interfaces;
 using VirtualGarage.VehicleSpecs.Persistence.Interfaces;
 using VirtualGarage.VehicleSpecs.Persistence.Repositories;
 using VirtualGarage.VehicleSpecs.Domain.Services;
+using Microsoft.OpenApi;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +64,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference(); 
 }
 
 app.UseHttpsRedirection();

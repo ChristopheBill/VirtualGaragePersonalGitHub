@@ -31,3 +31,17 @@
 2026-01-12 03:19:17.178 +01:00 [INF] HTTP DELETE /api/vehicles/1df9bc85-f429-4303-834c-e1943f3c863e responded 204 in 8.4535 ms
 2026-01-12 03:19:25.628 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 5.5795 ms
 2026-01-12 03:19:25.628 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 5.6022 ms
+2026-01-12 19:19:40.974 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-12 19:19:41.036 +01:00 [INF] HTTP GET /scalar responded 302 in 11.5700 ms
+2026-01-12 19:19:41.196 +01:00 [INF] HTTP GET /scalar/ responded 200 in 126.3323 ms
+2026-01-12 19:19:41.268 +01:00 [INF] HTTP GET /scalar/scalar.aspnetcore.js responded 200 in 13.7317 ms
+2026-01-12 19:19:41.289 +01:00 [INF] HTTP GET /scalar/scalar.js responded 200 in 35.2810 ms
+2026-01-12 19:19:41.760 +01:00 [INF] HTTP GET /openapi/v1.json responded 200 in 158.7369 ms
+2026-01-12 19:19:41.776 +01:00 [INF] HTTP GET /scalar/favicon.svg responded 200 in 0.8066 ms
+2026-01-12 19:20:41.317 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-12 19:20:41.359 +01:00 [INF] HTTP GET /scalar responded 302 in 5.3334 ms
+2026-01-12 19:20:41.498 +01:00 [INF] HTTP GET /scalar/ responded 200 in 104.7235 ms
+2026-01-12 19:20:41.578 +01:00 [INF] HTTP GET /scalar/scalar.aspnetcore.js responded 200 in 8.3037 ms
+2026-01-12 19:20:41.588 +01:00 [INF] HTTP GET /scalar/scalar.js responded 200 in 17.8486 ms
+2026-01-12 19:20:41.963 +01:00 [INF] HTTP GET /openapi/v1.json responded 200 in 114.2494 ms
+2026-01-12 19:20:42.012 +01:00 [INF] HTTP GET /scalar/favicon.svg responded 200 in 0.3795 ms
