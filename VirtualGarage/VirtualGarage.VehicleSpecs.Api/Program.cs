@@ -61,10 +61,11 @@ builder.Services.AddSingleton<IVehicleSpecsRepository>(sp =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
     app.MapOpenApi();
     app.MapScalarApiReference(); 
+
+if (app.Environment.IsDevelopment())
+{
 }
 
 app.UseHttpsRedirection();

@@ -32,12 +32,12 @@ namespace VirtualGarage.VehicleSpecs.Api.Controllers
             }
             return Ok(specs);
         }   
-    // [HttpPost("lookup")]
-    // public async Task<ActionResult<CarSpecsResponse>> LookupAsync(
-    //     CarSpecsLookupRequest request)
-    // {
-    //     var specs = await _specsService.LookupAsync(request);
-    //     return Ok(specs);
-    // }
+            // [HttpPost("lookup")]
+            // public async Task<ActionResult<CarSpecsResponse>> LookupAsync(
+            //     CarSpecsLookupRequest request)
+            // {
+            //     var specs = await _specsService.LookupAsync(request);
+            //     return Ok(specs);
+            // }
 }
 }

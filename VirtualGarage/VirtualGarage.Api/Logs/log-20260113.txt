@@ -1,0 +1,6 @@
+2026-01-13 08:52:50.327 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-13 08:52:55.790 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 5356.2818 ms
+2026-01-13 08:52:55.790 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 5356.3117 ms
+2026-01-13 08:53:23.017 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 580.6053 ms
+2026-01-13 08:53:33.812 +01:00 [INF] HTTP DELETE /api/vehicles/99465a2e-a988-4c49-a881-13da2a18a8d9 responded 204 in 296.8363 ms
+2026-01-13 08:53:33.842 +01:00 [INF] HTTP DELETE /api/vehicles/99465a2e-a988-4c49-a881-13da2a18a8d9 responded 204 in 8.2710 ms
