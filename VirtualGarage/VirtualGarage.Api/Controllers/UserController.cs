@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using VirtualGarage.Domain.Services.Interfaces;
 using VirtualGarage.Contracts;
+using VirtualGarage.Api.Contracts;
 
 namespace VirtualGarage.Api.Controllers
 {
@@ -19,7 +20,7 @@ namespace VirtualGarage.Api.Controllers
 
         [HttpGet("{id:guid}")]
         // [Authorize]
-        public async Task<IActionResult> GetUserByIdAsync([FromRoute] Guid id)
+        public async Task<ActionResult<UserResponseContract>> GetUserByIdAsync([FromRoute] Guid id)
         {
             var user = await _userService.GetUserByIdAsync(id);
             if (user == null)
