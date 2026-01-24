@@ -59,6 +59,17 @@ builder.Services.AddSingleton<IVehicleSpecsRepository>(sp =>
     return new VehicleSpecsRepository(client, dbId, containerId);
 });
 
+ // Setup authentication/authorization
+    builder.Services.AddAuthentication()
+        .AddJwtBearer(options =>
+        {
+        options.Authority = "https://localhost:5001";
+        options.TokenValidationParameters.ValidateAudience = false;
+        });
+                
+    builder.Services.AddAuthorization();
+
+
 var app = builder.Build();
 
     app.MapOpenApi();
@@ -69,6 +80,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

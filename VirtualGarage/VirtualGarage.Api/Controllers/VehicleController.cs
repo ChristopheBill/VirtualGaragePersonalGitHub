@@ -49,7 +49,7 @@ namespace VirtualGarage.Api.Controllers
             return Ok(created);
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpGet("mine")]
         public async Task<IActionResult> GetMyVehicles()
         {
