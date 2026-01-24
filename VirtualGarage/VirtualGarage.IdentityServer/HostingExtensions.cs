@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Duende.IdentityServer.EntityFramework.DbContexts;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
 
 namespace VirtualGarage.IdentityServer;
 
@@ -12,6 +14,16 @@ internal static class HostingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        // Configure Key Vault
+        var keyVaultUrl = new Uri("https://virtualgarage-keyvault.vault.azure.net/");
+        builder.Configuration.AddAzureKeyVault(
+            keyVaultUrl,
+            new DefaultAzureCredential(),
+            new AzureKeyVaultConfigurationOptions
+            {
+                ReloadInterval = TimeSpan.FromHours(1)
+            });
+
         builder.Services.AddRazorPages();
         builder.Services.AddControllers();
         
@@ -29,10 +41,10 @@ internal static class HostingExtensions
 
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(builder.Configuration["identityserver-db-connection-string"]));
         
         builder.Services.AddDbContext<ConfigurationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+            options.UseSqlServer(builder.Configuration["identityserver-db-connection-string"],
             options => options.MigrationsAssembly(typeof(Program).Assembly.GetName().Name)));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()

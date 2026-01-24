@@ -1,5 +1,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.Azure.Cosmos;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
 using VirtualGarage.VehicleSpecs.Domain.Services.Interfaces;
 using VirtualGarage.VehicleSpecs.Infrastructure.CarApi;
 using VirtualGarage.VehicleSpecs.Infrastructure.Interfaces;
@@ -10,6 +12,16 @@ using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure Key Vault
+var keyVaultUrl = new Uri("https://virtualgarage-keyvault.vault.azure.net/");
+builder.Configuration.AddAzureKeyVault(
+    keyVaultUrl,
+    new DefaultAzureCredential(),
+    new AzureKeyVaultConfigurationOptions
+    {
+        ReloadInterval = TimeSpan.FromHours(1)
+    });
 
 // Bind CarApi settings (User Secrets / appsettings / KeyVault)
 builder.Services.Configure<CarApiSettings>(

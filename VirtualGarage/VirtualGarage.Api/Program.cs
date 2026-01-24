@@ -14,6 +14,8 @@ using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
 using QuestPDF.Infrastructure;
 using VirtualGarage.Infrastructure.Storage;
 using Azure.Storage.Blobs;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
 using Scalar.AspNetCore;
 using System.Security.Claims;
 
@@ -26,11 +28,26 @@ namespace VirtualGarage.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Configure Key Vault
+            var keyVaultUrl = new Uri("https://virtualgarage-keyvault.vault.azure.net/");
+            builder.Configuration.AddAzureKeyVault(
+                keyVaultUrl,
+                new DefaultAzureCredential(),
+                new AzureKeyVaultConfigurationOptions
+                {
+                    ReloadInterval = TimeSpan.FromHours(1)
+                });
+
             global::QuestPDF.Settings.License = global::QuestPDF.Infrastructure.LicenseType.Community;
 
             // EF Core - SQL
+            // Connection string loaded from Key Vault secret 'virtualgarage-db-connection-string'
+            string? connectionString = builder.Configuration["virtualgarage-db-connection-string"];
 
-            string? connectionString = builder.Configuration.GetConnectionString("VirtualGarage");
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new InvalidOperationException("Connection string 'virtualgarage-db-connection-string' not found in Key Vault configuration.");
+            }
 
             // Register DbContext with DI container
 

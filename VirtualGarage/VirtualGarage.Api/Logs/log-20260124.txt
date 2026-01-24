@@ -1952,3 +1952,16 @@ Error Number:2627,State:1,Class:14
 2026-01-24 18:08:58.436 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 6534.5856 ms
 2026-01-24 18:09:11.820 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 10.9943 ms
 2026-01-24 18:09:11.821 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 11.7360 ms
+2026-01-24 18:58:00.563 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-24 18:58:03.009 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1623.2946 ms
+2026-01-24 18:58:03.041 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 29.2989 ms
+2026-01-24 18:58:05.917 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 310.8004 ms
+2026-01-24 19:05:19.575 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-24 19:05:21.226 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 980.5203 ms
+2026-01-24 19:05:21.255 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 25.9624 ms
+2026-01-24 19:05:23.708 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 254.8495 ms
+2026-01-24 19:05:39.811 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 225.1267 ms
+2026-01-24 19:05:48.542 +01:00 [INF] HTTP PUT /api/vehicles/d02ca709-0dbf-480f-bd22-d44e2474cc3c responded 200 in 57.9431 ms
+2026-01-24 19:05:56.863 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 6983.2164 ms
+2026-01-24 19:06:09.295 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 6.2170 ms
+2026-01-24 19:06:09.308 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 18.8769 ms
