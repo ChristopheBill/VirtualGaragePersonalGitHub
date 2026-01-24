@@ -56,7 +56,8 @@ public static class Config
                 AllowedScopes = { "virtualgarage.api.read", "virtualgarage.api.write" }
             },
             // interactive ASP.NET Core MVC web app
-            new Client {
+            new Client 
+            {
                 ClientId = "react-app-client",
                 ClientSecrets = {new Secret("reactapp-secret".Sha256())},
                 AllowedGrantTypes = GrantTypes.Code,
@@ -66,9 +67,9 @@ public static class Config
                     "virtualgarage.api.read",
                     "virtualgarage.api.write"
                 },
-                RedirectUris = { "http://localhost:5215/" }, 
-                PostLogoutRedirectUris = { "http://localhost:5215/" }, 
-                AllowedCorsOrigins = { "http://localhost:5215" }, 
+                RedirectUris = { "http://localhost:5173/callback" },         
+                PostLogoutRedirectUris = { "http://localhost:5173/login" },    
+                AllowedCorsOrigins = { "http://localhost:5173" },        
             }
         };
 }
