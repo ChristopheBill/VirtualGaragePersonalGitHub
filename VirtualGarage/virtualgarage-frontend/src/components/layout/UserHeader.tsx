@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "react-oidc-context";
 import { useDarkMode } from "../../providers/DarkModeProvider";
 import AuthStatus from "../auth/AuthStatus";
 
@@ -6,6 +7,16 @@ export default function UserHeader() {
   const navigate = useNavigate();
   const location = useLocation();
   const { darkMode, toggleDarkMode } = useDarkMode();
+  const auth = useAuth();
+
+  const roleCandidates = [
+    auth.user?.profile?.role,
+    auth.user?.profile?.roles,
+    auth.user?.profile?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
+  ].filter(Boolean);
+  const isAdmin = roleCandidates.some((value) =>
+    Array.isArray(value) ? value.includes("Admin") : value === "Admin"
+  );
 
   return (
     <header className="w-full border-b border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900">
@@ -35,16 +46,18 @@ export default function UserHeader() {
               Vehicles
             </button>
 
-            <button
-              onClick={() => navigate("/users")}
-              className={`px-3 py-2 rounded-lg transition hover:cursor-pointer ${
-                location.pathname === "/users"
-                  ? "bg-blue-600 text-white dark:bg-blue-500"
-                  : "bg-neutral-200 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
-              }`}
-            >
-              Users
-            </button>
+            {isAdmin && (
+              <button
+                onClick={() => navigate("/users")}
+                className={`px-3 py-2 rounded-lg transition hover:cursor-pointer ${
+                  location.pathname === "/users"
+                    ? "bg-blue-600 text-white dark:bg-blue-500"
+                    : "bg-neutral-200 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
+                }`}
+              >
+                Users
+              </button>
+            )}
 
             <button
               onClick={toggleDarkMode}

@@ -9,6 +9,7 @@ namespace VirtualGarage.Api.Controllers
 {
     [ApiController]
     [Route("api/users")]
+    [Authorize(Policy = "AdminOnly")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import CallbackPage from "./pages/CallbackPage";
 import Layout from "./components/layout/Layout";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import AdminRoute from "./components/auth/AdminRoute";
 import { DarkModeProvider } from "./providers/DarkModeProvider";
 
 export default function App() {
@@ -44,7 +45,14 @@ export default function App() {
               <Layout>
                 <Routes>
                   <Route path="/" element={<HomePage />} />
-                  <Route path="/users" element={<UsersPage />} />
+                  <Route
+                    path="/users"
+                    element={
+                      <AdminRoute>
+                        <UsersPage />
+                      </AdminRoute>
+                    }
+                  />
                   <Route path="/vehicles" element={<VehiclesPage />} />
                   <Route path="*" element={
                     <div className="text-center py-12 text-neutral-400 dark:text-neutral-500">

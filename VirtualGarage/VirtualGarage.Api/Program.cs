@@ -15,6 +15,7 @@ using QuestPDF.Infrastructure;
 using VirtualGarage.Infrastructure.Storage;
 using Azure.Storage.Blobs;
 using Scalar.AspNetCore;
+using System.Security.Claims;
 
 
 namespace VirtualGarage.Api
@@ -74,9 +75,13 @@ namespace VirtualGarage.Api
                 {
                     options.Authority = "https://localhost:5001";
                     options.TokenValidationParameters.ValidateAudience = false;
+                    options.TokenValidationParameters.RoleClaimType = ClaimTypes.Role;
                 });
-                
-            builder.Services.AddAuthorization();
+            
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+            });
 
             
 

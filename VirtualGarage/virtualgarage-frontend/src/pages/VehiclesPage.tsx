@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { getMyVehicles, deleteVehicle } from "../api/vehicles";
+import { getVehicleSpecsPdf } from "../api/vehicleSpecs";
 import type { Vehicle } from "../types/vehicle";
 import VehicleCard from "../components/vehicles/VehicleCard";
 import EditVehicleModal from "../components/vehicles/EditVehicleModal";
 import AddVehicleModal from "../components/vehicles/AddVehicleModal";
 import DeleteConfirmModal from "../components/vehicles/DeleteConfirmModal";
+import PdfViewerModal from "../components/vehicles/PdfViewerModal";
 import Spinner from "../components/Spinner";
 
 
@@ -14,6 +16,8 @@ export default function VehiclesPage() {
   const [isAdding, setIsAdding] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [vehicleToDelete, setVehicleToDelete] = useState<Vehicle | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [pdfLoading, setPdfLoading] = useState(false);
 
 
   function openDelete(vehicle: Vehicle) {
@@ -42,6 +46,28 @@ function openEdit(vehicle: Vehicle) {
 
 function closeEdit() {
   setSelectedVehicle(null);
+}
+
+async function openPdfViewer(vehicle: Vehicle) {
+  setPdfLoading(true);
+  try {
+    const year = new Date(vehicle.manufactureDate).getFullYear();
+    const blob = await getVehicleSpecsPdf(vehicle.brand, vehicle.model, year);
+    const url = URL.createObjectURL(blob);
+    setPdfUrl(url);
+  } catch (error) {
+    console.error("Failed to load PDF:", error);
+    alert("Failed to load vehicle specifications PDF");
+  } finally {
+    setPdfLoading(false);
+  }
+}
+
+function closePdfViewer() {
+  if (pdfUrl) {
+    URL.revokeObjectURL(pdfUrl);
+  }
+  setPdfUrl(null);
 }
 
   useEffect(() => {
@@ -82,8 +108,8 @@ function closeEdit() {
           key={v.id} 
           vehicle={v} 
           onEdit={openEdit} 
-          onDelete={() => {openDelete(v)
-          }}
+          onDelete={() => openDelete(v)}
+          onViewPdf={openPdfViewer}
           />
         ))}
       </div>
@@ -118,6 +144,23 @@ function closeEdit() {
         onClose={closeDelete}
         onDeleted={confirmDelete}
       />
+    )}
+
+    {pdfUrl && (
+      <PdfViewerModal
+        pdfUrl={pdfUrl}
+        onClose={closePdfViewer}
+        title="Vehicle Specifications"
+      />
+    )}
+
+    {pdfLoading && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-500 mx-auto mb-4"></div>
+          <p className="text-white">Loading PDF...</p>
+        </div>
+      </div>
     )}
   </div>
 );

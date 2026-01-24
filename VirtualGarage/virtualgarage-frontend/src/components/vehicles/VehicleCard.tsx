@@ -4,9 +4,10 @@ type Props = {
   vehicle: Vehicle;
   onEdit: (vehicle: Vehicle) => void;
   onDelete: (id: string) => void;
+  onViewPdf: (vehicle: Vehicle) => void;
 };
 
-export default function VehicleCard({ vehicle, onEdit, onDelete }: Props) {
+export default function VehicleCard({ vehicle, onEdit, onDelete, onViewPdf }: Props) {
   return (
     <div className="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 p-6 hover:shadow-lg transition">
       <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">
@@ -18,6 +19,13 @@ export default function VehicleCard({ vehicle, onEdit, onDelete }: Props) {
       </p>
 
       <div className="mt-4 flex flex-col sm:flex-row gap-2">
+        <button
+          onClick={() => onViewPdf(vehicle)}
+          className="px-4 py-2 text-sm rounded-lg font-medium bg-green-600 text-white hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 transition-colors"
+        >
+          View Specs PDF
+        </button>
+
         <button
           onClick={() => onEdit(vehicle)}
           className="px-4 py-2 text-sm rounded-lg font-medium bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors"

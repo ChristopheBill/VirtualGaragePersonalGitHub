@@ -978,3 +978,227 @@ System.Text.Json.JsonException: A possible object cycle was detected. This can e
    at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-24 06:01:25.478 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-24 06:01:27.829 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1422.8225 ms
+2026-01-24 06:01:27.891 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 35.9041 ms
+2026-01-24 06:01:35.421 +01:00 [INF] HTTP DELETE /api/vehicles/92c24bbd-3b00-4dbb-ab0d-6cf55cff1773 responded 204 in 253.8984 ms
+2026-01-24 06:01:35.443 +01:00 [INF] HTTP DELETE /api/vehicles/92c24bbd-3b00-4dbb-ab0d-6cf55cff1773 responded 204 in 8.3030 ms
+2026-01-24 06:01:39.167 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 6.7830 ms
+2026-01-24 06:01:39.186 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 25.5903 ms
+2026-01-24 06:01:54.106 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 74.6820 ms
+2026-01-24 06:02:14.489 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 6.6109 ms
+2026-01-24 06:02:14.502 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 8.6267 ms
+2026-01-24 06:05:25.008 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-24 06:05:27.482 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1420.1596 ms
+2026-01-24 06:05:27.528 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 35.1417 ms
+2026-01-24 06:06:16.319 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 89.6425 ms
+2026-01-24 06:06:16.333 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 9.8644 ms
+2026-01-24 06:09:35.493 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 6.5599 ms
+2026-01-24 06:09:35.507 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 9.6877 ms
+2026-01-24 06:10:09.334 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 7.3097 ms
+2026-01-24 06:10:09.353 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 25.5332 ms
+2026-01-24 06:10:56.698 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-24 06:11:00.287 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 987.9178 ms
+2026-01-24 06:11:00.287 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 987.9250 ms
+2026-01-24 06:12:20.626 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 72.2457 ms
+2026-01-24 06:12:20.626 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 72.2890 ms
+2026-01-24 06:13:28.441 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 94.3510 ms
+2026-01-24 06:13:28.447 +01:00 [ERR] Failed executing DbCommand (18ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 200), @p3='?' (Size = 100), @p4='?' (Size = 100), @p5='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([Id], [BirthDay], [Email], [FirstName], [LastName], [UserRole])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2026-01-24 06:13:28.462 +01:00 [ERR] An exception occurred in the database while saving changes for context type 'VirtualGarage.Persistence.DbContexts.VirtualGarageDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Violation of PRIMARY KEY constraint 'PK_Users'. Cannot insert duplicate key in object 'dbo.Users'. The duplicate key value is (b81c20c0-4b7b-4c53-8e83-7f36fcedc2ad).
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:3a1f4387-4e64-4a57-aabe-87b945f8acf9
+Error Number:2627,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Violation of PRIMARY KEY constraint 'PK_Users'. Cannot insert duplicate key in object 'dbo.Users'. The duplicate key value is (b81c20c0-4b7b-4c53-8e83-7f36fcedc2ad).
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:3a1f4387-4e64-4a57-aabe-87b945f8acf9
+Error Number:2627,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-01-24 06:13:28.470 +01:00 [ERR] HTTP GET /api/vehicles/mine responded 500 in 123.4335 ms
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Violation of PRIMARY KEY constraint 'PK_Users'. Cannot insert duplicate key in object 'dbo.Users'. The duplicate key value is (b81c20c0-4b7b-4c53-8e83-7f36fcedc2ad).
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:3a1f4387-4e64-4a57-aabe-87b945f8acf9
+Error Number:2627,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at VirtualGarage.Persistence.UserRepository.CreateUserAsync(User user) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Persistence\UserRepository.cs:line 12
+   at VirtualGarage.Api.Controllers.VehicleController.EnsureUserExists(Guid userId) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleController.cs:line 55
+   at VirtualGarage.Api.Controllers.VehicleController.GetMyVehicles() in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleController.cs:line 91
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-01-24 06:13:28.509 +01:00 [ERR] An unhandled exception has occurred while executing the request.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Violation of PRIMARY KEY constraint 'PK_Users'. Cannot insert duplicate key in object 'dbo.Users'. The duplicate key value is (b81c20c0-4b7b-4c53-8e83-7f36fcedc2ad).
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:3a1f4387-4e64-4a57-aabe-87b945f8acf9
+Error Number:2627,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at VirtualGarage.Persistence.UserRepository.CreateUserAsync(User user) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Persistence\UserRepository.cs:line 12
+   at VirtualGarage.Api.Controllers.VehicleController.EnsureUserExists(Guid userId) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleController.cs:line 55
+   at VirtualGarage.Api.Controllers.VehicleController.GetMyVehicles() in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleController.cs:line 91
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-24 06:13:38.343 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 8.6672 ms
+2026-01-24 06:13:38.343 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 8.7415 ms
+2026-01-24 06:14:00.917 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 12.0535 ms
+2026-01-24 06:14:00.917 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 12.0536 ms
+2026-01-24 06:14:48.733 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 8.1722 ms
+2026-01-24 06:14:48.733 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 8.1653 ms
+2026-01-24 06:16:33.602 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 7.2266 ms
+2026-01-24 06:16:33.602 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 7.2221 ms
+2026-01-24 06:17:45.705 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 7.8348 ms
+2026-01-24 06:17:45.705 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 7.9284 ms
+2026-01-24 06:21:07.542 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-24 06:21:09.375 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1036.6477 ms
+2026-01-24 06:21:09.375 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1036.7364 ms
+2026-01-24 06:24:55.741 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-24 06:24:57.802 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1265.4459 ms
+2026-01-24 06:24:57.802 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1265.4396 ms
+2026-01-24 06:25:06.182 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 6822.9050 ms
+2026-01-24 06:25:18.643 +01:00 [ERR] HTTP GET /api/vehiclespecs/pdf responded 500 in 3440.4095 ms
+System.ApplicationException: VehicleSpecs API failed: InternalServerError
+   at VirtualGarage.QuestPDF.Infrastructure.Clients.VehicleSpecsClient.GetSpecsAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.QuestPDF.Infrastructure\Clients\VehicleSpecsClient.cs:line 42
+   at VehicleReportService.GetOrCreatePdfAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Domain.Services\VehicleReportService.cs:line 42
+   at VirtualGarage.VehicleSpecs.Api.Controllers.VehicleSpecsController.GetPdf(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleSpecsController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-01-24 06:25:18.686 +01:00 [ERR] An unhandled exception has occurred while executing the request.
+System.ApplicationException: VehicleSpecs API failed: InternalServerError
+   at VirtualGarage.QuestPDF.Infrastructure.Clients.VehicleSpecsClient.GetSpecsAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.QuestPDF.Infrastructure\Clients\VehicleSpecsClient.cs:line 42
+   at VehicleReportService.GetOrCreatePdfAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Domain.Services\VehicleReportService.cs:line 42
+   at VirtualGarage.VehicleSpecs.Api.Controllers.VehicleSpecsController.GetPdf(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleSpecsController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-24 06:25:33.012 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 216.4136 ms
+2026-01-24 06:25:37.592 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 2956.7032 ms
+2026-01-24 06:26:12.336 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 13.7383 ms
+2026-01-24 06:26:16.799 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 3292.7621 ms
+2026-01-24 06:26:35.558 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 9.0290 ms
+2026-01-24 06:26:35.558 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 9.0022 ms

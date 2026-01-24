@@ -10,6 +10,7 @@ public static class Config
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
+            new IdentityResource("roles", new[]{ "role" })
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
@@ -64,6 +65,7 @@ public static class Config
                 AllowedScopes = {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
+                    "roles",
                     "virtualgarage.api.read",
                     "virtualgarage.api.write"
                 },
