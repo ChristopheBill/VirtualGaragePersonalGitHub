@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http.Json;
+using Duende.IdentityModel.Client;
 using VirtualGarage.Domain.Models;
 using VirtualGarage.QuestPDF.Infrastructure.DTOs;
 using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
@@ -23,6 +24,16 @@ public sealed class VehicleSpecsClient : IVehicleSpecsProvider
         if (string.IsNullOrWhiteSpace(model)) throw new ArgumentException("Model is required", nameof(model));
 
         var url = $"api/specifications?brand={Uri.EscapeDataString(brand)}&model={Uri.EscapeDataString(model)}&year={year}";
+
+        var disco = await _httpClient.GetDiscoveryDocumentAsync("https://localhost:5001");
+        var tokenResponse = await _httpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+        {
+            Address = disco.TokenEndpoint,
+            ClientId = "m2m.virtualgarage.api",
+            ClientSecret = "virtualgaragesecret",
+            Scope = "virtualgarage.api.read"
+        });
+        _httpClient.SetBearerToken(tokenResponse.AccessToken);
 
         var response = await _httpClient.GetAsync(url);
 

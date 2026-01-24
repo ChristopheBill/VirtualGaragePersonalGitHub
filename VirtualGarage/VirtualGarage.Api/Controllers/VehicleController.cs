@@ -19,7 +19,7 @@ public static class HttpContextExtensions
 
 namespace VirtualGarage.Api.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/vehicles")]
     public class VehicleController : ControllerBase
@@ -49,7 +49,7 @@ namespace VirtualGarage.Api.Controllers
             return Ok(created);
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet("mine")]
         public async Task<IActionResult> GetMyVehicles()
         {

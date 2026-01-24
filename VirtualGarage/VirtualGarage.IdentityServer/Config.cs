@@ -42,7 +42,18 @@ public static class Config
                 ClientSecrets = { new Secret("postmangeheim".Sha256()) },
 
                 AllowedScopes = { "virtualgarage.api.read", "virtualgarage.api.write" }
+            },
+            //m2m (virtualgarage.api => vehiclespecs.api)
+            new Client
+            {
+                ClientId = "m2m.virtualgarage.api",
+                ClientName = "Client for Virtual Garage API to access Vehicle Specs API",
+
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                ClientSecrets = { new Secret("virtualgaragesecret".Sha256()) },
+
+                AllowedScopes = { "virtualgarage.api.read", "virtualgarage.api.write" }
             }
-            
+
         };
 }

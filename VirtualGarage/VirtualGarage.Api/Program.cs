@@ -78,6 +78,8 @@ namespace VirtualGarage.Api
                 
             builder.Services.AddAuthorization();
 
+            
+
             // Add services to the container.
 
             builder.Services.AddControllers();

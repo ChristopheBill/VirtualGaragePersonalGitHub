@@ -60,14 +60,21 @@ builder.Services.AddSingleton<IVehicleSpecsRepository>(sp =>
 });
 
  // Setup authentication/authorization
-    builder.Services.AddAuthentication()
+    builder.Services.AddAuthentication("Bearer")
         .AddJwtBearer(options =>
         {
-        options.Authority = "https://localhost:5001";
-        options.TokenValidationParameters.ValidateAudience = false;
+            options.Authority = "https://localhost:5001";
+            options.TokenValidationParameters.ValidateAudience = false;
         });
                 
-    builder.Services.AddAuthorization();
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("VehicleSpecsApiScope", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireClaim("scope", "vehiclespecs.api");
+        });
+    });
 
 
 var app = builder.Build();
