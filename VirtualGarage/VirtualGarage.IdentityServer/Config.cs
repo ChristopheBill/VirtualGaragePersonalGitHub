@@ -1,4 +1,5 @@
-﻿using Duende.IdentityServer.Models;
+﻿using Duende.IdentityServer;
+using Duende.IdentityServer.Models;
 
 namespace VirtualGarage.IdentityServer;
 
@@ -53,7 +54,21 @@ public static class Config
                 ClientSecrets = { new Secret("virtualgaragesecret".Sha256()) },
 
                 AllowedScopes = { "virtualgarage.api.read", "virtualgarage.api.write" }
+            },
+            // interactive ASP.NET Core MVC web app
+            new Client {
+                ClientId = "react-app-client",
+                ClientSecrets = {new Secret("reactapp-secret".Sha256())},
+                AllowedGrantTypes = GrantTypes.Code,
+                AllowedScopes = {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "virtualgarage.api.read",
+                    "virtualgarage.api.write"
+                },
+                RedirectUris = { "http://localhost:5215/" }, 
+                PostLogoutRedirectUris = { "http://localhost:5215/" }, 
+                AllowedCorsOrigins = { "http://localhost:5215" }, 
             }
-
         };
 }

@@ -359,3 +359,10 @@ System.ApplicationException: VehicleSpecs API failed: Unauthorized
 2026-01-24 04:12:51.194 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 59.0302 ms
 2026-01-24 04:12:54.784 +01:00 [INF] HTTP GET /api/vehiclespecs responded 200 in 821.9673 ms
 2026-01-24 04:13:01.671 +01:00 [INF] HTTP GET /api/vehiclespecs responded 200 in 807.6848 ms
+2026-01-24 04:50:17.918 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-24 04:54:12.230 +01:00 [INF] HTTP GET /api/vehicles/823b097f-0828-4cfc-9b91-ec3cabc9002c responded 200 in 1615.9107 ms
+2026-01-24 04:54:16.808 +01:00 [INF] HTTP GET /api/vehicles/823b097f-0828-4cfc-9b91-ec3cabc9002c responded 200 in 32.3034 ms
+2026-01-24 04:54:27.356 +01:00 [INF] HTTP GET /api/vehiclespecs responded 200 in 3222.4995 ms
+2026-01-24 04:54:35.038 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 164.0023 ms
+2026-01-24 04:54:42.274 +01:00 [INF] HTTP GET /api/vehiclespecs responded 200 in 789.1806 ms
+2026-01-24 04:54:49.443 +01:00 [INF] HTTP GET /api/vehiclespecs responded 200 in 876.0321 ms
