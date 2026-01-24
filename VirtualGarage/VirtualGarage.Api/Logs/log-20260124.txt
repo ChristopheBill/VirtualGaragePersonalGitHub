@@ -2444,3 +2444,8 @@ System.ApplicationException: VehicleSpecs API failed: InternalServerError
 2026-01-24 19:32:28.657 +01:00 [WRN] Failed to determine the https port for redirect.
 2026-01-24 19:32:30.847 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 1490.7079 ms
 2026-01-24 19:32:38.466 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 5956.6981 ms
+2026-01-24 21:03:18.585 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-24 21:03:20.613 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1320.8540 ms
+2026-01-24 21:03:20.643 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 24.8204 ms
+2026-01-24 21:03:29.672 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 351.6630 ms
+2026-01-24 21:03:49.677 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 69.9154 ms
