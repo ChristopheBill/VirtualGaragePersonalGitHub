@@ -1202,3 +1202,191 @@ System.ApplicationException: VehicleSpecs API failed: InternalServerError
 2026-01-24 06:26:16.799 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 3292.7621 ms
 2026-01-24 06:26:35.558 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 9.0290 ms
 2026-01-24 06:26:35.558 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 9.0022 ms
+2026-01-24 17:42:14.539 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-24 17:42:16.706 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1380.5472 ms
+2026-01-24 17:42:16.706 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 1380.5302 ms
+2026-01-24 17:42:19.995 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 432.9814 ms
+2026-01-24 17:42:36.706 +01:00 [ERR] HTTP GET /api/vehiclespecs/pdf responded 500 in 6608.1113 ms
+System.ApplicationException: VehicleSpecs API failed: InternalServerError
+   at VirtualGarage.QuestPDF.Infrastructure.Clients.VehicleSpecsClient.GetSpecsAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.QuestPDF.Infrastructure\Clients\VehicleSpecsClient.cs:line 42
+   at VehicleReportService.GetOrCreatePdfAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Domain.Services\VehicleReportService.cs:line 42
+   at VirtualGarage.VehicleSpecs.Api.Controllers.VehicleSpecsController.GetPdf(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleSpecsController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-01-24 17:42:36.779 +01:00 [ERR] An unhandled exception has occurred while executing the request.
+System.ApplicationException: VehicleSpecs API failed: InternalServerError
+   at VirtualGarage.QuestPDF.Infrastructure.Clients.VehicleSpecsClient.GetSpecsAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.QuestPDF.Infrastructure\Clients\VehicleSpecsClient.cs:line 42
+   at VehicleReportService.GetOrCreatePdfAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Domain.Services\VehicleReportService.cs:line 42
+   at VirtualGarage.VehicleSpecs.Api.Controllers.VehicleSpecsController.GetPdf(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleSpecsController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-24 17:42:43.463 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 60.7170 ms
+2026-01-24 17:43:05.153 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 255.2324 ms
+2026-01-24 17:43:09.953 +01:00 [ERR] HTTP GET /api/vehiclespecs/pdf responded 500 in 2981.8270 ms
+System.ApplicationException: VehicleSpecs API failed: InternalServerError
+   at VirtualGarage.QuestPDF.Infrastructure.Clients.VehicleSpecsClient.GetSpecsAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.QuestPDF.Infrastructure\Clients\VehicleSpecsClient.cs:line 42
+   at VehicleReportService.GetOrCreatePdfAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Domain.Services\VehicleReportService.cs:line 42
+   at VirtualGarage.VehicleSpecs.Api.Controllers.VehicleSpecsController.GetPdf(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleSpecsController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-01-24 17:43:09.959 +01:00 [ERR] An unhandled exception has occurred while executing the request.
+System.ApplicationException: VehicleSpecs API failed: InternalServerError
+   at VirtualGarage.QuestPDF.Infrastructure.Clients.VehicleSpecsClient.GetSpecsAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.QuestPDF.Infrastructure\Clients\VehicleSpecsClient.cs:line 42
+   at VehicleReportService.GetOrCreatePdfAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Domain.Services\VehicleReportService.cs:line 42
+   at VirtualGarage.VehicleSpecs.Api.Controllers.VehicleSpecsController.GetPdf(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleSpecsController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-24 17:43:13.336 +01:00 [INF] HTTP DELETE /api/vehicles/62d349fd-00a2-41b9-8ea0-a799b81b89a8 responded 204 in 67.7410 ms
+2026-01-24 17:43:13.356 +01:00 [INF] HTTP DELETE /api/vehicles/62d349fd-00a2-41b9-8ea0-a799b81b89a8 responded 204 in 9.3719 ms
+2026-01-24 17:43:41.748 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 18.8705 ms
+2026-01-24 17:43:46.329 +01:00 [ERR] HTTP GET /api/vehiclespecs/pdf responded 500 in 3052.7080 ms
+System.ApplicationException: VehicleSpecs API failed: InternalServerError
+   at VirtualGarage.QuestPDF.Infrastructure.Clients.VehicleSpecsClient.GetSpecsAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.QuestPDF.Infrastructure\Clients\VehicleSpecsClient.cs:line 42
+   at VehicleReportService.GetOrCreatePdfAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Domain.Services\VehicleReportService.cs:line 42
+   at VirtualGarage.VehicleSpecs.Api.Controllers.VehicleSpecsController.GetPdf(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleSpecsController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-01-24 17:43:46.339 +01:00 [ERR] An unhandled exception has occurred while executing the request.
+System.ApplicationException: VehicleSpecs API failed: InternalServerError
+   at VirtualGarage.QuestPDF.Infrastructure.Clients.VehicleSpecsClient.GetSpecsAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.QuestPDF.Infrastructure\Clients\VehicleSpecsClient.cs:line 42
+   at VehicleReportService.GetOrCreatePdfAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Domain.Services\VehicleReportService.cs:line 42
+   at VirtualGarage.VehicleSpecs.Api.Controllers.VehicleSpecsController.GetPdf(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleSpecsController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-24 17:43:51.296 +01:00 [INF] HTTP PUT /api/vehicles/965c7533-c993-4432-a130-01010b1fa4f3 responded 200 in 43.1469 ms
+2026-01-24 17:43:55.357 +01:00 [ERR] HTTP GET /api/vehiclespecs/pdf responded 500 in 2881.2780 ms
+System.ApplicationException: VehicleSpecs API failed: InternalServerError
+   at VirtualGarage.QuestPDF.Infrastructure.Clients.VehicleSpecsClient.GetSpecsAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.QuestPDF.Infrastructure\Clients\VehicleSpecsClient.cs:line 42
+   at VehicleReportService.GetOrCreatePdfAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Domain.Services\VehicleReportService.cs:line 42
+   at VirtualGarage.VehicleSpecs.Api.Controllers.VehicleSpecsController.GetPdf(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleSpecsController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-01-24 17:43:55.367 +01:00 [ERR] An unhandled exception has occurred while executing the request.
+System.ApplicationException: VehicleSpecs API failed: InternalServerError
+   at VirtualGarage.QuestPDF.Infrastructure.Clients.VehicleSpecsClient.GetSpecsAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.QuestPDF.Infrastructure\Clients\VehicleSpecsClient.cs:line 42
+   at VehicleReportService.GetOrCreatePdfAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Domain.Services\VehicleReportService.cs:line 42
+   at VirtualGarage.VehicleSpecs.Api.Controllers.VehicleSpecsController.GetPdf(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleSpecsController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-24 17:44:09.392 +01:00 [INF] HTTP PUT /api/vehicles/965c7533-c993-4432-a130-01010b1fa4f3 responded 200 in 28.0775 ms
+2026-01-24 17:44:13.578 +01:00 [ERR] HTTP GET /api/vehiclespecs/pdf responded 500 in 3075.3035 ms
+System.ApplicationException: VehicleSpecs API failed: InternalServerError
+   at VirtualGarage.QuestPDF.Infrastructure.Clients.VehicleSpecsClient.GetSpecsAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.QuestPDF.Infrastructure\Clients\VehicleSpecsClient.cs:line 42
+   at VehicleReportService.GetOrCreatePdfAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Domain.Services\VehicleReportService.cs:line 42
+   at VirtualGarage.VehicleSpecs.Api.Controllers.VehicleSpecsController.GetPdf(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleSpecsController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-01-24 17:44:13.616 +01:00 [ERR] An unhandled exception has occurred while executing the request.
+System.ApplicationException: VehicleSpecs API failed: InternalServerError
+   at VirtualGarage.QuestPDF.Infrastructure.Clients.VehicleSpecsClient.GetSpecsAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.QuestPDF.Infrastructure\Clients\VehicleSpecsClient.cs:line 42
+   at VehicleReportService.GetOrCreatePdfAsync(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Domain.Services\VehicleReportService.cs:line 42
+   at VirtualGarage.VehicleSpecs.Api.Controllers.VehicleSpecsController.GetPdf(String brand, String model, Int32 year) in C:\repo\VirtualGarage\VirtualGarage\VirtualGarage\VirtualGarage.Api\Controllers\VehicleSpecsController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-24 17:44:27.765 +01:00 [INF] HTTP PUT /api/vehicles/965c7533-c993-4432-a130-01010b1fa4f3 responded 200 in 28.2491 ms
+2026-01-24 17:44:33.126 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 4029.1502 ms
+2026-01-24 17:45:07.469 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 8.0693 ms
+2026-01-24 17:45:07.479 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 5.6046 ms
+2026-01-24 17:45:08.589 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 59.3561 ms
+2026-01-24 17:45:12.921 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 54.2488 ms
+2026-01-24 17:47:35.227 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-24 17:47:46.853 +01:00 [INF] HTTP GET /api/vehiclespecs responded 200 in 5398.1942 ms
+2026-01-24 17:47:59.606 +01:00 [INF] HTTP GET /api/vehicles/mine responded 401 in 115.6256 ms
+2026-01-24 17:48:04.486 +01:00 [INF] HTTP GET /api/vehicles/mine responded 401 in 6.3779 ms
+2026-01-24 17:48:11.562 +01:00 [INF] HTTP GET /api/vehicles/mine responded 401 in 11.0472 ms
+2026-01-24 17:48:37.267 +01:00 [INF] HTTP GET /api/vehiclespecs responded 200 in 2925.8058 ms

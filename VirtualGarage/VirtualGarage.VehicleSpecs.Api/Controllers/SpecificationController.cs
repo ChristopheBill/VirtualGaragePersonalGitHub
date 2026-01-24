@@ -19,7 +19,7 @@ namespace VirtualGarage.VehicleSpecs.Api.Controllers
             _specsService = specsService;
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetSpecsAsync(
             [FromQuery] string brand,

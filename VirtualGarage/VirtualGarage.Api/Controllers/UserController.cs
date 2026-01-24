@@ -32,7 +32,7 @@ namespace VirtualGarage.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUserAsync([FromBody] UserRequestContract userRequestContract)
+        public async Task<ActionResult<UserResponseContract>> CreateUserAsync([FromBody] UserRequestContract userRequestContract)
         {
             var createdUser = await _userService.CreateUserAsync(userRequestContract);
             // return CreatedAtAction(nameof(GetUserByIdAsync),  // action name
