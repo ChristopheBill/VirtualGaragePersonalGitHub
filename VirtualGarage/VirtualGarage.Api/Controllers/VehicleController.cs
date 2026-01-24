@@ -57,7 +57,7 @@ namespace VirtualGarage.Api.Controllers
 
        [HttpGet("{id:guid}")]
     //    [Route("index")]
-       public async Task<IActionResult> GetCarByIdAsync([FromRoute] Guid id)
+       public async Task<ActionResult<VehicleResponseContract>> GetCarByIdAsync([FromRoute] Guid id)
         {
             var vehicle =  await _vehicleService.GetVehicleAsync(id);
             if (vehicle == null)
@@ -67,7 +67,7 @@ namespace VirtualGarage.Api.Controllers
             return new OkObjectResult(vehicle);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateVehicleAsync([FromBody] VehicleRequestContract vehicle)
+        public async Task<ActionResult<VehicleResponseContract>> CreateVehicleAsync([FromBody] VehicleRequestContract vehicle)
         {
             var userId = GetUserIdFromClaims();
             if (userId is null)
@@ -81,7 +81,7 @@ namespace VirtualGarage.Api.Controllers
 
         // [Authorize]
         [HttpGet("mine")]
-        public async Task<IActionResult> GetMyVehicles()
+        public async Task<ActionResult<IEnumerable<VehicleResponseContract>>> GetMyVehicles()
         {
             var userId = GetUserIdFromClaims();
             if (userId is null)
@@ -94,14 +94,14 @@ namespace VirtualGarage.Api.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateVehicle(Guid id, [FromBody] VehicleRequestContract contract)
+        public async Task<ActionResult<VehicleResponseContract>> UpdateVehicle(Guid id, [FromBody] VehicleRequestContract contract)
         {
             var updated = await _vehicleService.UpdateVehicleAsync(id, contract);
             return Ok(updated);
         }       
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteVehicle(Guid id)
+        public async Task<ActionResult> DeleteVehicle(Guid id)
         {
             await _vehicleService.DeleteVehicleAsync(id);
             return NoContent();
