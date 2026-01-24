@@ -18,7 +18,7 @@ export default function HomePage() {
     <div className="max-w-4xl mx-auto">
       <div className="text-center py-12">
         <h1 className="text-4xl font-bold mb-4 text-neutral-900 dark:text-white">Virtual Garage</h1>
-        <p className="text-neutral-600 dark:text-neutral-400 mb-8 text-lg">Manage your vehicles and users</p>
+        <p className="text-neutral-600 dark:text-neutral-400 mb-8 text-lg">Manage your vehicles</p>
         <div className="flex gap-4 justify-center flex-wrap">
           <button onClick={() => navigate("/vehicles")} className={primaryButton}>
             My Vehicles
