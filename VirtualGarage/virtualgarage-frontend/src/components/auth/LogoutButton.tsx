@@ -4,7 +4,7 @@ export default function LogoutButton() {
   const auth = useAuth();
 
   const handleLogout = async () => {
-    await auth.removeUser();
+    await auth.signoutRedirect();
   };
 
   return (

@@ -13,6 +13,19 @@ internal static class HostingExtensions
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddRazorPages();
+        builder.Services.AddControllers();
+        
+        // Add CORS support for React frontend
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowReactApp", policy =>
+            {
+                policy.WithOrigins("http://localhost:5173")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
 
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -69,11 +82,14 @@ internal static class HostingExtensions
 
         app.UseStaticFiles();
         app.UseRouting();
+        app.UseCors("AllowReactApp");
         app.UseIdentityServer();
         app.UseAuthorization();
         
         app.MapRazorPages()
             .RequireAuthorization();
+        
+        app.MapControllers();
 
         return app;
     }
