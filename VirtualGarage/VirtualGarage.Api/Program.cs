@@ -59,16 +59,27 @@ namespace VirtualGarage.Api
             builder.Services.Configure<VehicleSpecsApiOptions>(
                 builder.Configuration.GetSection("VehicleSpecsApi"));
 
-            Console.WriteLine($"Connection String: {connectionString}");
+            // Configure BlobStorage options via Key Vault (hyphenated secrets)
+            var blobConnectionString = builder.Configuration["BlobStorage-ConnectionString"];
+            var blobContainerName = builder.Configuration["BlobStorage-ContainerName"];
 
-            // Configure BlobStorage options
+            if (string.IsNullOrWhiteSpace(blobConnectionString))
+            {
+                throw new InvalidOperationException("BlobStorage-ConnectionString not found in configuration (Key Vault).");
+            }
 
-            builder.Services.Configure<BlobStorageOptions>(
-                builder.Configuration.GetSection("BlobStorage"));
+            if (string.IsNullOrWhiteSpace(blobContainerName))
+            {
+                throw new InvalidOperationException("BlobStorage-ContainerName not found in configuration (Key Vault).");
+            }
 
-            System.Console.WriteLine("BlobStorage options configured, ContainerName: " + 
-                builder.Configuration.GetSection("BlobStorage:ContainerName").Value);
-            
+            // Bind options
+            builder.Services.Configure<BlobStorageOptions>(opts =>
+            {
+                opts.ConnectionString = blobConnectionString;
+                opts.ContainerName = blobContainerName;
+            });
+
             // Register BlobServiceClient with DI container
             
             builder.Services.AddSingleton(sp =>
@@ -82,7 +93,6 @@ namespace VirtualGarage.Api
 
             builder.Host.UseSerilog((context, configuration) =>
             configuration.ReadFrom.Configuration(context.Configuration));
-            System.Console.WriteLine("SeriLog configured");
 
             builder.Services.AddOpenApi();
 
@@ -123,14 +133,16 @@ namespace VirtualGarage.Api
             (sp, client) =>
             {
                 var config = sp.GetRequiredService<IConfiguration>();
-                var baseUrl = config["VehicleSpecsApi:BaseUrl"];
+                var baseUrl = config["VehicleSpecsApi-BaseUrl"];
 
-                client.BaseAddress = new Uri(baseUrl!);
+                if (string.IsNullOrEmpty(baseUrl))
+                {
+                    throw new InvalidOperationException("VehicleSpecsApi-BaseUrl not found in configuration. Check Key Vault.");
+                }
+
+                client.BaseAddress = new Uri(baseUrl);
             });
             builder.Services.AddProblemDetails();
-
-            System.Console.WriteLine("HttpClient for VehicleSpecsClient configured, BaseUrl: " + builder.Configuration["VehicleSpecsApi:BaseUrl"]);
-
 
             builder.Services.AddCors(options =>
             {
@@ -163,17 +175,12 @@ namespace VirtualGarage.Api
 
             app.UseHttpsRedirection();
 
-            System.Console.WriteLine("App running at http://localhost:5215/scalar");
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSerilogRequestLogging();
             app.MapControllers();
-
-            System.Console.WriteLine("Application started");
-
+            System.Console.WriteLine("Starting VirtualGarage.Api...");
             app.Run();
-
-            System.Console.WriteLine("Application shutdown");
         }
     }
 }

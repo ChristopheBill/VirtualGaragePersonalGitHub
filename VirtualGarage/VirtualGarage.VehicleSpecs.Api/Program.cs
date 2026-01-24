@@ -14,18 +14,41 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Key Vault
-var keyVaultUrl = new Uri("https://virtualgarage-keyvault.vault.azure.net/");
-builder.Configuration.AddAzureKeyVault(
-    keyVaultUrl,
-    new DefaultAzureCredential(),
-    new AzureKeyVaultConfigurationOptions
-    {
-        ReloadInterval = TimeSpan.FromHours(1)
-    });
+try
+{
+    var keyVaultUrl = new Uri("https://virtualgarage-keyvault.vault.azure.net/");
+    builder.Configuration.AddAzureKeyVault(
+        keyVaultUrl,
+        new DefaultAzureCredential(),
+        new AzureKeyVaultConfigurationOptions
+        {
+            ReloadInterval = TimeSpan.FromHours(1)
+        });
+}
+catch (Exception ex)
+{
+    throw new InvalidOperationException("Failed to load Key Vault configuration", ex);
+}
 
-// Bind CarApi settings (User Secrets / appsettings / KeyVault)
-builder.Services.Configure<CarApiSettings>(
-    builder.Configuration.GetSection("CarApi"));
+// Bind CarApi settings from Key Vault (hyphenated secrets)
+var carApiBaseUrl = builder.Configuration["CarApi-BaseUrl"];
+var carApiJwtToken = builder.Configuration["CarApi-JwtToken"];
+
+if (string.IsNullOrWhiteSpace(carApiBaseUrl))
+{
+    throw new InvalidOperationException("CarApi-BaseUrl not found in configuration (Key Vault).");
+}
+
+if (string.IsNullOrWhiteSpace(carApiJwtToken))
+{
+    throw new InvalidOperationException("CarApi-JwtToken not found in configuration (Key Vault).");
+}
+
+builder.Services.Configure<CarApiSettings>(opts =>
+{
+    opts.BaseUrl = carApiBaseUrl;
+    opts.JwtToken = carApiJwtToken;
+});
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -42,23 +65,23 @@ builder.Services.AddHttpClient<ICarApiClient, CarApiClient>((sp, client) =>
 // Domain service
 builder.Services.AddScoped<ISpecsService, SpecsService>();
 
-// Cosmos DB client registration (supports both "Cosmos" and "CosmosDb" user-secrets)
-var cfgRoot = builder.Configuration;
-var cosmosConn = cfgRoot["Cosmos:ConnectionString"] ?? cfgRoot["CosmosDb:ConnectionString"];
-var endpoint = cfgRoot["Cosmos:AccountEndpoint"] ?? cfgRoot["CosmosDb:AccountEndpoint"];
-var key = cfgRoot["Cosmos:AccountKey"] ?? cfgRoot["CosmosDb:AccountKey"];
-
-if (!string.IsNullOrEmpty(cosmosConn))
+// Cosmos DB client registration (prefer single connection string)
+var cosmosConn = builder.Configuration["CosmosDb-ConnectionString"] ?? builder.Configuration["Cosmos:ConnectionString"];
+if (!string.IsNullOrWhiteSpace(cosmosConn))
 {
-    builder.Services.AddSingleton(sp => new CosmosClient(cosmosConn));
+    builder.Services.AddSingleton(_ => new CosmosClient(cosmosConn));
 }
 else
 {
+    var endpoint = builder.Configuration["CosmosDb-AccountEndpoint"] ?? builder.Configuration["Cosmos:AccountEndpoint"];
+    var key = builder.Configuration["CosmosDb-AccountKey"] ?? builder.Configuration["Cosmos:AccountKey"];
+
     if (string.IsNullOrWhiteSpace(endpoint) || string.IsNullOrWhiteSpace(key))
     {
-        throw new InvalidOperationException("Cosmos configuration is missing. Set 'Cosmos:ConnectionString' or both 'Cosmos:AccountEndpoint' and 'Cosmos:AccountKey' (use dotnet user-secrets for local development). Or provide the same values under the 'CosmosDb' section in user-secrets.");
+        throw new InvalidOperationException("Cosmos configuration missing. Set 'CosmosDb-ConnectionString' (preferred) or both 'CosmosDb-AccountEndpoint' and 'CosmosDb-AccountKey' in Key Vault.");
     }
-    builder.Services.AddSingleton(sp => new CosmosClient(endpoint, key));
+
+    builder.Services.AddSingleton(_ => new CosmosClient(endpoint, key));
 }
 
 // Register repository (creates DB/container if needed)
@@ -66,8 +89,11 @@ builder.Services.AddSingleton<IVehicleSpecsRepository>(sp =>
 {
     var client = sp.GetRequiredService<CosmosClient>();
     var cfg = sp.GetRequiredService<IConfiguration>();
-    var dbId = cfg["Cosmos:DatabaseId"] ?? cfg["CosmosDb:DatabaseName"] ?? cfg["Cosmos:DatabaseName"] ?? "VirtualGarage";
-    var containerId = cfg["Cosmos:ContainerId"] ?? cfg["CosmosDb:ContainerName"] ?? cfg["Cosmos:ContainerName"] ?? "VehicleSpecs";
+
+    // Prefer Key Vault hyphenated secrets; fall back to defaults
+    var dbId = cfg["CosmosDb-DatabaseName"] ?? "VirtualGarage";
+    var containerId = cfg["CosmosDb-ContainerName"] ?? "VehicleSpecs";
+
     return new VehicleSpecsRepository(client, dbId, containerId);
 });
 
