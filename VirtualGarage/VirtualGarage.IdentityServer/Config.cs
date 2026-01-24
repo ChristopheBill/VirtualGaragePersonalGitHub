@@ -34,16 +34,16 @@ public static class Config
                 AllowedScopes = { "virtualgarage.api.read", "virtualgarage.api.write" }
             },
             // m2m (postman => vehiclespecs.api)
-            new Client
-            {
-                ClientId = "m2m.postman",
-                ClientName = "Postman Client for Vehicles Specs API",
+            // new Client
+            // {
+            //     ClientId = "m2m.postman.vehiclespecs",
+            //     ClientName = "Postman Client for Vehicles Specs API",
 
-                AllowedGrantTypes = GrantTypes.ClientCredentials,
-                ClientSecrets = { new Secret("postmangeheim".Sha256()) },
+            //     AllowedGrantTypes = GrantTypes.ClientCredentials,
+            //     ClientSecrets = { new Secret("postmangeheim".Sha256()) },
 
-                AllowedScopes = { "virtualgarage.api.read", "virtualgarage.api.write" }
-            },
+            //     AllowedScopes = { "virtualgarage.api.read", "virtualgarage.api.write" }
+            // },
             //m2m (virtualgarage.api => vehiclespecs.api)
             new Client
             {

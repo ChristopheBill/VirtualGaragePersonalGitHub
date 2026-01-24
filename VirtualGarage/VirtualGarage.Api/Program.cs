@@ -142,7 +142,7 @@ namespace VirtualGarage.Api
             app.UseHttpsRedirection();
 
             System.Console.WriteLine("App running at http://localhost:5215/scalar");
-
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseSerilogRequestLogging();
             app.MapControllers();
