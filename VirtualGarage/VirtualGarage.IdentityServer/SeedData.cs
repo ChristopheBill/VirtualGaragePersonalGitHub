@@ -40,7 +40,7 @@ public class SeedData
                             new Claim(JwtClaimTypes.GivenName, "Alice"),
                             new Claim(JwtClaimTypes.FamilyName, "Smith"),
                             new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
-                            new Claim(ClaimTypes.Role, "Admin"),
+                            new Claim("role", "Admin"),
                         }).Result;
                 if (!result.Succeeded)
                 {
@@ -74,7 +74,7 @@ public class SeedData
                             new Claim(JwtClaimTypes.FamilyName, "Smith"),
                             new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
                             new Claim("location", "somewhere"),
-                            new Claim(ClaimTypes.Role, "User")
+                            new Claim("role", "User")
                         }).Result;
                 if (!result.Succeeded)
                 {

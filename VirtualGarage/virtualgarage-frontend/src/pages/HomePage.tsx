@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const { isAdmin } = useAuthContext();
   
   const baseButton =
     "inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2";
@@ -21,9 +23,11 @@ export default function HomePage() {
           <button onClick={() => navigate("/vehicles")} className={primaryButton}>
             My Vehicles
           </button>
-          <button onClick={() => navigate("/users")} className={secondaryButton}>
-            Users
-          </button>
+          {isAdmin && (
+            <button onClick={() => navigate("/users")} className={secondaryButton}>
+              Users
+            </button>
+          )}
         </div>
       </div>
     </div>
