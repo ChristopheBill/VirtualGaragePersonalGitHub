@@ -41,10 +41,10 @@ internal static class HostingExtensions
 
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration["identityserver-db-connection-string"]));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
         
         builder.Services.AddDbContext<ConfigurationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration["identityserver-db-connection-string"],
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
             options => options.MigrationsAssembly(typeof(Program).Assembly.GetName().Name)));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
