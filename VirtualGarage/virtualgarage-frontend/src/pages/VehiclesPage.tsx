@@ -57,7 +57,8 @@ async function openPdfViewer(vehicle: Vehicle) {
     setPdfUrl(url);
   } catch (error) {
     console.error("Failed to load PDF:", error);
-    alert("Failed to load vehicle specifications PDF");
+    const message = error instanceof Error ? error.message : "Failed to load vehicle specifications PDF";
+    alert(message);
   } finally {
     setPdfLoading(false);
   }

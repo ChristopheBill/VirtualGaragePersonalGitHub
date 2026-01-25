@@ -5,6 +5,8 @@ using VirtualGarage.Domain.Models;
 using VirtualGarage.QuestPDF.Infrastructure.DTOs;
 using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
 using VirtualGarage.QuestPDF.Infrastructure.Mapping;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace VirtualGarage.QuestPDF.Infrastructure.Clients;
 
@@ -39,7 +41,19 @@ public sealed class VehicleSpecsClient : IVehicleSpecsProvider
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new ApplicationException($"VehicleSpecs API failed: {response.StatusCode}");
+            // Try to extract ProblemDetails-style error message from API
+            ProblemDetailsDto? problem = null;
+            try
+            {
+                problem = await response.Content.ReadFromJsonAsync<ProblemDetailsDto>();
+            }
+            catch
+            {
+                // ignore parse errors and fall back to status code
+            }
+
+            var message = problem?.Detail ?? $"VehicleSpecs API failed: {response.StatusCode}";
+            throw new ApplicationException(message);
         }
 
         var dto = await response.Content.ReadFromJsonAsync<VehicleSpecsResponseDto>();
@@ -49,4 +63,11 @@ public sealed class VehicleSpecsClient : IVehicleSpecsProvider
 
         return VehicleSpecsMapper.MapToDomain(dto);
     }
+}
+
+internal sealed class ProblemDetailsDto
+{
+    [JsonPropertyName("title")] public string? Title { get; set; }
+    [JsonPropertyName("detail")] public string? Detail { get; set; }
+    [JsonPropertyName("status")] public int? Status { get; set; }
 }

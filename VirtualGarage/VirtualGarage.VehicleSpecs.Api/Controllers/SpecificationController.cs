@@ -5,6 +5,7 @@ using VirtualGarage.VehicleSpecs.Api.Contracts.RequestContracts;
 using VirtualGarage.VehicleSpecs.Api.Contracts.ResponseContracts;
 using VirtualGarage.VehicleSpecs.Domain.Services;
 using VirtualGarage.VehicleSpecs.Domain.Services.Interfaces;
+using System;
 
 namespace VirtualGarage.VehicleSpecs.Api.Controllers
 {
@@ -26,12 +27,25 @@ namespace VirtualGarage.VehicleSpecs.Api.Controllers
             [FromQuery] string model,
             [FromQuery] int year)
         {
-            var specs = await _specsService.GetOrFetchAsync(brand, model, year);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(specs);
+            try
+            {
+                var specs = await _specsService.GetOrFetchAsync(brand, model, year);
+                return Ok(specs);
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Translate domain/infrastructure "not found" into HTTP 404 with details
+                return NotFound(new ProblemDetails
+                {
+                    Title = "Specifications not found",
+                    Detail = ex.Message,
+                    Status = StatusCodes.Status404NotFound
+                });
+            }
         }   
             // [HttpPost("lookup")]
             // public async Task<ActionResult<CarSpecsResponse>> LookupAsync(
