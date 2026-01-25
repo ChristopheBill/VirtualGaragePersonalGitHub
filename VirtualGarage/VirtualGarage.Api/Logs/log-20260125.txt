@@ -387,3 +387,16 @@ System.ApplicationException: VehicleSpecs API failed: InternalServerError
    at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
 2026-01-25 00:52:35.206 +01:00 [INF] HTTP PUT /api/vehicles/224f6bd1-e727-44df-adff-679a815b5579 responded 200 in 514.2858 ms
 2026-01-25 00:52:41.910 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 4024.8330 ms
+2026-01-25 00:58:26.143 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-01-25 00:58:29.019 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 2224.5966 ms
+2026-01-25 00:58:29.356 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 333.1707 ms
+2026-01-25 00:58:39.842 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 510.0480 ms
+2026-01-25 00:58:46.560 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 404 in 5225.7118 ms
+2026-01-25 00:59:16.422 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 328.6052 ms
+2026-01-25 00:59:23.222 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 4016.7292 ms
+2026-01-25 01:00:31.370 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 152.8286 ms
+2026-01-25 01:00:43.020 +01:00 [INF] HTTP POST /api/vehicles responded 200 in 331.6688 ms
+2026-01-25 01:00:48.078 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 200 in 3354.0734 ms
+2026-01-25 01:01:04.464 +01:00 [INF] HTTP GET /api/vehiclespecs/pdf responded 404 in 2929.5280 ms
+2026-01-25 01:02:15.892 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 315.7268 ms
+2026-01-25 01:02:16.218 +01:00 [INF] HTTP GET /api/vehicles/mine responded 200 in 317.8342 ms
