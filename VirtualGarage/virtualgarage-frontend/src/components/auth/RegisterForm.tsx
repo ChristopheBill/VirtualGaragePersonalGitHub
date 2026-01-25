@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 interface RegisterFormData {
   username: string;
   email: string;
+  firstName: string;
+  lastName: string;
   password: string;
   confirmPassword: string;
 }
@@ -20,6 +22,8 @@ export default function RegisterForm() {
   const [formData, setFormData] = useState<RegisterFormData>({
     username: "",
     email: "",
+    firstName: "",
+    lastName: "",
     password: "",
     confirmPassword: "",
   });
@@ -47,6 +51,14 @@ export default function RegisterForm() {
     }
     if (!formData.email.includes("@")) {
       setError("Please enter a valid email");
+      return false;
+    }
+    if (!formData.firstName.trim()) {
+      setError("First name is required");
+      return false;
+    }
+    if (!formData.lastName.trim()) {
+      setError("Last name is required");
       return false;
     }
     if (formData.password.length < 8) {
@@ -81,6 +93,8 @@ export default function RegisterForm() {
           body: JSON.stringify({
             username: formData.username,
             email: formData.email,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
             password: formData.password,
             confirmPassword: formData.confirmPassword,
           }),
@@ -107,6 +121,8 @@ export default function RegisterForm() {
       setFormData({
         username: "",
         email: "",
+        firstName: "",
+        lastName: "",
         password: "",
         confirmPassword: "",
       });
@@ -169,6 +185,38 @@ export default function RegisterForm() {
           onChange={handleChange}
           disabled={isLoading}
           placeholder="your@email.com"
+          className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="firstName" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+          First Name
+        </label>
+        <input
+          id="firstName"
+          type="text"
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleChange}
+          disabled={isLoading}
+          placeholder="Your first name"
+          className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="lastName" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+          Last Name
+        </label>
+        <input
+          id="lastName"
+          type="text"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleChange}
+          disabled={isLoading}
+          placeholder="Your last name"
           className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
         />
       </div>

@@ -51,6 +51,17 @@ public class SeedData
             else
             {
                 Log.Debug("alice already exists");
+                // Ensure Alice has the Admin role claim
+                var existingClaims = userMgr.GetClaimsAsync(alice).Result;
+                if (!existingClaims.Any(c => c.Type == "role" && c.Value == "Admin"))
+                {
+                    var result = userMgr.AddClaimAsync(alice, new Claim("role", "Admin")).Result;
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(result.Errors.First().Description);
+                    }
+                    Log.Debug("Added Admin role to existing alice user");
+                }
             }
 
             var bob = userMgr.FindByNameAsync("bob").Result;

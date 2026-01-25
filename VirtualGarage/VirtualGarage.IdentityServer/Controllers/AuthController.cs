@@ -35,6 +35,16 @@ public class AuthController : ControllerBase
             return BadRequest(new { message = "Email is required" });
         }
 
+        if (string.IsNullOrWhiteSpace(request.FirstName))
+        {
+            return BadRequest(new { message = "First name is required" });
+        }
+
+        if (string.IsNullOrWhiteSpace(request.LastName))
+        {
+            return BadRequest(new { message = "Last name is required" });
+        }
+
         if (string.IsNullOrWhiteSpace(request.Password))
         {
             return BadRequest(new { message = "Password is required" });
@@ -86,6 +96,15 @@ public class AuthController : ControllerBase
             return BadRequest(new { errors = errors });
         }
 
+        // Add name claims
+        await _userManager.AddClaimsAsync(user, new[]
+        {
+            new System.Security.Claims.Claim(IdentityModel.JwtClaimTypes.Name, $"{request.FirstName} {request.LastName}"),
+            new System.Security.Claims.Claim(IdentityModel.JwtClaimTypes.GivenName, request.FirstName),
+            new System.Security.Claims.Claim(IdentityModel.JwtClaimTypes.FamilyName, request.LastName),
+            new System.Security.Claims.Claim("role", "User")
+        });
+
         _logger.LogInformation("User {Username} registered successfully", user.UserName);
 
         return Ok(new { message = "User registered successfully" });
@@ -96,6 +115,8 @@ public class RegisterRequest
 {
     public string Username { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public string ConfirmPassword { get; set; } = string.Empty;
 }

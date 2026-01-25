@@ -71,7 +71,8 @@ public static class Config
                 },
                 RedirectUris = { "http://localhost:5173/callback" },         
                 PostLogoutRedirectUris = { "http://localhost:5173/login" },    
-                AllowedCorsOrigins = { "http://localhost:5173" },        
+                AllowedCorsOrigins = { "http://localhost:5173" },
+                AlwaysIncludeUserClaimsInIdToken = true,
             }
         };
 }
