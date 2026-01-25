@@ -97,22 +97,39 @@ builder.Services.AddSingleton<IVehicleSpecsRepository>(sp =>
     return new VehicleSpecsRepository(client, dbId, containerId);
 });
 
- // Setup authentication/authorization
-    builder.Services.AddAuthentication("Bearer")
-        .AddJwtBearer(options =>
-        {
-            options.Authority = "https://localhost:5001";
-            options.TokenValidationParameters.ValidateAudience = false;
-        });
-                
-    builder.Services.AddAuthorization(options =>
+// CORS for frontend access
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("DefaultCors", policy =>
     {
-        options.AddPolicy("VehicleSpecsApiScope", policy =>
-        {
-            policy.RequireAuthenticatedUser();
-            policy.RequireClaim("scope", "vehiclespecs.api");
-        });
+        policy
+            .WithOrigins(
+                "http://localhost:5173",
+                "https://christophebilliet.be")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
+});
+
+// Setup authentication/authorization
+var identityAuthority = builder.Configuration["IdentityServer:Authority"]
+                       ?? "https://virtualgarage-identityserver.azurewebsites.net";
+
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer(options =>
+    {
+        options.Authority = identityAuthority;
+        options.TokenValidationParameters.ValidateAudience = false;
+    });
+                
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("VehicleSpecsApiScope", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("scope", "vehiclespecs.api");
+    });
+});
 
 
 var app = builder.Build();
@@ -125,6 +142,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("DefaultCors");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

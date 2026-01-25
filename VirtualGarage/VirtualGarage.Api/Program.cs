@@ -97,10 +97,13 @@ namespace VirtualGarage.Api
             builder.Services.AddOpenApi();
 
             // Setup authentication/authorization
+            var identityAuthority = builder.Configuration["IdentityServer:Authority"]
+                                   ?? "https://virtualgarage-identityserver.azurewebsites.net";
+
             builder.Services.AddAuthentication()
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = "https://localhost:5001";
+                    options.Authority = identityAuthority;
                     options.TokenValidationParameters.ValidateAudience = false;
                     options.TokenValidationParameters.RoleClaimType = ClaimTypes.Role;
                 });
@@ -133,12 +136,8 @@ namespace VirtualGarage.Api
             (sp, client) =>
             {
                 var config = sp.GetRequiredService<IConfiguration>();
-                var baseUrl = config["VehicleSpecsApi-BaseUrl"];
-
-                if (string.IsNullOrEmpty(baseUrl))
-                {
-                    throw new InvalidOperationException("VehicleSpecsApi-BaseUrl not found in configuration. Check Key Vault.");
-                }
+                var baseUrl = config["VehicleSpecsApi-BaseUrl"]
+                             ?? "https://vehiclespecs2-api.azurewebsites.net";
 
                 client.BaseAddress = new Uri(baseUrl);
             });
@@ -149,7 +148,9 @@ namespace VirtualGarage.Api
                 options.AddPolicy("DevCors", policy =>
                 {
                     policy
-                        .WithOrigins("http://localhost:5173")
+                        .WithOrigins(
+                            "http://localhost:5173",
+                            "https://christophebilliet.be")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });         

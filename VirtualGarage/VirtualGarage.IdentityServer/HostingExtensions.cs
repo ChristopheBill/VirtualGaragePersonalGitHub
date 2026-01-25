@@ -32,7 +32,9 @@ internal static class HostingExtensions
         {
             options.AddPolicy("AllowReactApp", policy =>
             {
-                policy.WithOrigins("http://localhost:5173")
+                policy.WithOrigins(
+                        "http://localhost:5173",
+                        "https://christophebilliet.be")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
@@ -41,10 +43,10 @@ internal static class HostingExtensions
 
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(builder.Configuration["identityserver-db-connection-string"]));
         
         builder.Services.AddDbContext<ConfigurationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+            options.UseSqlServer(builder.Configuration["identityserver-db-connection-string"],
             options => options.MigrationsAssembly(typeof(Program).Assembly.GetName().Name)));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -91,6 +93,14 @@ internal static class HostingExtensions
         {
             app.UseDeveloperExceptionPage();
         }
+
+        // Add CSP to allow inline styles for IdentityServer UI
+        app.Use(async (context, next) =>
+        {
+            context.Response.Headers.Append("Content-Security-Policy", 
+                "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';");
+            await next();
+        });
 
         app.UseStaticFiles();
         app.UseRouting();

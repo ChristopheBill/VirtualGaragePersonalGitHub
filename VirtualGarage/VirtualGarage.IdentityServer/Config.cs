@@ -69,9 +69,21 @@ public static class Config
                     "virtualgarage.api.read",
                     "virtualgarage.api.write"
                 },
-                RedirectUris = { "http://localhost:5173/callback" },         
-                PostLogoutRedirectUris = { "http://localhost:5173/login" },    
-                AllowedCorsOrigins = { "http://localhost:5173" },
+                RedirectUris =
+                {
+                    "http://localhost:5173/callback",
+                    "https://christophebilliet.be/callback"
+                },         
+                PostLogoutRedirectUris =
+                {
+                    "http://localhost:5173/login",
+                    "https://christophebilliet.be/login"
+                },    
+                AllowedCorsOrigins =
+                {
+                    "http://localhost:5173",
+                    "https://christophebilliet.be"
+                },
                 AlwaysIncludeUserClaimsInIdToken = true,
             }
         };

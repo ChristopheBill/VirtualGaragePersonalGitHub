@@ -84,7 +84,7 @@ export default function RegisterForm() {
 
     try {
       const response = await fetch(
-        "https://localhost:5001/api/auth/register",
+        `${import.meta.env.VITE_OIDC_AUTHORITY || "https://virtualgarage-identityserver.azurewebsites.net"}/api/auth/register`,
         {
           method: "POST",
           headers: {
@@ -101,20 +101,31 @@ export default function RegisterForm() {
         }
       );
 
-      const data = (await response.json()) as ApiError;
-
       if (!response.ok) {
-        if (data.errors) {
+        let data: ApiError | null = null;
+        const contentType = response.headers.get("content-type");
+        
+        if (contentType && contentType.includes("application/json")) {
+          data = await response.json() as ApiError;
+        }
+
+        if (data?.errors) {
           const errorMessages = Object.values(data.errors)
             .flat()
             .join(", ");
           setError(errorMessages);
-        } else if (data.message) {
+        } else if (data?.message) {
           setError(data.message);
         } else {
           setError("Registration failed. Please try again.");
         }
         return;
+      }
+
+      // Success - check if there's JSON response
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        await response.json(); // Parse but don't need the data
       }
 
       setSuccess(true);
