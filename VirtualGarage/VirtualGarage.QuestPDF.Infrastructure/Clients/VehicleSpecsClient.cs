@@ -27,7 +27,7 @@ public sealed class VehicleSpecsClient : IVehicleSpecsProvider
 
         var url = $"api/specifications?brand={Uri.EscapeDataString(brand)}&model={Uri.EscapeDataString(model)}&year={year}";
 
-        var disco = await _httpClient.GetDiscoveryDocumentAsync("https://localhost:5001");
+        var disco = await _httpClient.GetDiscoveryDocumentAsync("https://virtualgarage-identityserver.azurewebsites.net");
         var tokenResponse = await _httpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
         {
             Address = disco.TokenEndpoint,

@@ -6,6 +6,8 @@ using VirtualGarage.VehicleSpecs.Api.Contracts.ResponseContracts;
 using VirtualGarage.VehicleSpecs.Domain.Services;
 using VirtualGarage.VehicleSpecs.Domain.Services.Interfaces;
 using System;
+using Microsoft.Extensions.Options;
+using VirtualGarage.VehicleSpecs.Infrastructure.CarApi;
 
 namespace VirtualGarage.VehicleSpecs.Api.Controllers
 {
@@ -14,10 +16,29 @@ namespace VirtualGarage.VehicleSpecs.Api.Controllers
     public class SpecificationController : ControllerBase
     {
         private readonly ISpecsService _specsService;
+        private readonly IOptions<CarApiSettings> _carApiSettings;
 
-        public SpecificationController(ISpecsService specsService)
+        public SpecificationController(ISpecsService specsService, IOptions<CarApiSettings> carApiSettings)
         {
             _specsService = specsService;
+            _carApiSettings = carApiSettings;
+        }
+
+        /// <summary>
+        /// Health check endpoint to verify CarAPI connectivity and configuration
+        /// </summary>
+        [HttpGet("health")]
+        public IActionResult Health()
+        {
+            var settings = _carApiSettings.Value;
+            var diagnostics = new
+            {
+                carApiConfigured = !string.IsNullOrEmpty(settings.BaseUrl),
+                carApiBaseUrl = settings.BaseUrl ?? "(not set)",
+                carApiTokenSet = !string.IsNullOrEmpty(settings.JwtToken),
+                timestamp = DateTime.UtcNow
+            };
+            return Ok(diagnostics);
         }
 
         [Authorize]
@@ -46,13 +67,24 @@ namespace VirtualGarage.VehicleSpecs.Api.Controllers
                     Status = StatusCodes.Status404NotFound
                 });
             }
-        }   
-            // [HttpPost("lookup")]
-            // public async Task<ActionResult<CarSpecsResponse>> LookupAsync(
-            //     CarSpecsLookupRequest request)
-            // {
-            //     var specs = await _specsService.LookupAsync(request);
-            //     return Ok(specs);
-            // }
-}
+            catch (HttpRequestException ex)
+            {
+                return StatusCode(503, new ProblemDetails
+                {
+                    Title = "CarAPI unreachable",
+                    Detail = ex.Message,
+                    Status = StatusCodes.Status503ServiceUnavailable
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ProblemDetails
+                {
+                    Title = "Internal server error",
+                    Detail = ex.Message,
+                    Status = StatusCodes.Status500InternalServerError
+                });
+            }
+        }
+    }
 }
