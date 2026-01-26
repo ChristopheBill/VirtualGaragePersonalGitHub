@@ -28,13 +28,24 @@ public sealed class VehicleSpecsClient : IVehicleSpecsProvider
         var url = $"api/specifications?brand={Uri.EscapeDataString(brand)}&model={Uri.EscapeDataString(model)}&year={year}";
 
         var disco = await _httpClient.GetDiscoveryDocumentAsync("https://virtualgarage-identityserver.azurewebsites.net");
+        if (disco.IsError)
+        {
+            throw new ApplicationException($"Failed to get discovery document: {disco.Error}");
+        }
+
         var tokenResponse = await _httpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
         {
             Address = disco.TokenEndpoint,
             ClientId = "m2m.virtualgarage.api",
             ClientSecret = "virtualgaragesecret",
-            Scope = "virtualgarage.api.read"
+            Scope = "vehiclespecs.api"
         });
+
+        if (tokenResponse.IsError)
+        {
+            throw new ApplicationException($"Failed to get access token: {tokenResponse.Error}");
+        }
+
         _httpClient.SetBearerToken(tokenResponse.AccessToken);
 
         var response = await _httpClient.GetAsync(url);

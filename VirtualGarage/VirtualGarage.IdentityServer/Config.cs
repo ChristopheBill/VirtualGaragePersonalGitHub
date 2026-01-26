@@ -17,7 +17,8 @@ public static class Config
         new ApiScope[]
         {
             new ApiScope("virtualgarage.api.read"),
-            new ApiScope("virtualgarage.api.write")
+            new ApiScope("virtualgarage.api.write"),
+            new ApiScope("vehiclespecs.api")  // Required for VehicleSpecs API access
         };
 
     public static IEnumerable<Client> Clients =>
@@ -54,7 +55,7 @@ public static class Config
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
                 ClientSecrets = { new Secret("virtualgaragesecret".Sha256()) },
 
-                AllowedScopes = { "virtualgarage.api.read", "virtualgarage.api.write" }
+                AllowedScopes = { "vehiclespecs.api" }  // Changed from virtualgarage.api.read/write
             },
             // interactive ASP.NET Core MVC web app
             new Client 
