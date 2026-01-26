@@ -1,9 +1,5 @@
-import axios from "axios";
 import type { User } from "../types/user";
-
-const api = axios.create({
-  baseURL: "https://localhost:5215/api", // adjust port if needed
-});
+import { api } from "./axios";
 
 export const getUsers = async (): Promise<User[]> => {
   const response = await api.get<User[]>("/users");
@@ -15,4 +11,8 @@ export const createUser = async (
 ): Promise<User> => {
   const response = await api.post<User>("/users", data);
   return response.data;
+};
+
+export const deleteUser = async (id: string): Promise<void> => {
+  await api.delete(`/users/${id}`);
 };

@@ -41,5 +41,19 @@ namespace VirtualGarage.Api.Controllers
             //                         );
             return new OkObjectResult(createdUser);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<UserResponseContract?>>> GetAllUsersAsync()
+        {
+            var users = await _userService.GetAllUsersAsync();
+            return new OkObjectResult(users);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteUserAsync([FromRoute] Guid id)
+        {
+            await _userService.DeleteUserAsync(id);
+            return NoContent();
+        }
     }
 }
