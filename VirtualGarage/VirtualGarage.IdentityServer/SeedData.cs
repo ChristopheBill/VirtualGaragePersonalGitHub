@@ -5,6 +5,8 @@ using VirtualGarage.IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Duende.IdentityServer.EntityFramework.DbContexts;
+using Duende.IdentityServer.EntityFramework.Mappers;
 
 namespace VirtualGarage.IdentityServer;
 
@@ -38,6 +40,7 @@ public class SeedData
                             new Claim(JwtClaimTypes.GivenName, "Alice"),
                             new Claim(JwtClaimTypes.FamilyName, "Smith"),
                             new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
+                            new Claim("role", "Admin"),
                         }).Result;
                 if (!result.Succeeded)
                 {
@@ -48,6 +51,17 @@ public class SeedData
             else
             {
                 Log.Debug("alice already exists");
+                // Ensure Alice has the Admin role claim
+                var existingClaims = userMgr.GetClaimsAsync(alice).Result;
+                if (!existingClaims.Any(c => c.Type == "role" && c.Value == "Admin"))
+                {
+                    var result = userMgr.AddClaimAsync(alice, new Claim("role", "Admin")).Result;
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(result.Errors.First().Description);
+                    }
+                    Log.Debug("Added Admin role to existing alice user");
+                }
             }
 
             var bob = userMgr.FindByNameAsync("bob").Result;
@@ -70,7 +84,8 @@ public class SeedData
                             new Claim(JwtClaimTypes.GivenName, "Bob"),
                             new Claim(JwtClaimTypes.FamilyName, "Smith"),
                             new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
-                            new Claim("location", "somewhere")
+                            new Claim("location", "somewhere"),
+                            new Claim("role", "User")
                         }).Result;
                 if (!result.Succeeded)
                 {
@@ -83,5 +98,35 @@ public class SeedData
                 Log.Debug("bob already exists");
             }
         }
+
+        using (var scope = app.Services
+                .GetRequiredService<IServiceScopeFactory>().CreateScope()) {
+
+            var context = scope.ServiceProvider
+                .GetRequiredService<ConfigurationDbContext>();
+
+            Log.Debug("Overwriting db clients with Config.cs");
+            context.Clients.RemoveRange(context.Clients);
+            foreach (var client in Config.Clients)
+                context.Clients.Add(client.ToEntity());
+            context.SaveChanges();
+            Log.Debug("Clients overwrite done");
+
+            Log.Debug("Adding IdentityResources");
+            foreach (var resource in Config.IdentityResources)
+                if(!context.IdentityResources.Any(db =>
+                        resource.Name == db.Name))
+                    context.IdentityResources.Add(resource.ToEntity());
+            context.SaveChanges();
+            Log.Debug("Adding IdentityResources done");
+
+            Log.Debug("Adding ApiScopes");
+            foreach (var resource in Config.ApiScopes)
+                if(!context.ApiScopes.Any(db =>
+                        resource.Name == db.Name))
+                    context.ApiScopes.Add(resource.ToEntity());
+            context.SaveChanges();
+            Log.Debug("Adding ApiScopes done");
     }
+}
 }

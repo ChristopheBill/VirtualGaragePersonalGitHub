@@ -1,50 +1,63 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using VirtualGarage.Api.Contracts;
 using VirtualGarage.Domain.Services.Interfaces;
-
-public static class HttpContextExtensions
-{
-    //temp method to get userId from header for testing before IdentityServer is setup
-    public static Guid GetDebugUserId(this HttpContext context)
-    {
-        var userIdHeader = context.Request.Headers["X-Debug-UserId"].ToString();
-        if (string.IsNullOrEmpty(userIdHeader) || !Guid.TryParse(userIdHeader, out var userId))
-        {
-            throw new InvalidOperationException("X-Debug-UserId header is missing or invalid.");
-        }
-        return userId;
-    }
-}
-
-
-// using System.Security.Claims;
-
-// public static class ClaimsPrincipalExtensions
-// {
-//     // Extension method to get UserId from ClaimsPrincipal - before using IdentityServer
-//     public static Guid GetUserId(this ClaimsPrincipal user)
-//     {
-//         var id = user.FindFirstValue(ClaimTypes.NameIdentifier);
-//         return Guid.Parse(id!);
-//     }
-// }
+using VirtualGarage.Persistence.Interfaces;
+using VirtualGarage.Persistence.Entities;
+using VirtualGarage.Shared;
 
 namespace VirtualGarage.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/vehicles")]
     public class VehicleController : ControllerBase
     {
         private readonly IVehicleService _vehicleService;
-        public VehicleController(IVehicleService vehicleService)
+        private readonly IUserRepository _userRepository;
+
+        public VehicleController(IVehicleService vehicleService, IUserRepository userRepository)
         {
             _vehicleService = vehicleService;
+            _userRepository = userRepository;
+        }
+
+        private Guid? GetUserIdFromClaims()
+        {
+            var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub) ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (Guid.TryParse(sub, out var userId))
+            {
+                return userId;
+            }
+            return null;
+        }
+
+        private async Task EnsureUserExists(Guid userId)
+        {
+            var existing = await _userRepository.GetUserByIdAsync(userId);
+            if (existing != null)
+            {
+                return;
+            }
+
+            var placeholder = new User
+            {
+                Id = userId,
+                FirstName = User.FindFirstValue(ClaimTypes.GivenName) ?? "Unknown",
+                LastName = User.FindFirstValue(ClaimTypes.Surname) ?? User.FindFirstValue(ClaimTypes.Name) ?? "User",
+                Email = User.FindFirstValue(ClaimTypes.Email) ?? $"{userId}@placeholder.local",
+                BirthDay = DateTime.UtcNow,
+                UserRole = RoleEnum.User
+            };
+
+            await _userRepository.CreateUserAsync(placeholder);
         }
 
        [HttpGet("{id:guid}")]
     //    [Route("index")]
-       public async Task<IActionResult> GetCarByIdAsync([FromRoute] Guid id)
+       public async Task<ActionResult<VehicleResponseContract>> GetCarByIdAsync([FromRoute] Guid id)
         {
             var vehicle =  await _vehicleService.GetVehicleAsync(id);
             if (vehicle == null)
@@ -54,31 +67,41 @@ namespace VirtualGarage.Api.Controllers
             return new OkObjectResult(vehicle);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateVehicleAsync([FromBody] VehicleRequestContract vehicle)
+        public async Task<ActionResult<VehicleResponseContract>> CreateVehicleAsync([FromBody] VehicleRequestContract vehicle)
         {
-            var userId = HttpContext.GetDebugUserId();
-            var created = await _vehicleService.CreateVehicleAsync(vehicle, userId);
+            var userId = GetUserIdFromClaims();
+            if (userId is null)
+            {
+                return Unauthorized();
+            }
+            await EnsureUserExists(userId.Value);
+            var created = await _vehicleService.CreateVehicleAsync(vehicle, userId.Value);
             return Ok(created);
         }
 
         // [Authorize]
         [HttpGet("mine")]
-        public async Task<IActionResult> GetMyVehicles()
+        public async Task<ActionResult<IEnumerable<VehicleResponseContract>>> GetMyVehicles()
         {
-            var userId = HttpContext.GetDebugUserId();
-            var vehicles = await _vehicleService.GetVehiclesForUserAsync(userId);
+            var userId = GetUserIdFromClaims();
+            if (userId is null)
+            {
+                return Unauthorized();
+            }
+            await EnsureUserExists(userId.Value);
+            var vehicles = await _vehicleService.GetVehiclesForUserAsync(userId.Value);
             return Ok(vehicles);
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateVehicle(Guid id, [FromBody] VehicleRequestContract contract)
+        public async Task<ActionResult<VehicleResponseContract>> UpdateVehicle(Guid id, [FromBody] VehicleRequestContract contract)
         {
             var updated = await _vehicleService.UpdateVehicleAsync(id, contract);
             return Ok(updated);
         }       
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteVehicle(Guid id)
+        public async Task<ActionResult> DeleteVehicle(Guid id)
         {
             await _vehicleService.DeleteVehicleAsync(id);
             return NoContent();

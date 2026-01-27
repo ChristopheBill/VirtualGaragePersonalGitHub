@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using VirtualGarage.Shared;
 
 
@@ -15,6 +16,7 @@ namespace VirtualGarage.Persistence.Entities
         public required string Email { get; set; }
         public DateTime BirthDay { get; set; }
         public RoleEnum UserRole { get; set; }
+        [JsonIgnore]
         public List<Vehicle>? Vehicles { get; set; }
     }
 }

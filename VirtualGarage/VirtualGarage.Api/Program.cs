@@ -14,6 +14,10 @@ using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
 using QuestPDF.Infrastructure;
 using VirtualGarage.Infrastructure.Storage;
 using Azure.Storage.Blobs;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using Scalar.AspNetCore;
+using System.Security.Claims;
 
 
 namespace VirtualGarage.Api
@@ -24,11 +28,26 @@ namespace VirtualGarage.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Configure Key Vault
+            var keyVaultUrl = new Uri("https://virtualgarage-keyvault.vault.azure.net/");
+            builder.Configuration.AddAzureKeyVault(
+                keyVaultUrl,
+                new DefaultAzureCredential(),
+                new AzureKeyVaultConfigurationOptions
+                {
+                    ReloadInterval = TimeSpan.FromHours(1)
+                });
+
             global::QuestPDF.Settings.License = global::QuestPDF.Infrastructure.LicenseType.Community;
 
             // EF Core - SQL
+            // Connection string loaded from Key Vault secret 'virtualgarage-db-connection-string'
+            string? connectionString = builder.Configuration["virtualgarage-db-connection-string"];
 
-            string? connectionString = builder.Configuration.GetConnectionString("VirtualGarage");
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new InvalidOperationException("Connection string 'virtualgarage-db-connection-string' not found in Key Vault configuration.");
+            }
 
             // Register DbContext with DI container
 
@@ -40,16 +59,27 @@ namespace VirtualGarage.Api
             builder.Services.Configure<VehicleSpecsApiOptions>(
                 builder.Configuration.GetSection("VehicleSpecsApi"));
 
-            Console.WriteLine($"Connection String: {connectionString}");
+            // Configure BlobStorage options via Key Vault (hyphenated secrets)
+            var blobConnectionString = builder.Configuration["BlobStorage-ConnectionString"];
+            var blobContainerName = builder.Configuration["BlobStorage-ContainerName"];
 
-            // Configure BlobStorage options
+            if (string.IsNullOrWhiteSpace(blobConnectionString))
+            {
+                throw new InvalidOperationException("BlobStorage-ConnectionString not found in configuration (Key Vault).");
+            }
 
-            builder.Services.Configure<BlobStorageOptions>(
-                builder.Configuration.GetSection("BlobStorage"));
+            if (string.IsNullOrWhiteSpace(blobContainerName))
+            {
+                throw new InvalidOperationException("BlobStorage-ContainerName not found in configuration (Key Vault).");
+            }
 
-            System.Console.WriteLine("BlobStorage options configured, ContainerName: " + 
-                builder.Configuration.GetSection("BlobStorage:ContainerName").Value);
-            
+            // Bind options
+            builder.Services.Configure<BlobStorageOptions>(opts =>
+            {
+                opts.ConnectionString = blobConnectionString;
+                opts.ContainerName = blobContainerName;
+            });
+
             // Register BlobServiceClient with DI container
             
             builder.Services.AddSingleton(sp =>
@@ -64,7 +94,26 @@ namespace VirtualGarage.Api
             builder.Host.UseSerilog((context, configuration) =>
             configuration.ReadFrom.Configuration(context.Configuration));
 
-            System.Console.WriteLine("SeriLog configured");
+            builder.Services.AddOpenApi();
+
+            // Setup authentication/authorization
+            var identityAuthority = builder.Configuration["IdentityServer:Authority"]
+                                   ?? "https://virtualgarage-identityserver.azurewebsites.net";
+
+            builder.Services.AddAuthentication()
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = identityAuthority;
+                    options.TokenValidationParameters.ValidateAudience = false;
+                    options.TokenValidationParameters.RoleClaimType = ClaimTypes.Role;
+                });
+            
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+            });
+
+            
 
             // Add services to the container.
 
@@ -87,21 +136,21 @@ namespace VirtualGarage.Api
             (sp, client) =>
             {
                 var config = sp.GetRequiredService<IConfiguration>();
-                var baseUrl = config["VehicleSpecsApi:BaseUrl"];
+                var baseUrl = config["VehicleSpecsApi-BaseUrl"]
+                             ?? "https://vehiclespecs2-api.azurewebsites.net";
 
-                client.BaseAddress = new Uri(baseUrl!);
+                client.BaseAddress = new Uri(baseUrl);
             });
             builder.Services.AddProblemDetails();
-
-            System.Console.WriteLine("HttpClient for VehicleSpecsClient configured, BaseUrl: " + builder.Configuration["VehicleSpecsApi:BaseUrl"]);
-
 
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("DevCors", policy =>
                 {
                     policy
-                        .WithOrigins("http://localhost:5173")
+                        .WithOrigins(
+                            "http://localhost:5173",
+                            "https://christophebilliet.be")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });         
@@ -119,23 +168,20 @@ namespace VirtualGarage.Api
 
             app.UseCors("DevCors");
 
+            if (app.Environment.IsDevelopment())
+            {
+                app.MapOpenApi();
+                app.MapScalarApiReference();
+            }
+
             app.UseHttpsRedirection();
 
-            System.Console.WriteLine("HTTPS Redirection configured");
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
-            System.Console.WriteLine("Authorization configured");
-
             app.UseSerilogRequestLogging();
-
             app.MapControllers();
-
-            System.Console.WriteLine("Controllers mapped");
-
+            System.Console.WriteLine("Starting VirtualGarage.Api...");
             app.Run();
-
-            System.Console.WriteLine("Application shutdown");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace VirtualGarage.Persistence.Entities;
 
@@ -6,6 +7,7 @@ public class Vehicle
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
+    [JsonIgnore]
     public User? User { get; set; } // navigation property
     [MaxLength(50)]
     public required string Brand { get; set; }

@@ -6,6 +6,6 @@ namespace VirtualGarage.IdentityServer.Pages.Logout;
 
 public static class LogoutOptions
 {
-    public static readonly bool ShowLogoutPrompt = true;
-    public static readonly bool AutomaticRedirectAfterSignOut = false;
+    public static readonly bool ShowLogoutPrompt = false;
+    public static readonly bool AutomaticRedirectAfterSignOut = true;
 }

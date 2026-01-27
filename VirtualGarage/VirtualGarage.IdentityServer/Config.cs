@@ -1,4 +1,5 @@
-﻿using Duende.IdentityServer.Models;
+﻿using Duende.IdentityServer;
+using Duende.IdentityServer.Models;
 
 namespace VirtualGarage.IdentityServer;
 
@@ -9,44 +10,82 @@ public static class Config
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
+            new IdentityResource("roles", new[]{ "role" })
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
-            new ApiScope("scope1"),
-            new ApiScope("scope2"),
+            new ApiScope("virtualgarage.api.read"),
+            new ApiScope("virtualgarage.api.write"),
+            new ApiScope("vehiclespecs.api")  // Required for VehicleSpecs API access
         };
 
     public static IEnumerable<Client> Clients =>
         new Client[]
         {
-            // m2m client credentials flow client
+            // m2m (postman => virtualgarage.api)
             new Client
             {
-                ClientId = "m2m.client",
-                ClientName = "Client Credentials Client",
+                ClientId = "m2m.postman",
+                ClientName = "Postman Client for Virtual Garage API",
 
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
-                ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
+                ClientSecrets = { new Secret("postmangeheim".Sha256()) },
 
-                AllowedScopes = { "scope1" }
+                AllowedScopes = { "virtualgarage.api.read", "virtualgarage.api.write" }
             },
+            // m2m (postman => vehiclespecs.api)
+            // new Client
+            // {
+            //     ClientId = "m2m.postman.vehiclespecs",
+            //     ClientName = "Postman Client for Vehicles Specs API",
 
-            // interactive client using code flow + pkce
+            //     AllowedGrantTypes = GrantTypes.ClientCredentials,
+            //     ClientSecrets = { new Secret("postmangeheim".Sha256()) },
+
+            //     AllowedScopes = { "virtualgarage.api.read", "virtualgarage.api.write" }
+            // },
+            //m2m (virtualgarage.api => vehiclespecs.api)
             new Client
             {
-                ClientId = "interactive",
-                ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
+                ClientId = "m2m.virtualgarage.api",
+                ClientName = "Client for Virtual Garage API to access Vehicle Specs API",
 
-                AllowedGrantTypes = GrantTypes.Code,
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                ClientSecrets = { new Secret("virtualgaragesecret".Sha256()) },
 
-                RedirectUris = { "https://localhost:44300/signin-oidc" },
-                FrontChannelLogoutUri = "https://localhost:44300/signout-oidc",
-                PostLogoutRedirectUris = { "https://localhost:44300/signout-callback-oidc" },
-
-                AllowOfflineAccess = true,
-                AllowedScopes = { "openid", "profile", "scope2" }
+                AllowedScopes = { "vehiclespecs.api" }  // Changed from virtualgarage.api.read/write
             },
+            // interactive ASP.NET Core MVC web app
+            new Client 
+            {
+                ClientId = "react-app-client",
+                ClientSecrets = {new Secret("reactapp-secret".Sha256())},
+                AllowedGrantTypes = GrantTypes.Code,
+                AllowedScopes = {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "roles",
+                    "virtualgarage.api.read",
+                    "virtualgarage.api.write"
+                },
+                RedirectUris =
+                {
+                    "http://localhost:5173/callback",
+                    "https://christophebilliet.be/callback"
+                },         
+                PostLogoutRedirectUris =
+                {
+                    "http://localhost:5173/login",
+                    "https://christophebilliet.be/login"
+                },    
+                AllowedCorsOrigins =
+                {
+                    "http://localhost:5173",
+                    "https://christophebilliet.be"
+                },
+                AlwaysIncludeUserClaimsInIdToken = true,
+            }
         };
 }
