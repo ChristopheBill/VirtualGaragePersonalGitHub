@@ -122,8 +122,10 @@ namespace VirtualGarage.Api
             // Register domain services
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IVehicleService, VehicleService>();
+            builder.Services.AddScoped<IDonationService, DonationService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+            builder.Services.AddScoped<IDonationRepository, DonationRepository>();
             builder.Services.AddScoped<IVehicleReportService, VehicleReportService>();
 
             // Register infrastructure providers

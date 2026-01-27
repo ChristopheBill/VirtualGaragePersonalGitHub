@@ -4,6 +4,7 @@ import { useAuth } from "react-oidc-context";
 import HomePage from "./pages/HomePage";
 import UsersPage from "./pages/UsersPage";
 import VehiclesPage from "./pages/VehiclesPage";
+import DonationPage from "./pages/DonationPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import CallbackPage from "./pages/CallbackPage";
@@ -56,6 +57,7 @@ export default function App() {
                     }
                   />
                   <Route path="/vehicles" element={<VehiclesPage />} />
+                  <Route path="/donate" element={<DonationPage />} />
                   <Route path="*" element={
                     <div className="text-center py-12 text-neutral-400 dark:text-neutral-500">
                       Page not found
