@@ -19,9 +19,17 @@ export const api = axios.create({
 
 // Interceptor to add authorization token to all requests
 api.interceptors.request.use((config) => {
-  const auth = window.__auth_context__;
-  if (auth?.user?.access_token) {
-    config.headers.Authorization = `Bearer ${auth.user.access_token}`;
+  // Get the OIDC user from sessionStorage
+  const oidcUserKey = Object.keys(sessionStorage).find(key => key.startsWith("oidc.user:"));
+  if (oidcUserKey) {
+    try {
+      const oidcUser = JSON.parse(sessionStorage.getItem(oidcUserKey) || "{}");
+      if (oidcUser.access_token) {
+        config.headers.Authorization = `Bearer ${oidcUser.access_token}`;
+      }
+    } catch (e) {
+      console.error("Failed to parse OIDC user from sessionStorage", e);
+    }
   }
   return config;
 });
