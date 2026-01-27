@@ -46,6 +46,17 @@ export default function UserHeader() {
               Vehicles
             </button>
 
+            <button
+              onClick={() => navigate("/search")}
+              className={`px-3 py-2 rounded-lg transition hover:cursor-pointer ${
+                location.pathname === "/search"
+                  ? "bg-blue-600 text-white dark:bg-blue-500"
+                  : "bg-neutral-200 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
+              }`}
+            >
+              🔍 Search
+            </button>
+
             {isAdmin && (
               <button
                 onClick={() => navigate("/users")}

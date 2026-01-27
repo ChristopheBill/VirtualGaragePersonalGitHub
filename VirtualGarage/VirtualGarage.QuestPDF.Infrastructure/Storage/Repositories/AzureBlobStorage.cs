@@ -52,4 +52,22 @@ public sealed class AzureBlobStorage : IBlobStorage
         var response = await blob.DownloadContentAsync();
         return response.Value.Content.ToArray();
     }
+
+    public async Task<List<VirtualGarage.Domain.Services.Interfaces.BlobInfo>> ListAllAsync()
+    {
+        var blobs = new List<VirtualGarage.Domain.Services.Interfaces.BlobInfo>();
+        
+        await foreach (var blob in _container.GetBlobsAsync())
+        {
+            blobs.Add(new VirtualGarage.Domain.Services.Interfaces.BlobInfo
+            {
+                Name = blob.Name,
+                Url = _container.GetBlobClient(blob.Name).Uri.ToString(),
+                CreatedOn = blob.Properties.CreatedOn,
+                SizeInBytes = blob.Properties.ContentLength
+            });
+        }
+        
+        return blobs;
+    }
 }
