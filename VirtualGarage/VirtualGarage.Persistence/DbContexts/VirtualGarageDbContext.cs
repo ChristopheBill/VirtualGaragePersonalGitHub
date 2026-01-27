@@ -13,6 +13,8 @@ namespace VirtualGarage.Persistence.DbContexts
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Donation> Donations { get; set; } = null!;
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

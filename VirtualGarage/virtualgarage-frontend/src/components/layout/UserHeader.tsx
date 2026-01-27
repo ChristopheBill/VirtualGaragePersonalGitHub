@@ -59,6 +59,27 @@ export default function UserHeader() {
               </button>
             )}
 
+            {isAdmin && (
+              <button
+                onClick={() => navigate("/admin/donations")}
+                className={`px-3 py-2 rounded-lg transition hover:cursor-pointer ${
+                  location.pathname === "/admin/donations"
+                    ? "bg-blue-600 text-white dark:bg-blue-500"
+                    : "bg-neutral-200 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
+                }`}
+              >
+                Donations
+              </button>
+            )}
+            <button
+              onClick={() => navigate("/donate")}
+              className="px-4 py-2 rounded-lg font-semibold transition hover:cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700 shadow-md hover:shadow-lg"
+              title="Support Virtual Garage"
+            >
+              💚 Donate
+            </button>
+
+
             <button
               onClick={toggleDarkMode}
               className="px-3 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition hover:cursor-pointer text-neutral-900 dark:text-white"

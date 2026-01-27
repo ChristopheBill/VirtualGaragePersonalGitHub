@@ -14,5 +14,9 @@ namespace VirtualGarage.Domain.Services.Interfaces
             ConfirmPaymentRequest request,
             Guid userId
         );
+
+        Task<List<DonationRecordResponse>> GetAllDonationsAsync();
+
+        Task<List<DonationRecordResponse>> GetDonationsForUserAsync(Guid userId);
     }
 }

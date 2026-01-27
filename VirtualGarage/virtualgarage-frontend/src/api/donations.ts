@@ -30,6 +30,18 @@ export interface ConfirmPaymentResponse {
   amount: number;
 }
 
+export interface DonationRecord {
+  id: string;
+  userId: string;
+  amount: number;
+  currency: string;
+  email: string;
+  status: string;
+  paymentIntentId: string;
+  createdAt: string;
+  notes?: string;
+}
+
 /**
  * Create a payment intent for donation
  */
@@ -53,5 +65,21 @@ export async function confirmPayment(
     "/donations/confirm-payment",
     data
   );
+  return response.data;
+}
+
+/**
+ * Get all donations (admin)
+ */
+export async function getAllDonations(): Promise<DonationRecord[]> {
+  const response = await api.get<DonationRecord[]>("/donations");
+  return response.data;
+}
+
+/**
+ * Get current user's donations
+ */
+export async function getMyDonations(): Promise<DonationRecord[]> {
+  const response = await api.get<DonationRecord[]>("/donations/me");
   return response.data;
 }

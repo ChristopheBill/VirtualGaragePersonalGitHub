@@ -8,7 +8,9 @@ namespace VirtualGarage.Domain.Services
 {
     public class DonationService(IDonationRepository donationRepository) : IDonationService
     {
-        private static readonly Dictionary<string, string> PaymentIntents = new();
+        private sealed record PaymentIntentData(string ClientSecret, int Amount, string Currency, string Email, Guid UserId);
+
+        private static readonly Dictionary<string, PaymentIntentData> PaymentIntents = new();
 
         public async Task<CreatePaymentIntentResponse> CreatePaymentIntentAsync(
             CreatePaymentIntentRequest request,
@@ -27,7 +29,7 @@ namespace VirtualGarage.Domain.Services
             string clientSecret = $"pi_{Guid.NewGuid().ToString("N").Substring(0, 20)}_secret_{Guid.NewGuid().ToString("N").Substring(0, 20)}";
 
             // Store the intent temporarily (in production, use actual Stripe)
-            PaymentIntents[paymentIntentId] = clientSecret;
+            PaymentIntents[paymentIntentId] = new PaymentIntentData(clientSecret, request.Amount, request.Currency, request.Email, userId);
 
             return new CreatePaymentIntentResponse
             {
@@ -44,11 +46,11 @@ namespace VirtualGarage.Domain.Services
         )
         {
             // Validate that the payment intent exists
-            if (!PaymentIntents.ContainsKey(request.PaymentIntentId))
+            if (!PaymentIntents.TryGetValue(request.PaymentIntentId, out var intentData))
                 throw new InvalidOperationException("Payment intent not found");
 
             // Verify client secret matches
-            if (PaymentIntents[request.PaymentIntentId] != request.ClientSecret)
+            if (intentData.ClientSecret != request.ClientSecret)
                 throw new InvalidOperationException("Invalid client secret");
 
             // In a real scenario, you'd process with Stripe here
@@ -67,17 +69,15 @@ namespace VirtualGarage.Domain.Services
                     "Card declined. Use test card 4242 4242 4242 4242 for demo."
                 );
 
-            // Extract email from intent (in real scenario, store this in the intent)
-            // For demo, we'll accept the payment
             string status = "succeeded";
 
             // Save donation record
             var donation = new Donation
             {
                 UserId = userId,
-                Amount = 2500, // You'd extract this from somewhere
-                Currency = "usd",
-                Email = "donor@example.com", // You'd get this from the request context
+                Amount = intentData.Amount,
+                Currency = intentData.Currency,
+                Email = intentData.Email,
                 PaymentIntentId = request.PaymentIntentId,
                 Status = status,
             };
@@ -88,8 +88,44 @@ namespace VirtualGarage.Domain.Services
             {
                 Status = status,
                 PaymentIntentId = request.PaymentIntentId,
-                Amount = 2500, // Retrieved from donation or request
+                Amount = intentData.Amount,
             };
+        }
+
+        public async Task<List<DonationRecordResponse>> GetAllDonationsAsync()
+        {
+            var donations = await donationRepository.GetAllDonationsAsync();
+
+            return donations.Select(d => new DonationRecordResponse
+            {
+                Id = d.Id,
+                UserId = d.UserId,
+                Amount = d.Amount,
+                Currency = d.Currency,
+                Email = d.Email,
+                Status = d.Status,
+                PaymentIntentId = d.PaymentIntentId,
+                CreatedAt = d.CreatedAt,
+                Notes = d.Notes,
+            }).ToList();
+        }
+
+        public async Task<List<DonationRecordResponse>> GetDonationsForUserAsync(Guid userId)
+        {
+            var donations = await donationRepository.GetDonationsByUserIdAsync(userId);
+
+            return donations.Select(d => new DonationRecordResponse
+            {
+                Id = d.Id,
+                UserId = d.UserId,
+                Amount = d.Amount,
+                Currency = d.Currency,
+                Email = d.Email,
+                Status = d.Status,
+                PaymentIntentId = d.PaymentIntentId,
+                CreatedAt = d.CreatedAt,
+                Notes = d.Notes,
+            }).ToList();
         }
     }
 }

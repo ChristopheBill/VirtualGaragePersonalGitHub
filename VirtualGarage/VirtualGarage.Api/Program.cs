@@ -105,7 +105,7 @@ namespace VirtualGarage.Api
                 {
                     options.Authority = identityAuthority;
                     options.TokenValidationParameters.ValidateAudience = false;
-                    options.TokenValidationParameters.RoleClaimType = ClaimTypes.Role;
+                    options.TokenValidationParameters.RoleClaimType = "role";
                 });
             
             builder.Services.AddAuthorization(options =>

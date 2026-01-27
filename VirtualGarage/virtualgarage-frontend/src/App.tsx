@@ -4,6 +4,7 @@ import { useAuth } from "react-oidc-context";
 import HomePage from "./pages/HomePage";
 import UsersPage from "./pages/UsersPage";
 import VehiclesPage from "./pages/VehiclesPage";
+import AdminDonationsPage from "./pages/AdminDonationsPage";
 import DonationPage from "./pages/DonationPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -53,6 +54,14 @@ export default function App() {
                     element={
                       <AdminRoute>
                         <UsersPage />
+                      </AdminRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/donations"
+                    element={
+                      <AdminRoute>
+                        <AdminDonationsPage />
                       </AdminRoute>
                     }
                   />
