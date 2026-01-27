@@ -1,6 +1,5 @@
 import { api } from "./axios";
 import type { Vehicle } from "../types/vehicle";
-import axios from "axios";
 
 export const getMyVehicles = async (): Promise<Vehicle[]> => {
   const response = await api.get("/vehicles/mine");

@@ -92,12 +92,12 @@ export default function VehicleSearchPage() {
       {/* Search Form */}
       <div className="bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
         <form onSubmit={handleSearch} className="space-y-4">
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search by brand, model, or year (e.g., Volvo, V60, 2019)"
+              placeholder="Search by brand, model, or year..."
               className="flex-1 px-4 py-3 rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
@@ -106,7 +106,7 @@ export default function VehicleSearchPage() {
               className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-neutral-400 text-white font-bold rounded-lg transition-all shadow-md hover:shadow-lg disabled:cursor-not-allowed whitespace-nowrap"
             >
               {loading ? (
-                <span className="flex items-center">
+                <span className="flex items-center justify-center">
                   <span className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></span>
                   Searching...
                 </span>
