@@ -1,5 +1,15 @@
 import axios from "axios";
 
+declare global {
+  interface Window {
+    __auth_context__?: {
+      user?: {
+        access_token?: string;
+      };
+    };
+  }
+}
+
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5215/api",
   headers: {

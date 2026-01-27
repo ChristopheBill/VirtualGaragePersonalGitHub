@@ -214,7 +214,7 @@ export default function DonationPage() {
                   placeholder="1234 5678 9012 3456"
                   value={cardNumber}
                   onChange={handleCardNumberChange}
-                  maxLength="19"
+                  maxLength={19}
                   className="w-full px-4 py-3 rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                   required
                 />
@@ -234,7 +234,7 @@ export default function DonationPage() {
                     placeholder="MM/YY"
                     value={cardExpiry}
                     onChange={handleExpiryChange}
-                    maxLength="5"
+                    maxLength={5}
                     className="w-full px-4 py-3 rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                     required
                   />
@@ -248,7 +248,7 @@ export default function DonationPage() {
                     placeholder="123"
                     value={cardCvc}
                     onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, "").slice(0, 4))}
-                    maxLength="4"
+                    maxLength={4}
                     className="w-full px-4 py-3 rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                     required
                   />
@@ -268,7 +268,7 @@ export default function DonationPage() {
                   Processing...
                 </span>
               ) : (
-                `Donate $${finalAmount.toFixed(2)}`
+                `Donate $${typeof finalAmount === 'number' ? finalAmount.toFixed(2) : '0.00'}`
               )}
             </button>
 
