@@ -105,28 +105,25 @@ public class SeedData
             var context = scope.ServiceProvider
                 .GetRequiredService<ConfigurationDbContext>();
 
-            Log.Debug("Overwriting db clients with Config.cs");
+            Log.Debug("Overwriting configuration store with Config.cs");
+
             context.Clients.RemoveRange(context.Clients);
+            context.IdentityResources.RemoveRange(context.IdentityResources);
+            context.ApiScopes.RemoveRange(context.ApiScopes);
+            context.ApiResources.RemoveRange(context.ApiResources);
+            context.SaveChanges();
+
             foreach (var client in Config.Clients)
                 context.Clients.Add(client.ToEntity());
-            context.SaveChanges();
-            Log.Debug("Clients overwrite done");
-
-            Log.Debug("Adding IdentityResources");
             foreach (var resource in Config.IdentityResources)
-                if(!context.IdentityResources.Any(db =>
-                        resource.Name == db.Name))
-                    context.IdentityResources.Add(resource.ToEntity());
+                context.IdentityResources.Add(resource.ToEntity());
+            foreach (var scopeResource in Config.ApiScopes)
+                context.ApiScopes.Add(scopeResource.ToEntity());
+            foreach (var apiResource in Config.ApiResources)
+                context.ApiResources.Add(apiResource.ToEntity());
             context.SaveChanges();
-            Log.Debug("Adding IdentityResources done");
 
-            Log.Debug("Adding ApiScopes");
-            foreach (var resource in Config.ApiScopes)
-                if(!context.ApiScopes.Any(db =>
-                        resource.Name == db.Name))
-                    context.ApiScopes.Add(resource.ToEntity());
-            context.SaveChanges();
-            Log.Debug("Adding ApiScopes done");
+            Log.Debug("Configuration store overwrite done");
     }
 }
 }

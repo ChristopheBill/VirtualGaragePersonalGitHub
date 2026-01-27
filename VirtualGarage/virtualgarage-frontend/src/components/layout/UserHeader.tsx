@@ -59,27 +59,14 @@ export default function UserHeader() {
 
             {isAdmin && (
               <button
-                onClick={() => navigate("/users")}
+                onClick={() => navigate("/admin")}
                 className={`px-3 py-2 rounded-lg transition hover:cursor-pointer ${
-                  location.pathname === "/users"
+                  location.pathname === "/admin"
                     ? "bg-blue-600 text-white dark:bg-blue-500"
                     : "bg-neutral-200 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
                 }`}
               >
-                Users
-              </button>
-            )}
-
-            {isAdmin && (
-              <button
-                onClick={() => navigate("/admin/donations")}
-                className={`px-3 py-2 rounded-lg transition hover:cursor-pointer ${
-                  location.pathname === "/admin/donations"
-                    ? "bg-blue-600 text-white dark:bg-blue-500"
-                    : "bg-neutral-200 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
-                }`}
-              >
-                Donations
+                Admin
               </button>
             )}
             <button

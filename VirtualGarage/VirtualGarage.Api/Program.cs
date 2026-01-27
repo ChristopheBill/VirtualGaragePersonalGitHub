@@ -18,6 +18,7 @@ using Azure.Identity;
 using Azure.Extensions.AspNetCore.Configuration.Secrets;
 using Scalar.AspNetCore;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 namespace VirtualGarage.Api
@@ -100,7 +101,11 @@ namespace VirtualGarage.Api
             var identityAuthority = builder.Configuration["IdentityServer:Authority"]
                                    ?? "https://virtualgarage-identityserver.azurewebsites.net";
 
-            builder.Services.AddAuthentication()
+            builder.Services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(options =>
                 {
                     options.Authority = identityAuthority;

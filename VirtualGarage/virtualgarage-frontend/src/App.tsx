@@ -2,10 +2,9 @@ import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 import HomePage from "./pages/HomePage";
-import UsersPage from "./pages/UsersPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
 import VehiclesPage from "./pages/VehiclesPage";
 import VehicleSearchPage from "./pages/VehicleSearchPage";
-import AdminDonationsPage from "./pages/AdminDonationsPage";
 import DonationPage from "./pages/DonationPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -51,18 +50,10 @@ export default function App() {
                 <Routes>
                   <Route path="/" element={<HomePage />} />
                   <Route
-                    path="/users"
+                    path="/admin"
                     element={
                       <AdminRoute>
-                        <UsersPage />
-                      </AdminRoute>
-                    }
-                  />
-                  <Route
-                    path="/admin/donations"
-                    element={
-                      <AdminRoute>
-                        <AdminDonationsPage />
+                        <AdminDashboardPage />
                       </AdminRoute>
                     }
                   />
