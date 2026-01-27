@@ -7,17 +7,20 @@ using VirtualGarage.QuestPDF.Infrastructure.Interfaces;
 using VirtualGarage.QuestPDF.Infrastructure.Mapping;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Net.Http;
 
 namespace VirtualGarage.QuestPDF.Infrastructure.Clients;
 
 public sealed class VehicleSpecsClient : IVehicleSpecsProvider
 {
     private readonly HttpClient _httpClient;
+    private readonly IHttpClientFactory _httpClientFactory;
 
     // Constructor receives an HttpClient that's configured with BaseAddress
-    public VehicleSpecsClient(HttpClient httpClient)
+    public VehicleSpecsClient(HttpClient httpClient, IHttpClientFactory httpClientFactory)
     {
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+        _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
     }
 
     public async Task<VehicleSpecs> GetSpecsAsync(string brand, string model, int year)
@@ -27,13 +30,16 @@ public sealed class VehicleSpecsClient : IVehicleSpecsProvider
 
         var url = $"api/specifications?brand={Uri.EscapeDataString(brand)}&model={Uri.EscapeDataString(model)}&year={year}";
 
-        var disco = await _httpClient.GetDiscoveryDocumentAsync("https://virtualgarage-identityserver.azurewebsites.net");
+        // Use a separate HttpClient for Identity Server requests
+        using var identityClient = _httpClientFactory.CreateClient();
+        
+        var disco = await identityClient.GetDiscoveryDocumentAsync("https://virtualgarage-identityserver.azurewebsites.net");
         if (disco.IsError)
         {
             throw new ApplicationException($"Failed to get discovery document: {disco.Error}");
         }
 
-        var tokenResponse = await _httpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+        var tokenResponse = await identityClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
         {
             Address = disco.TokenEndpoint,
             ClientId = "m2m.virtualgarage.api",
@@ -46,9 +52,11 @@ public sealed class VehicleSpecsClient : IVehicleSpecsProvider
             throw new ApplicationException($"Failed to get access token: {tokenResponse.Error}");
         }
 
-        _httpClient.SetBearerToken(tokenResponse.AccessToken);
+        // Create a new request message with the bearer token
+        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        request.SetBearerToken(tokenResponse.AccessToken);
 
-        var response = await _httpClient.GetAsync(url);
+        var response = await _httpClient.SendAsync(request);
 
         if (!response.IsSuccessStatusCode)
         {

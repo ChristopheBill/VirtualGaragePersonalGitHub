@@ -134,7 +134,7 @@ namespace VirtualGarage.Api
             builder.Services.AddScoped<IVehicleReportService, VehicleReportService>();
 
             // Register infrastructure providers
-            builder.Services.AddScoped<IVehicleSpecsProvider, VehicleSpecsClient>();
+            // builder.Services.AddScoped<IVehicleSpecsProvider, VehicleSpecsClient>();
             builder.Services.AddScoped<IVehicleSpecsPdfGenerator, VehicleSpecsPdfGenerator>();
             builder.Services.AddScoped<IBlobStorage, AzureBlobStorage>();
 
@@ -159,17 +159,16 @@ namespace VirtualGarage.Api
                             "http://localhost:5173",
                             "https://christophebilliet.be")
                         .AllowAnyHeader()
-                        .AllowAnyMethod();
+                        .AllowAnyMethod()
+                        .AllowCredentials();
                 });         
             });
 
-            //PascalCase JSON Serialization
-            builder.Services.AddControllers()
-                .AddJsonOptions(options =>
-                {
-                  options.JsonSerializerOptions.PropertyNamingPolicy =
-                  JsonNamingPolicy.CamelCase;
-              });
+            //PascalCase JSON Serialization - Configure the already-added controllers from earlier
+            builder.Services.ConfigureHttpJsonOptions(options =>
+            {
+                options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            });
 
             var app = builder.Build();
 
