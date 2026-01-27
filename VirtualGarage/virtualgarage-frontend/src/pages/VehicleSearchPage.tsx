@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { listBlobs, type BlobInfo } from "../api/blobs";
+import { listBlobs, downloadBlob, type BlobInfo } from "../api/blobs";
 
 interface ParsedBlobInfo extends BlobInfo {
   brand?: string;
@@ -60,8 +60,14 @@ export default function VehicleSearchPage() {
     }
   };
 
-  const handleViewPdf = (url: string) => {
-    window.open(url, "_blank");
+  const handleViewPdf = async (fileName: string) => {
+    try {
+      const blob = await downloadBlob(fileName);
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+    } catch (error) {
+      alert("Failed to load PDF");
+    }
   };
 
   const formatFileSize = (bytes?: number) => {
@@ -175,7 +181,7 @@ export default function VehicleSearchPage() {
                       </div>
                     </div>
                     <button
-                      onClick={() => handleViewPdf(blob.url)}
+                      onClick={() => handleViewPdf(blob.name)}
                       className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors whitespace-nowrap"
                     >
                       View PDF
