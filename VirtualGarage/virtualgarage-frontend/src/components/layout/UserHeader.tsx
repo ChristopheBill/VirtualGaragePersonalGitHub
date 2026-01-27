@@ -46,18 +46,37 @@ export default function UserHeader() {
               Vehicles
             </button>
 
+            <button
+              onClick={() => navigate("/search")}
+              className={`px-3 py-2 rounded-lg transition hover:cursor-pointer ${
+                location.pathname === "/search"
+                  ? "bg-blue-600 text-white dark:bg-blue-500"
+                  : "bg-neutral-200 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
+              }`}
+            >
+              🔍 Search
+            </button>
+
             {isAdmin && (
               <button
-                onClick={() => navigate("/users")}
+                onClick={() => navigate("/admin")}
                 className={`px-3 py-2 rounded-lg transition hover:cursor-pointer ${
-                  location.pathname === "/users"
+                  location.pathname === "/admin"
                     ? "bg-blue-600 text-white dark:bg-blue-500"
                     : "bg-neutral-200 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
                 }`}
               >
-                Users
+                Admin
               </button>
             )}
+            <button
+              onClick={() => navigate("/donate")}
+              className="px-4 py-2 rounded-lg font-semibold transition hover:cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700 shadow-md hover:shadow-lg"
+              title="Support Virtual Garage"
+            >
+              💚 Donate
+            </button>
+
 
             <button
               onClick={toggleDarkMode}

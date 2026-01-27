@@ -13,6 +13,21 @@ public static class Config
             new IdentityResource("roles", new[]{ "role" })
         };
 
+    public static IEnumerable<ApiResource> ApiResources =>
+        new ApiResource[]
+        {
+            new ApiResource("virtualgarage.api", "Virtual Garage API")
+            {
+                Scopes = { "virtualgarage.api.read", "virtualgarage.api.write" },
+                UserClaims = { "role" }
+            },
+            new ApiResource("vehiclespecs.api", "Vehicle Specs API")
+            {
+                Scopes = { "vehiclespecs.api" },
+                UserClaims = { "role" }
+            }
+        };
+
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
@@ -88,4 +103,4 @@ public static class Config
                 AlwaysIncludeUserClaimsInIdToken = true,
             }
         };
-}
+ }

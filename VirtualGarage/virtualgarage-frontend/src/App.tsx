@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 import HomePage from "./pages/HomePage";
-import UsersPage from "./pages/UsersPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
 import VehiclesPage from "./pages/VehiclesPage";
+import VehicleSearchPage from "./pages/VehicleSearchPage";
+import DonationPage from "./pages/DonationPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import CallbackPage from "./pages/CallbackPage";
@@ -48,14 +50,16 @@ export default function App() {
                 <Routes>
                   <Route path="/" element={<HomePage />} />
                   <Route
-                    path="/users"
+                    path="/admin"
                     element={
                       <AdminRoute>
-                        <UsersPage />
+                        <AdminDashboardPage />
                       </AdminRoute>
                     }
                   />
                   <Route path="/vehicles" element={<VehiclesPage />} />
+                  <Route path="/search" element={<VehicleSearchPage />} />
+                  <Route path="/donate" element={<DonationPage />} />
                   <Route path="*" element={
                     <div className="text-center py-12 text-neutral-400 dark:text-neutral-500">
                       Page not found
