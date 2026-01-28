@@ -1,6 +1,7 @@
 # 🎓 Virtual Garage Full Stack API - Exam Study Guide
 
 ## Table of Contents
+
 1. [React Components & Lifecycle](#react-components--lifecycle)
 2. [React Hooks Deep Dive](#react-hooks-deep-dive)
 3. [Component Rendering & Re-rendering](#component-rendering--re-rendering)
@@ -13,13 +14,16 @@
 ## React Components & Lifecycle
 
 ### What is a React Component?
+
 A React component is a reusable piece of UI that can:
+
 - Accept inputs (props)
 - Manage its own state
 - Render JSX (HTML-like syntax)
 - React to changes and re-render when state or props change
 
 ### Component Lifecycle Phases
+
 1. **Mounting**: Component is created and inserted into the DOM
 2. **Updating**: Component re-renders due to state/props changes
 3. **Unmounting**: Component is removed from the DOM
@@ -33,11 +37,13 @@ A React component is a reusable piece of UI that can:
 **Purpose**: Adds state management to functional components
 
 **Syntax**:
+
 ```tsx
 const [state, setState] = useState(initialValue);
 ```
 
 **Example from VehiclesPage**:
+
 ```tsx
 const [vehicles, setVehicles] = useState<Vehicle[]>([]);
 const [loading, setLoading] = useState(true);
@@ -45,23 +51,26 @@ const [isAdding, setIsAdding] = useState(false);
 ```
 
 **How it works**:
+
 - Returns an array with 2 elements: current state value and updater function
 - When you call `setState`, React schedules a re-render
 - React preserves state between re-renders
 - Each `useState` call creates an independent state variable
 
 **Re-render triggers**:
+
 - ✅ Calling `setVehicles([...])` triggers re-render
 - ✅ Calling `setLoading(false)` triggers re-render
 - ❌ Directly mutating `vehicles.push()` does NOT trigger re-render (wrong!)
 
 **Real example - Adding a vehicle**:
+
 ```tsx
 // ❌ WRONG - mutates state directly, no re-render
 vehicles.push(newVehicle);
 
 // ✅ CORRECT - creates new array, triggers re-render
-setVehicles(vs => [...vs, newVehicle]);
+setVehicles((vs) => [...vs, newVehicle]);
 ```
 
 ### 2. useEffect Hook
@@ -69,6 +78,7 @@ setVehicles(vs => [...vs, newVehicle]);
 **Purpose**: Performs side effects in functional components (data fetching, subscriptions, DOM manipulation)
 
 **Syntax**:
+
 ```tsx
 useEffect(() => {
   // Effect logic
@@ -79,9 +89,10 @@ useEffect(() => {
 ```
 
 **Example from VehiclesPage**:
+
 ```tsx
 useEffect(() => {
-  getMyVehicles().then(v => {
+  getMyVehicles().then((v) => {
     setVehicles(v);
     setLoading(false);
   });
@@ -90,24 +101,27 @@ useEffect(() => {
 
 **Dependency Array Rules**:
 
-| Dependency Array | When Effect Runs |
-|-----------------|------------------|
-| `[]` | Only once when component mounts |
-| `[count]` | On mount + every time `count` changes |
+| Dependency Array   | When Effect Runs                            |
+| ------------------ | ------------------------------------------- |
+| `[]`               | Only once when component mounts             |
+| `[count]`          | On mount + every time `count` changes       |
 | `[user, vehicles]` | On mount + when `user` OR `vehicles` change |
-| No array (omitted) | On mount + after EVERY render (dangerous!) |
+| No array (omitted) | On mount + after EVERY render (dangerous!)  |
 
 **Example from DonationPage**:
+
 ```tsx
 // In DonationPage, email is prefilled from auth:
 const [email, setEmail] = useState(auth?.user?.profile?.email || "");
 ```
 
 **No useEffect needed here** because:
+
 - Initial value is set once during component creation
 - Email doesn't need to sync with auth changes (it's user-editable)
 
 **When you WOULD use useEffect**:
+
 ```tsx
 // If email should always stay synced with auth:
 useEffect(() => {
@@ -118,11 +132,12 @@ useEffect(() => {
 ```
 
 **Cleanup Function Example**:
+
 ```tsx
 useEffect(() => {
   const url = URL.createObjectURL(blob);
   setPdfUrl(url);
-  
+
   return () => {
     // Cleanup: release memory when component unmounts
     URL.revokeObjectURL(url);
@@ -135,6 +150,7 @@ useEffect(() => {
 **Purpose**: Extract reusable logic from components
 
 **Example - useAuthContext (from your codebase)**:
+
 ```tsx
 export const useAuthContext = () => {
   const auth = useAuth(); // Uses react-oidc-context
@@ -142,7 +158,7 @@ export const useAuthContext = () => {
   const isAuthenticated = auth.isAuthenticated || false;
   const user = auth.user;
   const accessToken = user?.access_token;
-  
+
   // Extract roles from JWT token
   const roles: string[] = (() => {
     if (!user?.profile?.role) return [];
@@ -166,18 +182,20 @@ export const useAuthContext = () => {
 ```
 
 **Usage in a component**:
+
 ```tsx
 function AdminDashboardPage() {
   const { isAdmin, isAuthenticated } = useAuthContext();
-  
+
   if (!isAuthenticated) return <Navigate to="/login" />;
   if (!isAdmin) return <p>Access denied</p>;
-  
+
   return <div>Admin Dashboard</div>;
 }
 ```
 
 **Why custom hooks?**
+
 - ✅ Reusable across multiple components
 - ✅ Encapsulates complex logic
 - ✅ Easier to test
@@ -190,6 +208,7 @@ function AdminDashboardPage() {
 ### What Causes a Re-render?
 
 #### 1. State Changes (`useState`)
+
 ```tsx
 const [count, setCount] = useState(0);
 
@@ -200,11 +219,12 @@ setCount(count + 1);
 ```
 
 #### 2. Props Changes
+
 ```tsx
 // Parent component
 function VehiclesPage() {
   const [vehicles, setVehicles] = useState([]);
-  
+
   return <VehicleCard vehicle={vehicles[0]} />; // ← Props
 }
 
@@ -215,12 +235,13 @@ function VehicleCard({ vehicle }: Props) {
 ```
 
 #### 3. Parent Component Re-renders
+
 **Important**: When a parent re-renders, all children re-render by default!
 
 ```tsx
 function Parent() {
   const [count, setCount] = useState(0);
-  
+
   return (
     <>
       <button onClick={() => setCount(count + 1)}>Click</button>
@@ -233,6 +254,7 @@ function Parent() {
 ### Real Example: VehiclesPage Re-render Chain
 
 **Initial Load**:
+
 1. Component mounts
 2. `useEffect` runs (dependency array `[]`)
 3. `getMyVehicles()` API call
@@ -241,6 +263,7 @@ function Parent() {
 6. All `VehicleCard` children re-render
 
 **Adding a Vehicle**:
+
 1. User clicks "Add Vehicle"
 2. `setIsAdding(true)` → Re-render (modal appears)
 3. User submits form
@@ -249,6 +272,7 @@ function Parent() {
 6. All `VehicleCard` components re-render (including the new one)
 
 **Deleting a Vehicle**:
+
 ```tsx
 async function confirmDelete() {
   if (!vehicleToDelete) return;
@@ -256,15 +280,14 @@ async function confirmDelete() {
   await deleteVehicle(vehicleToDelete.id);
 
   // This triggers re-render:
-  setVehicles(vs =>
-    vs.filter(v => v.id !== vehicleToDelete.id)
-  );
+  setVehicles((vs) => vs.filter((v) => v.id !== vehicleToDelete.id));
 
   closeDelete(); // setVehicleToDelete(null) → Another re-render
 }
 ```
 
 **State Updates Cause**:
+
 - ✅ `setVehicles()` → VehiclesPage re-renders
 - ✅ All VehicleCard children re-render
 - ✅ Modal state changes (`setIsAdding`, `setVehicleToDelete`) → Re-render
@@ -272,13 +295,15 @@ async function confirmDelete() {
 ### Re-render Optimization (Not implemented in your code, but good to know)
 
 **useMemo**: Memoize expensive calculations
+
 ```tsx
 const expensiveValue = useMemo(() => {
-  return vehicles.filter(v => v.year > 2020).length;
+  return vehicles.filter((v) => v.year > 2020).length;
 }, [vehicles]); // Only recalculates when vehicles change
 ```
 
 **useCallback**: Memoize functions to prevent child re-renders
+
 ```tsx
 const handleDelete = useCallback((id: string) => {
   deleteVehicle(id);
@@ -286,6 +311,7 @@ const handleDelete = useCallback((id: string) => {
 ```
 
 **React.memo**: Prevent child re-render if props haven't changed
+
 ```tsx
 const VehicleCard = React.memo(({ vehicle }: Props) => {
   return <div>{vehicle.brand}</div>;
@@ -297,6 +323,7 @@ const VehicleCard = React.memo(({ vehicle }: Props) => {
 ## Stripe Payment Integration
 
 ### Overview
+
 Your app uses a **simulated Stripe payment flow** (not real Stripe API, but mimics the pattern).
 
 ### Payment Flow Architecture
@@ -307,15 +334,15 @@ Frontend (React)          →  Backend (.NET API)      →  Stripe (Simulated)
 
 1. User enters amount     →                          →
 2. User enters card       →                          →
-                          
+
 3. createPaymentIntent() →  POST /donations/        →  Generate PaymentIntent
                               create-payment-intent     - paymentIntentId
                           ←  Return clientSecret    ←  - clientSecret
-                          
+
 4. confirmPayment()       →  POST /donations/        →  Validate card
                               confirm-payment           Process payment
                           ←  Return status          ←  Save to database
-                          
+
 5. Show success/error     ←
 ```
 
@@ -325,17 +352,18 @@ Frontend (React)          →  Backend (.NET API)      →  Stripe (Simulated)
 
 ```tsx
 export async function createPaymentIntent(
-  data: CreatePaymentIntentRequest
+  data: CreatePaymentIntentRequest,
 ): Promise<CreatePaymentIntentResponse> {
   const response = await api.post<CreatePaymentIntentResponse>(
     "/donations/create-payment-intent",
-    data
+    data,
   );
   return response.data;
 }
 ```
 
 **DonationPage Usage**:
+
 ```tsx
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -370,6 +398,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 **File**: `VirtualGarage.Domain.Services/DonationService.cs`
 
 **Creating Payment Intent**:
+
 ```csharp
 public async Task<CreatePaymentIntentResponse> CreatePaymentIntentAsync(
     CreatePaymentIntentRequest request,
@@ -386,7 +415,7 @@ public async Task<CreatePaymentIntentResponse> CreatePaymentIntentAsync(
 
     // Store temporarily (in production, Stripe stores this)
     PaymentIntents[paymentIntentId] = new PaymentIntentData(
-        clientSecret, request.Amount, request.Currency, 
+        clientSecret, request.Amount, request.Currency,
         request.Email, userId
     );
 
@@ -400,6 +429,7 @@ public async Task<CreatePaymentIntentResponse> CreatePaymentIntentAsync(
 ```
 
 **Confirming Payment**:
+
 ```csharp
 public async Task<ConfirmPaymentResponse> ConfirmPaymentAsync(
     ConfirmPaymentRequest request,
@@ -444,21 +474,24 @@ public async Task<ConfirmPaymentResponse> ConfirmPaymentAsync(
 ### Key Stripe Concepts
 
 #### 1. Payment Intent
+
 - Represents a payment in progress
 - Created before card details are collected
 - Tracks payment lifecycle (pending → succeeded/failed)
 
 #### 2. Client Secret
+
 - Secure token used to confirm payment from frontend
 - Should be kept private (not shared publicly)
 - Each payment intent has unique client secret
 
 #### 3. Amount in Cents
+
 **Important**: Always store amounts in smallest currency unit (cents for USD)
 
 ```tsx
 // User enters: $25.50
-const dollars = 25.50;
+const dollars = 25.5;
 const cents = Math.round(dollars * 100); // 2550 cents
 
 // Backend stores: 2550
@@ -466,10 +499,11 @@ const cents = Math.round(dollars * 100); // 2550 cents
 ```
 
 #### 4. Test Cards (Real Stripe)
-| Card Number | Result |
-|------------|--------|
-| 4242 4242 4242 4242 | Success |
-| 4000 0000 0000 0002 | Card declined |
+
+| Card Number         | Result             |
+| ------------------- | ------------------ |
+| 4242 4242 4242 4242 | Success            |
+| 4000 0000 0000 0002 | Card declined      |
 | 4000 0000 0000 9995 | Insufficient funds |
 
 Your app accepts any card starting with "4242" or valid card formats.
@@ -511,6 +545,7 @@ export const oidcConfig: AuthProviderProps = {
 ```
 
 **Key Scopes**:
+
 - `openid`: Required for OpenID Connect
 - `profile`: Access to user profile info (name, email)
 - `roles`: Access to user roles (Admin, User)
@@ -522,6 +557,7 @@ export const oidcConfig: AuthProviderProps = {
 **File**: `VirtualGarage.IdentityServer/Config.cs`
 
 **Identity Resources** (User info):
+
 ```csharp
 public static IEnumerable<IdentityResource> IdentityResources =>
     new IdentityResource[]
@@ -533,15 +569,16 @@ public static IEnumerable<IdentityResource> IdentityResources =>
 ```
 
 **API Resources** (Protected APIs):
+
 ```csharp
 public static IEnumerable<ApiResource> ApiResources =>
     new ApiResource[]
     {
         new ApiResource("virtualgarage.api", "Virtual Garage API")
         {
-            Scopes = { 
-                "virtualgarage.api.read", 
-                "virtualgarage.api.write" 
+            Scopes = {
+                "virtualgarage.api.read",
+                "virtualgarage.api.write"
             },
             UserClaims = { "role" } // Include role in token
         }
@@ -549,13 +586,14 @@ public static IEnumerable<ApiResource> ApiResources =>
 ```
 
 **Client Configuration**:
+
 ```csharp
-new Client 
+new Client
 {
     ClientId = "react-app-client",
     ClientSecrets = { new Secret("reactapp-secret".Sha256()) },
     AllowedGrantTypes = GrantTypes.Code, // Authorization Code Flow
-    
+
     AllowedScopes = {
         IdentityServerConstants.StandardScopes.OpenId,
         IdentityServerConstants.StandardScopes.Profile,
@@ -563,7 +601,7 @@ new Client
         "virtualgarage.api.read",
         "virtualgarage.api.write"
     },
-    
+
     RedirectUris = { "http://localhost:5173/callback" },
     PostLogoutRedirectUris = { "http://localhost:5173/login" },
     AllowedCorsOrigins = { "http://localhost:5173" },
@@ -573,25 +611,30 @@ new Client
 #### 3. Login Flow Step-by-Step
 
 **Step 1**: User clicks "Login"
+
 ```tsx
 const auth = useAuth();
 auth.signinRedirect();
 ```
 
 **Step 2**: User redirected to IdentityServer (`https://localhost:5001`)
+
 - Shows login page
 - User enters username/password
 
 **Step 3**: IdentityServer validates credentials
+
 - Checks against database (ASP.NET Identity)
 - Creates authorization code
 
 **Step 4**: User redirected back to app with code
+
 ```
 http://localhost:5173/callback?code=ABC123...
 ```
 
 **Step 5**: App exchanges code for tokens
+
 ```tsx
 // Automatically handled by react-oidc-context
 // Returns:
@@ -603,6 +646,7 @@ http://localhost:5173/callback?code=ABC123...
 ```
 
 **Step 6**: App stores tokens and user info
+
 ```tsx
 const { isAuthenticated, user, accessToken } = useAuthContext();
 
@@ -620,6 +664,7 @@ const { isAuthenticated, user, accessToken } = useAuthContext();
 #### Frontend: Checking Permissions
 
 **Custom Hook**:
+
 ```tsx
 const { isAdmin, isAuthenticated, roles } = useAuthContext();
 
@@ -637,6 +682,7 @@ if (!isAdmin) {
 **File**: `VirtualGarage.Api/Program.cs`
 
 **JWT Authentication Setup**:
+
 ```csharp
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -651,13 +697,14 @@ builder.Services.AddAuthentication(options => {
 ```
 
 **Authorization Policies**:
+
 ```csharp
 builder.Services.AddAuthorization(options =>
 {
     // Simple role-based policy
-    options.AddPolicy("AdminOnly", policy => 
+    options.AddPolicy("AdminOnly", policy =>
         policy.RequireRole("Admin"));
-    
+
     // Custom policy: requires scope OR role
     options.AddPolicy("VehicleReadPolicy", policy =>
         policy.Requirements.Add(
@@ -683,9 +730,9 @@ public class VirtualGarageAuthHandler : AuthorizationHandler<ClaimOrRoleRequirem
 
         // Check if user has required scope
         var hasScope = claims.Exists(c => c.Value == requirement.Claim) ||
-                       claims.Exists(c => c.Type == "scope" && 
+                       claims.Exists(c => c.Type == "scope" &&
                                         c.Value.Split(' ').Contains(requirement.Claim));
-        
+
         if (!hasScope)
         {
             context.Fail(); // Unauthorized
@@ -760,6 +807,7 @@ public class VehiclesController : ControllerBase
 **Example Access Token** (decoded):
 
 **Header**:
+
 ```json
 {
   "alg": "RS256",
@@ -768,17 +816,18 @@ public class VehiclesController : ControllerBase
 ```
 
 **Payload** (claims):
+
 ```json
 {
-  "sub": "123-456-789",           // User ID
+  "sub": "123-456-789", // User ID
   "name": "John Doe",
   "email": "john@example.com",
   "role": ["User", "Admin"],
   "scope": "openid profile roles virtualgarage.api.read virtualgarage.api.write",
   "iss": "https://localhost:5001", // Issuer (IdentityServer)
-  "aud": "virtualgarage.api",      // Audience (API)
-  "exp": 1735689600,               // Expiration timestamp
-  "iat": 1735686000                // Issued at timestamp
+  "aud": "virtualgarage.api", // Audience (API)
+  "exp": 1735689600, // Expiration timestamp
+  "iat": 1735686000 // Issued at timestamp
 }
 ```
 
@@ -786,13 +835,13 @@ public class VehiclesController : ControllerBase
 
 ### Authentication vs Authorization Summary
 
-| Aspect | Authentication | Authorization |
-|--------|---------------|---------------|
-| **Question** | Who are you? | What can you do? |
-| **Process** | Login with username/password | Check roles/scopes in JWT |
-| **Result** | JWT access token | Allow/deny API access |
-| **Frontend** | `isAuthenticated` | `isAdmin`, `roles` |
-| **Backend** | `[Authorize]` | `[Authorize(Policy = "...")]` |
+| Aspect       | Authentication               | Authorization                 |
+| ------------ | ---------------------------- | ----------------------------- |
+| **Question** | Who are you?                 | What can you do?              |
+| **Process**  | Login with username/password | Check roles/scopes in JWT     |
+| **Result**   | JWT access token             | Allow/deny API access         |
+| **Frontend** | `isAuthenticated`            | `isAdmin`, `roles`            |
+| **Backend**  | `[Authorize]`                | `[Authorize(Policy = "...")]` |
 
 ---
 
@@ -916,6 +965,7 @@ VirtualGarage/
 ## Quick Reference
 
 ### Re-render Causes
+
 1. ✅ `useState` setter called
 2. ✅ Props changed from parent
 3. ✅ Parent component re-rendered
@@ -923,25 +973,30 @@ VirtualGarage/
 5. ❌ Direct state mutation (e.g., `array.push()`)
 
 ### useState Best Practices
+
 - ✅ Use functional updates: `setState(prev => prev + 1)`
 - ✅ Create new arrays/objects: `setState([...old, new])`
 - ❌ Never mutate state directly: `state.push()`, `state.x = 5`
 
 ### useEffect Patterns
+
 ```tsx
 // Run once on mount
-useEffect(() => { }, []);
+useEffect(() => {}, []);
 
 // Run when dependencies change
-useEffect(() => { }, [count, user]);
+useEffect(() => {}, [count, user]);
 
 // Cleanup on unmount
 useEffect(() => {
-  return () => { /* cleanup */ };
+  return () => {
+    /* cleanup */
+  };
 }, []);
 ```
 
 ### Authentication Flow
+
 1. User logs in → IdentityServer
 2. Returns JWT access token
 3. Frontend stores token
@@ -949,6 +1004,7 @@ useEffect(() => {
 5. Backend validates token & checks permissions
 
 ### Authorization Hierarchy
+
 - **Authentication**: Requires valid JWT token (`[Authorize]`)
 - **Scope**: Requires specific API scope claim (e.g., `virtualgarage.api.read`)
 - **Role**: Requires specific role (e.g., `Admin`)
@@ -959,18 +1015,21 @@ useEffect(() => {
 ## Exam Tips
 
 ### React Concepts
+
 - **useState**: Creates state, triggers re-render when changed
 - **useEffect**: Runs side effects, controlled by dependency array
 - **Custom hooks**: Reusable logic extraction, must start with "use"
 - **Re-rendering**: Happens when state/props change or parent re-renders
 
 ### Stripe Flow
+
 1. Create payment intent (get clientSecret)
 2. Collect card details
 3. Confirm payment (validate card, process)
 4. Save donation record to database
 
 ### IdentityServer
+
 - **Authentication**: Who you are (JWT token)
 - **Authorization**: What you can do (roles, scopes, policies)
 - **Scopes**: Permissions for APIs (`virtualgarage.api.read`)
