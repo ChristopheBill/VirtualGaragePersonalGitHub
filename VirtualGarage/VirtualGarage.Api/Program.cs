@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Options;
@@ -29,25 +30,30 @@ namespace VirtualGarage.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Configure Key Vault
-            var keyVaultUrl = new Uri("https://virtualgarage-keyvault.vault.azure.net/");
-            builder.Configuration.AddAzureKeyVault(
-                keyVaultUrl,
-                new DefaultAzureCredential(),
-                new AzureKeyVaultConfigurationOptions
-                {
-                    ReloadInterval = TimeSpan.FromHours(1)
-                });
+            // Configure Key Vault (only in Production or when UseKeyVault is true)
+            var useKeyVault = builder.Configuration.GetValue<bool>("UseKeyVault");
+            if (builder.Environment.IsProduction() || useKeyVault)
+            {
+                var keyVaultUrl = new Uri("https://virtualgarage-keyvault.vault.azure.net/");
+                builder.Configuration.AddAzureKeyVault(
+                    keyVaultUrl,
+                    new DefaultAzureCredential(),
+                    new AzureKeyVaultConfigurationOptions
+                    {
+                        ReloadInterval = TimeSpan.FromHours(1)
+                    });
+            }
 
             global::QuestPDF.Settings.License = global::QuestPDF.Infrastructure.LicenseType.Community;
 
             // EF Core - SQL
-            // Connection string loaded from Key Vault secret 'virtualgarage-db-connection-string'
-            string? connectionString = builder.Configuration["virtualgarage-db-connection-string"];
+            // Connection string loaded from Key Vault or appsettings
+            string? connectionString = builder.Configuration["virtualgarage-db-connection-string"] 
+                ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new InvalidOperationException("Connection string 'virtualgarage-db-connection-string' not found in Key Vault configuration.");
+                throw new InvalidOperationException("Connection string not found. Add 'ConnectionStrings:DefaultConnection' to appsettings or 'virtualgarage-db-connection-string' to Key Vault.");
             }
 
             // Register DbContext with DI container
@@ -60,18 +66,20 @@ namespace VirtualGarage.Api
             builder.Services.Configure<VehicleSpecsApiOptions>(
                 builder.Configuration.GetSection("VehicleSpecsApi"));
 
-            // Configure BlobStorage options via Key Vault (hyphenated secrets)
-            var blobConnectionString = builder.Configuration["BlobStorage-ConnectionString"];
-            var blobContainerName = builder.Configuration["BlobStorage-ContainerName"];
+            // Configure BlobStorage options via Key Vault or appsettings
+            var blobConnectionString = builder.Configuration["BlobStorage-ConnectionString"]
+                ?? builder.Configuration["BlobStorage:ConnectionString"];
+            var blobContainerName = builder.Configuration["BlobStorage-ContainerName"]
+                ?? builder.Configuration["BlobStorage:ContainerName"];
 
             if (string.IsNullOrWhiteSpace(blobConnectionString))
             {
-                throw new InvalidOperationException("BlobStorage-ConnectionString not found in configuration (Key Vault).");
+                throw new InvalidOperationException("BlobStorage ConnectionString not found. Add to appsettings or Key Vault.");
             }
 
             if (string.IsNullOrWhiteSpace(blobContainerName))
             {
-                throw new InvalidOperationException("BlobStorage-ContainerName not found in configuration (Key Vault).");
+                throw new InvalidOperationException("BlobStorage ContainerName not found. Add to appsettings or Key Vault.");
             }
 
             // Bind options
@@ -98,8 +106,7 @@ namespace VirtualGarage.Api
             builder.Services.AddOpenApi();
 
             // Setup authentication/authorization
-            var identityAuthority = builder.Configuration["IdentityServer:Authority"]
-                                   ?? "https://virtualgarage-identityserver.azurewebsites.net";
+            var identityAuthority = builder.Configuration["IdentityServer:Authority"];
 
             builder.Services.AddAuthentication(options =>
                 {
@@ -111,11 +118,36 @@ namespace VirtualGarage.Api
                     options.Authority = identityAuthority;
                     options.TokenValidationParameters.ValidateAudience = false;
                     options.TokenValidationParameters.RoleClaimType = "role";
+                    // Save the token so we can access it in the auth handler
+                    options.SaveToken = true;
                 });
+            
+            // Register HttpContextAccessor and custom auth handler
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSingleton<IAuthorizationHandler, VirtualGarageAuthHandler>();
             
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+                
+                // Example policies using ClaimOrRoleRequirement
+                options.AddPolicy("VehicleReadPolicy", policy =>
+                    policy.Requirements.Add(
+                        new ClaimOrRoleRequirement(
+                            "virtualgarage.api.read",
+                            "User")));
+                
+                options.AddPolicy("VehicleWritePolicy", policy =>
+                    policy.Requirements.Add(
+                        new ClaimOrRoleRequirement(
+                            "virtualgarage.api.write",
+                            "User")));
+                
+                options.AddPolicy("AdminReadPolicy", policy =>
+                    policy.Requirements.Add(
+                        new ClaimOrRoleRequirement(
+                            "virtualgarage.api.admin",
+                            "Admin")));
             });
 
             
@@ -143,10 +175,11 @@ namespace VirtualGarage.Api
             (sp, client) =>
             {
                 var config = sp.GetRequiredService<IConfiguration>();
-                var baseUrl = config["VehicleSpecsApi-BaseUrl"]
-                             ?? "https://vehiclespecs2-api.azurewebsites.net";
-
-                client.BaseAddress = new Uri(baseUrl);
+                var baseUrl = config["VehicleSpecsApi-BaseUrl"];
+                if (!string.IsNullOrEmpty(baseUrl))
+                {
+                    client.BaseAddress = new Uri(baseUrl);
+                }
             });
             builder.Services.AddProblemDetails();
 
