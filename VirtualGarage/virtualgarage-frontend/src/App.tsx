@@ -18,7 +18,8 @@ export default function App() {
   const auth = useAuth();
 
   useEffect(() => {
-    (window as any).__auth_context__ = auth;
+    // @ts-expect-error: Allow broader type for debugging purposes
+    window.__auth_context__ = auth;
   }, [auth]);
 
   // Show loading screen while auth is initializing
