@@ -130,7 +130,6 @@ namespace VirtualGarage.Api
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
                 
-                // Example policies using ClaimOrRoleRequirement
                 options.AddPolicy("VehicleReadPolicy", policy =>
                     policy.Requirements.Add(
                         new ClaimOrRoleRequirement(
