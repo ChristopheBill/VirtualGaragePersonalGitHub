@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getAllDonations, type DonationRecord } from "../api/donations";
-import CreateUser from "../components/users/CreateUser";
 import UserList from "../components/users/UserList";
 
 type TabType = "users" | "donations";
@@ -14,7 +13,6 @@ function formatAmount(amount: number, currency: string) {
 
 export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<TabType>("users");
-  const [refresh, setRefresh] = useState(0);
   const [donations, setDonations] = useState<DonationRecord[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -79,9 +77,8 @@ export default function AdminDashboardPage() {
       <div>
         {activeTab === "users" && (
           <div className="flex justify-center">
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl">
-              <CreateUser onCreated={() => setRefresh((r) => r + 1)} />
-              <UserList key={refresh} />
+            <div className="w-full max-w-4xl">
+              <UserList />
             </div>
           </div>
         )}

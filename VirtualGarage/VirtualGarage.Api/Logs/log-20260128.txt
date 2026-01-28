@@ -1623,3 +1623,4 @@ System.AggregateException: Retry failed after 6 tries. Retry settings can be adj
    at Azure.Core.Pipeline.HttpPipelinePolicy.ProcessNext(HttpMessage message, ReadOnlyMemory`1 pipeline)
    at Azure.Core.Pipeline.RetryPolicy.ProcessAsync(HttpMessage message, ReadOnlyMemory`1 pipeline, Boolean async)<---
 
+2026-01-28 09:40:42.220 +01:00 [WRN] Failed to determine the https port for redirect.
