@@ -1,9 +1,11 @@
 import { useAuth } from "react-oidc-context";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
+import { LOGIN } from "../../routes";
+import Loading from "../../components/common/Loading";
 
 interface ProtectedRouteProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
@@ -12,7 +14,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   useEffect(() => {
     if (!auth.isLoading && !auth.isAuthenticated) {
-      navigate("/login");
+      navigate(LOGIN);
     }
   }, [auth.isLoading, auth.isAuthenticated, navigate]);
 
@@ -20,7 +22,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-white dark:bg-neutral-900">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-500 mx-auto mb-4"></div>
+          <Loading />
           <p className="text-neutral-600 dark:text-neutral-400">Loading...</p>
         </div>
       </div>
@@ -31,5 +33,5 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     return null;
   }
 
-  return <>{children}</>;
+  return children ? <>{children}</> : <Outlet />;
 }

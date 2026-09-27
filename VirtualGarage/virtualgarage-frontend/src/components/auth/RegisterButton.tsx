@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { REGISTER } from "../../routes";
 
 export default function RegisterButton() {
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    navigate("/register");
+    navigate(REGISTER);
   };
 
   return (

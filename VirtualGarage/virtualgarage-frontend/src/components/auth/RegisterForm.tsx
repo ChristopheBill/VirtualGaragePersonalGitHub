@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { LOGIN } from "../../routes";
 
 interface RegisterFormData {
   username: string;
@@ -140,7 +141,7 @@ export default function RegisterForm() {
 
       // Redirect to login after 2 seconds
       setTimeout(() => {
-        navigate("/login");
+        navigate(LOGIN);
       }, 2000);
     } catch (err) {
       setError("An error occurred during registration. Please try again.");
@@ -276,7 +277,7 @@ export default function RegisterForm() {
         Already have an account?{" "}
         <button
           type="button"
-          onClick={() => navigate("/login")}
+          onClick={() => navigate(LOGIN)}
           className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
         >
           Sign in

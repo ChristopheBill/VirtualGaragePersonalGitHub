@@ -1,5 +1,6 @@
 import RegisterForm from "../components/auth/RegisterForm";
 import { useNavigate } from "react-router-dom";
+import { LOGIN } from "../routes";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function RegisterPage() {
 
         <div className="border-t border-neutral-200 dark:border-neutral-700 pt-4">
           <button
-            onClick={() => navigate("/login")}
+            onClick={() => navigate(LOGIN)}
             className="w-full text-center text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition"
           >
             Back to login

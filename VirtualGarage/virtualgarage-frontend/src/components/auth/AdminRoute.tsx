@@ -1,17 +1,25 @@
 import { useAuth } from "react-oidc-context";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
+import { LOGIN, HOME } from "../../routes";
+import Loading from "../../components/common/Loading";
 
 interface AdminRouteProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-function hasAdminRole(profile: any): boolean {
+type ProfileLike = Record<string, unknown> | null | undefined;
+
+function getProfileCandidate(profile: ProfileLike, key: string): unknown {
+  return profile ? profile[key] : undefined;
+}
+
+function hasAdminRole(profile: ProfileLike): boolean {
   if (!profile) return false;
   const candidates = [
-    profile.role,
-    profile.roles,
-    profile["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
+    getProfileCandidate(profile, "role"),
+    getProfileCandidate(profile, "roles"),
+    getProfileCandidate(profile, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"),
   ].filter(Boolean);
 
   for (const value of candidates) {
@@ -27,11 +35,11 @@ export default function AdminRoute({ children }: AdminRouteProps) {
 
   useEffect(() => {
     if (!auth.isLoading && !auth.isAuthenticated) {
-      navigate("/login");
+      navigate(LOGIN);
       return;
     }
     if (!auth.isLoading && auth.isAuthenticated && !hasAdminRole(auth.user?.profile)) {
-      navigate("/");
+      navigate(HOME);
     }
   }, [auth.isLoading, auth.isAuthenticated, auth.user, navigate]);
 
@@ -39,7 +47,7 @@ export default function AdminRoute({ children }: AdminRouteProps) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-white dark:bg-neutral-900">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-500 mx-auto mb-4"></div>
+          <Loading />
           <p className="text-neutral-600 dark:text-neutral-400">Loading...</p>
         </div>
       </div>
@@ -50,5 +58,5 @@ export default function AdminRoute({ children }: AdminRouteProps) {
     return null;
   }
 
-  return <>{children}</>;
+  return children ? <>{children}</> : <Outlet />;
 }

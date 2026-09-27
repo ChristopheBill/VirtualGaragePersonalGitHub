@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getAllDonations, type DonationRecord } from "../api/donations";
 import UserList from "../components/users/UserList";
+import Loading from "../components/common/Loading";
 
 type TabType = "users" | "donations";
 
@@ -88,7 +89,7 @@ export default function AdminDashboardPage() {
             {loading && (
               <div className="flex items-center justify-center py-12">
                 <div className="text-center">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-500 mx-auto mb-4" />
+                  <Loading />
                   <p className="text-neutral-600 dark:text-neutral-400">Loading donations...</p>
                 </div>
               </div>

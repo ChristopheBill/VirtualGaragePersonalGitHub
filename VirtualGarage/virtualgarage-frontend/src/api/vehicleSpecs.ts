@@ -9,7 +9,31 @@ export interface VehicleSpecs {
   horsepower?: string;
   transmission?: string;
   fuelType?: string;
-  [key: string]: any;
+}
+
+type ErrorResponseData = {
+  detail?: string;
+  message?: string;
+} | string | null | undefined;
+
+function getErrorMessage(data: ErrorResponseData, fallback: string): string {
+  if (!data) {
+    return fallback;
+  }
+
+  if (typeof data === "string") {
+    return data;
+  }
+
+  if (typeof data.detail === "string") {
+    return data.detail;
+  }
+
+  if (typeof data.message === "string") {
+    return data.message;
+  }
+
+  return fallback;
 }
 
 export async function getVehicleSpecsPdf(brand: string, model: string, year: number): Promise<Blob> {
@@ -21,18 +45,9 @@ export async function getVehicleSpecsPdf(brand: string, model: string, year: num
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
-      const data = err.response?.data as any;
-      let message = "Failed to load vehicle specifications PDF";
-      if (data) {
-        if (typeof data === "string") {
-          message = data;
-        } else if (typeof data.detail === "string") {
-          message = data.detail;
-        } else if (typeof data.message === "string") {
-          message = data.message;
-        }
-      }
-      throw new Error(message);
+      throw new Error(
+        getErrorMessage(err.response?.data as ErrorResponseData, "Failed to load vehicle specifications PDF")
+      );
     }
     throw err as Error;
   }
@@ -46,12 +61,9 @@ export async function getVehicleSpecs(brand: string, model: string, year: number
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
-      const data = err.response?.data as any;
-      let message = "Vehicle specifications not found";
-      if (data?.detail) {
-        message = data.detail;
-      }
-      throw new Error(message);
+      throw new Error(
+        getErrorMessage(err.response?.data as ErrorResponseData, "Vehicle specifications not found")
+      );
     }
     throw err as Error;
   }

@@ -1,5 +1,6 @@
 import { useAuth } from "react-oidc-context";
 import { useEffect } from "react";
+import Loading from "../components/common/Loading";
 
 export default function CallbackPage() {
   const auth = useAuth();
@@ -14,7 +15,7 @@ export default function CallbackPage() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-white dark:bg-neutral-900">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-500 mx-auto mb-4"></div>
+          <Loading />
           <p className="text-neutral-600 dark:text-neutral-400">Logging in...</p>
         </div>
       </div>

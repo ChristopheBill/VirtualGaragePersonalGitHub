@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Vehicle } from "../../types/vehicle";
 import { updateVehicle } from "../../api/vehicles";
-import Spinner from "../Spinner";
+import Loading from "../common/Loading";
 
 type Props = {
   vehicle: Vehicle;
@@ -82,7 +82,7 @@ export default function EditVehicleModal({ vehicle, onClose, onSaved }: Props) {
             >
               {loading ? (
                 <>
-                  <Spinner /> Saving...
+                  <Loading size="sm" className="mr-2" /> Saving...
                 </>
               ) : (
                 "Save"

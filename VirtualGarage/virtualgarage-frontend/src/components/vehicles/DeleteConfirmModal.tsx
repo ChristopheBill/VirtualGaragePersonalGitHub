@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Vehicle } from "../../types/vehicle";
 import { deleteVehicle } from "../../api/vehicles";
-import Spinner from "../Spinner";
+import Loading from "../common/Loading";
 
 type Props = {
   vehicle: Vehicle;
@@ -51,7 +51,7 @@ export default function DeleteConfirmModal({
           >
             {loading ? (
               <>
-                <Spinner /> Deleting...
+                <Loading size="sm" className="mr-2" /> Deleting...
               </>
             ) : (
               "Delete"

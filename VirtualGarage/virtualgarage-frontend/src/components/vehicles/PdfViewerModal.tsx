@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Loading from "../common/Loading";
 
 interface PdfViewerModalProps {
   pdfUrl: string;
@@ -35,7 +36,7 @@ export default function PdfViewerModal({ pdfUrl, onClose, title }: PdfViewerModa
           {loading && (
             <div className="absolute inset-0 flex items-center justify-center bg-neutral-50 dark:bg-neutral-900">
               <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-500 mx-auto mb-4"></div>
+                <Loading />
                 <p className="text-neutral-600 dark:text-neutral-400">Loading PDF...</p>
               </div>
             </div>

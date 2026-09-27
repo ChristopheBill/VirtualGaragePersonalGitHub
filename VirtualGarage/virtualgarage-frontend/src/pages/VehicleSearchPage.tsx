@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Loading from "../components/common/Loading";
 import { listBlobs, downloadBlob, type BlobInfo } from "../api/blobs";
 
 interface ParsedBlobInfo extends BlobInfo {
@@ -107,7 +108,7 @@ export default function VehicleSearchPage() {
             >
               {loading ? (
                 <span className="flex items-center justify-center">
-                  <span className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></span>
+                  <Loading size="sm" className="border-white mr-2" />
                   Searching...
                 </span>
               ) : (

@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 import { useDarkMode } from "../../providers/DarkModeProvider";
 import AuthStatus from "../auth/AuthStatus";
+import { HOME, VEHICLES, SEARCH, ADMIN, DONATE } from "../../routes";
 
 export default function UserHeader() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function UserHeader() {
           {/* LOGO */}
           <div
             className="flex items-center gap-3 cursor-pointer"
-            onClick={() => navigate("/")}
+            onClick={() => navigate(HOME)}
           >
             <span className="text-2xl font-bold text-blue-600 dark:text-blue-500">
               Virtual Garage
@@ -36,9 +37,9 @@ export default function UserHeader() {
           {/* NAVIGATION & ACTIONS */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <button
-              onClick={() => navigate("/vehicles")}
+              onClick={() => navigate(VEHICLES)}
               className={`px-2 sm:px-3 py-2 rounded-lg transition hover:cursor-pointer text-sm sm:text-base whitespace-nowrap ${
-                location.pathname === "/vehicles"
+                location.pathname === VEHICLES
                   ? "bg-blue-600 text-white dark:bg-blue-500"
                   : "bg-neutral-200 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
               }`}
@@ -47,9 +48,9 @@ export default function UserHeader() {
             </button>
 
             <button
-              onClick={() => navigate("/search")}
+              onClick={() => navigate(SEARCH)}
               className={`px-2 sm:px-3 py-2 rounded-lg transition hover:cursor-pointer text-sm sm:text-base whitespace-nowrap ${
-                location.pathname === "/search"
+                location.pathname === SEARCH
                   ? "bg-blue-600 text-white dark:bg-blue-500"
                   : "bg-neutral-200 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
               }`}
@@ -59,9 +60,9 @@ export default function UserHeader() {
 
             {isAdmin && (
               <button
-                onClick={() => navigate("/admin")}
+                onClick={() => navigate(ADMIN)}
                 className={`px-2 sm:px-3 py-2 rounded-lg transition hover:cursor-pointer text-sm sm:text-base whitespace-nowrap ${
-                  location.pathname === "/admin"
+                  location.pathname === ADMIN
                     ? "bg-blue-600 text-white dark:bg-blue-500"
                     : "bg-neutral-200 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
                 }`}
@@ -70,7 +71,7 @@ export default function UserHeader() {
               </button>
             )}
             <button
-              onClick={() => navigate("/donate")}
+              onClick={() => navigate(DONATE)}
               className="px-2 sm:px-4 py-2 rounded-lg font-semibold transition hover:cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700 shadow-md hover:shadow-lg text-sm sm:text-base whitespace-nowrap"
               title="Support Virtual Garage"
             >

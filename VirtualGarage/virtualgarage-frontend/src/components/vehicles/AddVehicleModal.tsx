@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createVehicle } from "../../api/vehicles";
 import type { Vehicle } from "../../types/vehicle";
-import Spinner from "../Spinner";
+import Loading from "../common/Loading";
 
 type Props = {
   onClose: () => void;
@@ -94,7 +94,7 @@ export default function AddVehicleModal({ onClose, onCreated }: Props) {
             >
               {loading ? (
                 <>
-                  <Spinner /> Adding...
+                  <Loading size="sm" className="mr-2" /> Adding...
                 </>
               ) : (
                 "Add Vehicle"

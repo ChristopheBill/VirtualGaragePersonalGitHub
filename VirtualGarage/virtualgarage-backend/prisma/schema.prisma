@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(uuid()) @db.UniqueIdentifier
+  firstName   String    @db.NVarChar(50)
+  lastName    String    @db.NVarChar(50)
+  email       String    @db.NVarChar(200)
+  birthDay    DateTime
+  userRole    Int
+  vehicles    Vehicle[]
+  donations   Donation[]
+
+  @@map("Users")
+}
+
+model Vehicle {
+  id              String   @id @default(uuid()) @db.UniqueIdentifier
+  userId          String   @db.UniqueIdentifier
+  brand           String   @db.NVarChar(50)
+  model           String   @db.NVarChar(50)
+  manufactureDate DateTime
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("Vehicles")
+}
+
+model Donation {
+  id              String   @id @default(uuid()) @db.UniqueIdentifier
+  userId          String   @db.UniqueIdentifier
+  amount          Int
+  currency        String   @db.NVarChar(10)
+  email           String   @db.NVarChar(100)
+  paymentIntentId String   @db.NVarChar(255)
+  status          String   @db.NVarChar(50)
+  createdAt       DateTime
+  notes           String?
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("Donations")
+}

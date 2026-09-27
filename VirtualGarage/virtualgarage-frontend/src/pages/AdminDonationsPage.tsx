@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Loading from "../components/common/Loading";
 import { getAllDonations } from "../api/donations";
 import type { DonationRecord } from "../api/donations";
 
@@ -32,7 +33,7 @@ export default function AdminDonationsPage() {
     return (
       <div className="flex items-center justify-center py-12">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-500 mx-auto mb-4" />
+          <Loading />
           <p className="text-neutral-600 dark:text-neutral-400">Loading donations...</p>
         </div>
       </div>

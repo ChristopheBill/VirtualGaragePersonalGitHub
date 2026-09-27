@@ -7,7 +7,7 @@ import EditVehicleModal from "../components/vehicles/EditVehicleModal";
 import AddVehicleModal from "../components/vehicles/AddVehicleModal";
 import DeleteConfirmModal from "../components/vehicles/DeleteConfirmModal";
 import PdfViewerModal from "../components/vehicles/PdfViewerModal";
-import Spinner from "../components/Spinner";
+import Loading from "../components/common/Loading";
 
 
 export default function VehiclesPage() {
@@ -98,7 +98,7 @@ function closePdfViewer() {
 
     {loading ? (
       <div className="flex justify-center py-12">
-        <Spinner />
+        <Loading />
       </div>
     ) : vehicles.length === 0 ? (
       <p className="text-neutral-600 dark:text-neutral-400 text-center py-8">No vehicles yet.</p>
@@ -158,7 +158,7 @@ function closePdfViewer() {
     {pdfLoading && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-500 mx-auto mb-4"></div>
+          <Loading />
           <p className="text-white">Loading PDF...</p>
         </div>
       </div>
