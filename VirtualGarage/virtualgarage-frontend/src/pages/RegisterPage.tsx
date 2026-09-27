@@ -1,12 +1,16 @@
 import RegisterForm from "../components/auth/RegisterForm";
 import { useNavigate } from "react-router-dom";
 import { LOGIN } from "../routes";
+import ThemeToggle from "../components/common/ThemeToggle";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white dark:bg-neutral-900">
+    <div className="relative flex items-center justify-center min-h-screen bg-white dark:bg-neutral-900">
+      <div className="absolute right-4 top-4">
+        <ThemeToggle />
+      </div>
       <div className="w-full max-w-md space-y-6">
         <div>
           <h1 className="text-4xl font-bold text-neutral-900 dark:text-white mb-2">
