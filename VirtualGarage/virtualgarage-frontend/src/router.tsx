@@ -1,4 +1,3 @@
-import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
@@ -10,8 +9,7 @@ import VehicleSearchPage from "./pages/VehicleSearchPage";
 import DonationPage from "./pages/DonationPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import CallbackPage from "./pages/CallbackPage";
-import { LOGIN, REGISTER, CALLBACK, ADMIN, VEHICLES, SEARCH, DONATE } from "./routes";
+import { LOGIN, REGISTER, ADMIN, VEHICLES, SEARCH, DONATE } from "./routes";
 
 const NotFound = () => (
   <div className="text-center py-12 text-neutral-400 dark:text-neutral-500">Page not found</div>
@@ -25,10 +23,6 @@ export const router = createBrowserRouter([
   {
     path: REGISTER,
     element: <RegisterPage />,
-  },
-  {
-    path: CALLBACK,
-    element: <CallbackPage />,
   },
   // Protected subtree: Layout + pages
   {

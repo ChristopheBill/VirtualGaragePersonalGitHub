@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Loading from "../components/common/Loading";
-import { useAuth } from "react-oidc-context";
+import { useAuth } from "../providers/AuthProvider";
 import { createPaymentIntent, confirmPayment } from "../api/donations";
 
 const PRESET_AMOUNTS = [5, 10, 25, 50, 100];
@@ -12,7 +12,7 @@ export default function DonationPage() {
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardCvc, setCardCvc] = useState("");
-  const [email, setEmail] = useState(auth?.user?.profile?.email || "");
+  const [email, setEmail] = useState(auth.user?.email || "");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
     type: "success" | "error";

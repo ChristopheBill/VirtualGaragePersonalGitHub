@@ -85,19 +85,17 @@ export default function RegisterForm() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_OIDC_AUTHORITY || "https://virtualgarage-identityserver.azurewebsites.net"}/api/auth/register`,
+        `${import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api"}/auth/register`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            username: formData.username,
             email: formData.email,
             firstName: formData.firstName,
             lastName: formData.lastName,
             password: formData.password,
-            confirmPassword: formData.confirmPassword,
           }),
         }
       );

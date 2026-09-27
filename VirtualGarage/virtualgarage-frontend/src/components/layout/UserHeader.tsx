@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "react-oidc-context";
+import { useAuth } from "../../providers/AuthProvider";
 import { useDarkMode } from "../../providers/DarkModeProvider";
 import AuthStatus from "../auth/AuthStatus";
 import { HOME, VEHICLES, SEARCH, ADMIN, DONATE } from "../../routes";
@@ -10,14 +10,7 @@ export default function UserHeader() {
   const { darkMode, toggleDarkMode } = useDarkMode();
   const auth = useAuth();
 
-  const roleCandidates = [
-    auth.user?.profile?.role,
-    auth.user?.profile?.roles,
-    auth.user?.profile?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
-  ].filter(Boolean);
-  const isAdmin = roleCandidates.some((value) =>
-    Array.isArray(value) ? value.includes("Admin") : value === "Admin"
-  );
+  const isAdmin = auth.user?.role === "admin";
 
   return (
     <header className="w-full border-b border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900">

@@ -1,10 +1,10 @@
-import { useAuth } from "react-oidc-context";
+import { useAuth } from "../../providers/AuthProvider";
 
 export default function LogoutButton() {
   const auth = useAuth();
 
   const handleLogout = async () => {
-    await auth.signoutRedirect();
+    auth.logout();
   };
 
   return (

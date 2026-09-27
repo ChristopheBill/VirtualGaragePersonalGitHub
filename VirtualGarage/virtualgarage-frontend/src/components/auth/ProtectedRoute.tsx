@@ -1,4 +1,4 @@
-import { useAuth } from "react-oidc-context";
+import { useAuth } from "../../providers/AuthProvider";
 import { useEffect } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import { LOGIN } from "../../routes";
@@ -13,10 +13,10 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!auth.isLoading && !auth.isAuthenticated) {
+    if (!auth.isAuthenticated) {
       navigate(LOGIN);
     }
-  }, [auth.isLoading, auth.isAuthenticated, navigate]);
+  }, [auth.isAuthenticated, navigate]);
 
   if (auth.isLoading) {
     return (

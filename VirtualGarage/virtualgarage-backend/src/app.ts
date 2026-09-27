@@ -3,6 +3,7 @@ import cors from "cors";
 import { config } from "./config.js";
 import vehiclesRouter from "./routes/vehicles.js";
 import usersRouter from "./routes/users.js";
+import authRouter from "./routes/auth.js";
 import { errorHandler } from "./middleware/errors.js";
 
 export const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.get("/health", (_request, response) => {
   response.json({ status: "ok" });
 });
+app.use("/api/auth", authRouter);
 app.use("/api/vehicles", vehiclesRouter);
 app.use("/api/users", usersRouter);
 app.use(errorHandler);

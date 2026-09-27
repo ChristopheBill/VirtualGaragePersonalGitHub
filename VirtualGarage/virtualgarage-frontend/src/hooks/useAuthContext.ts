@@ -1,29 +1,15 @@
-import { useAuth } from "react-oidc-context";
+import { useAuth } from "../providers/AuthProvider";
 
 export const useAuthContext = () => {
   const auth = useAuth();
-
-  const isAuthenticated = auth.isAuthenticated || false;
-  const user = auth.user;
-  const accessToken = user?.access_token;
-  
-  // Extract roles from the JWT token's 'role' claim
-  // The claim can be either a string (single role) or an array (multiple roles)
-  const roles: string[] = (() => {
-    if (!user?.profile?.role) {
-      return [];
-    }
-    const roleClaim = user.profile.role;
-    return Array.isArray(roleClaim) ? roleClaim : [roleClaim];
-  })();
-
-  const isAdmin = roles.includes("Admin");
+  const roles = auth.user ? [auth.user.role] : [];
+  const isAdmin = auth.user?.role === "admin";
 
   return {
     auth,
-    isAuthenticated,
-    user,
-    accessToken,
+    isAuthenticated: auth.isAuthenticated,
+    user: auth.user,
+    accessToken: auth.accessToken,
     roles,
     isAdmin,
     isLoading: auth.isLoading,

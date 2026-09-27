@@ -1,8 +1,6 @@
-import { createRemoteJWKSet, jwtVerify } from "jose";
-import { z } from "zod";
+import { jwtVerify } from "jose";
 import { config } from "../config.js";
-const issuer = config.OIDC_AUTHORITY.replace(/\/$/, "");
-const jwks = createRemoteJWKSet(new URL(`${issuer}/.well-known/openid-configuration/jwks`));
+const secret = new TextEncoder().encode(config.JWT_SECRET);
 export async function requireAuth(request, response, next) {
     const authorization = request.header("authorization");
     const token = authorization?.startsWith("Bearer ") ? authorization.slice(7) : undefined;
@@ -11,12 +9,9 @@ export async function requireAuth(request, response, next) {
         return;
     }
     try {
-        const { payload } = await jwtVerify(token, jwks, {
-            issuer,
-            ...(config.OIDC_AUDIENCE ? { audience: config.OIDC_AUDIENCE } : {}),
-        });
+        const { payload } = await jwtVerify(token, secret);
         const subject = typeof payload.sub === "string" ? payload.sub : undefined;
-        if (!subject || !z.string().uuid().safeParse(subject).success) {
+        if (!subject) {
             response.status(401).json({ error: "Token does not contain a subject" });
             return;
         }
@@ -37,7 +32,7 @@ export async function requireAuth(request, response, next) {
 }
 export function requireAdmin(request, response, next) {
     const user = request.user;
-    if (!user.roles.includes("Admin")) {
+    if (!user.roles.includes("admin")) {
         response.status(403).json({ error: "Administrator role is required" });
         return;
     }

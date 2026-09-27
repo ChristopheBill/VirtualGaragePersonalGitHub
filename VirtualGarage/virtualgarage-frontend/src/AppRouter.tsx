@@ -1,17 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { RouterProvider } from "react-router-dom";
-import { useAuth } from "react-oidc-context";
+import { useAuth } from "./providers/AuthProvider";
 import router from "./router";
 import { DarkModeProvider } from "./providers/DarkModeProvider";
 import Loading from "./components/common/Loading";
 
 function AuthInspector({ children }: { children: React.ReactNode }) {
   const auth = useAuth();
-
-  useEffect(() => {
-    // @ts-expect-error: debug hook
-    window.__auth_context__ = auth;
-  }, [auth]);
 
   if (auth.isLoading) {
     return (

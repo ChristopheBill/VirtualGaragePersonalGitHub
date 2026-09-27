@@ -48,7 +48,7 @@ router.post("/", async (request, response) => {
         return;
     }
     const user = await prisma.user.create({
-        data: { ...input.data, birthDay: new Date(), userRole: 1 },
+        data: { ...input.data, birthDay: new Date(), passwordHash: "", userRole: "user" },
         include: { vehicles: true },
     });
     response.json(userResponse(user));

@@ -3,47 +3,48 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlserver"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id          String    @id @default(uuid()) @db.UniqueIdentifier
-  firstName   String    @db.NVarChar(50)
-  lastName    String    @db.NVarChar(50)
-  email       String    @db.NVarChar(200)
+  id          String    @id @default(uuid()) @db.Char(36)
+  firstName   String    @db.VarChar(50)
+  lastName    String    @db.VarChar(50)
+  email       String    @unique @db.VarChar(200)
   birthDay    DateTime
-  userRole    Int
+  passwordHash String   @db.VarChar(255)
+  userRole    String    @default("user") @db.VarChar(20)
   vehicles    Vehicle[]
   donations   Donation[]
 
-  @@map("Users")
+  @@map("users")
 }
 
 model Vehicle {
-  id              String   @id @default(uuid()) @db.UniqueIdentifier
-  userId          String   @db.UniqueIdentifier
-  brand           String   @db.NVarChar(50)
-  model           String   @db.NVarChar(50)
+  id              String   @id @default(uuid()) @db.Char(36)
+  userId          String   @db.Char(36)
+  brand           String   @db.VarChar(50)
+  model           String   @db.VarChar(50)
   manufactureDate DateTime
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
-  @@map("Vehicles")
+  @@map("vehicles")
 }
 
 model Donation {
-  id              String   @id @default(uuid()) @db.UniqueIdentifier
-  userId          String   @db.UniqueIdentifier
+  id              String   @id @default(uuid()) @db.Char(36)
+  userId          String   @db.Char(36)
   amount          Int
-  currency        String   @db.NVarChar(10)
-  email           String   @db.NVarChar(100)
-  paymentIntentId String   @db.NVarChar(255)
-  status          String   @db.NVarChar(50)
+  currency        String   @db.VarChar(10)
+  email           String   @db.VarChar(100)
+  paymentIntentId String   @db.VarChar(255)
+  status          String   @db.VarChar(50)
   createdAt       DateTime
   notes           String?
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
-  @@map("Donations")
+  @@map("donations")
 }
